@@ -1,5 +1,7 @@
 package scaladbunit.model
 
+import org.springframework.jdbc.core.JdbcTemplate
+
 case class Record(table: Table, label: String, values: Set[Column]) {
 
 	def commaSeparatedString(columnToString: Column => String): String = {
@@ -27,7 +29,7 @@ case class Record(table: Table, label: String, values: Set[Column]) {
 	}
 
 	def insert {
-
+		new JdbcTemplate(table.dataSource).update(insertSql)
 	}
 
 }

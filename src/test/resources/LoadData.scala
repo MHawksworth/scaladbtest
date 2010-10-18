@@ -2,12 +2,12 @@ import scaladbunit.model.{Record, Table}
 
 object LoadData {
 
-	def table(name: Symbol) = {
+	def table(name: String) = {
 		new Table(name, Set(), Set())
 	}
 
-	def record(name: Symbol) = {
-		new Record(this, name, Set())
+	def record(name: String) = {
+		
 	}
 
 	/*

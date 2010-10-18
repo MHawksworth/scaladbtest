@@ -1,6 +1,8 @@
 package scaladbunit.model
 
-case class Table(name: String, defaultColumns: Set[Column], records: Set[Record]) {
+import javax.sql.DataSource
 
-
+case class Table(dataSource: DataSource, name: String, defaultColumns: Set[Column], records: Set[Record]) {
+	def this(name: String, defaultColumns: Set[Column], records: Set[Record]) =
+		this(null, name, defaultColumns, records)
 }

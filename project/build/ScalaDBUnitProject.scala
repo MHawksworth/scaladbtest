@@ -9,6 +9,8 @@ class ScalaDBUnitProject(info: ProjectInfo) extends DefaultProject(info) with Id
   val scalatest = "org.scalatest" % "scalatest" % "1.2"
 	val hsqldb = "org.hsqldb" % "hsqldb" % "2.0.0"
 	val mysql = "mysql" % "mysql-connector-java" % "5.1.13"
-	val squeryl = "org.squeryl" % "squeryl_2.8.0.RC7" % "0.9.4beta7"
+	val c3po = "c3p0" % "c3p0" % "0.9.1.2"
+	val springJdbc = "org.springframework" % "spring-jdbc" % "3.0.3.RELEASE"
+
 
 }
