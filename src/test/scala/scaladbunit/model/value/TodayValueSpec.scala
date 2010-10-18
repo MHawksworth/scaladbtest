@@ -1,8 +1,7 @@
 package scaladbunit.model.value
 
-import java.text.SimpleDateFormat
-import java.util.Date
-
+import scaladbunit.SpecSupport
+import java.util.{GregorianCalendar, Date}
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -19,12 +18,18 @@ import java.util.Date
 * limitations under the License.
 */
 
-case object TodayValue extends Value {
+class TodayValueSpec extends SpecSupport {
 
-	def formatDate(date: java.util.Date): String = {
-		new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date)
+	describe("A Today Value") {
+		it("should format a date and time") {
+			val date = new GregorianCalendar(2010, 4, 15, 8, 30, 20).getTime
+
+			TodayValue.formatDate(date) should equal ("2010-05-15 08:30:20")
+		}
+
+		it("should return a sql value of its internal date wrapped in single quotes") {
+			TodayValue.sqlValue should equal ("'" + TodayValue.formatDate(new Date()) + "'")
+		}
 	}
-
-	def sqlValue = "'" + formatDate(new Date()) + "'"
 
 }

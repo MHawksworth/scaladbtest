@@ -93,6 +93,23 @@ class RecordSpec extends DataSourceTestSupport {
 			}
 		}
 
+		describe("when it has a date value") {
+			val table = new Table(dataSource, "date_table", Set(), Set())
+			val record = table.createRecord("record", Set(
+	      new Column("id", StringValue(Some("1"))),
+				new Column("creation_date", StringValue(Some("2010-05-15 04:20:11")))
+			))
+
+			it("should insert") {
+				record.insert()
+
+				val map = jdbcTemplate.queryForMap("select * from date_table where id = ?", new Integer(1))
+
+				map.get("id") should equal (1)
+				map.get("creation_date").toString should equal ("2010-05-15 04:20:11.0")
+			}
+		}
+
 		describe("when the has default values defined") {
 			val table = new Table(dataSource, "two_string_table", Set(
 				new Column("col1", StringValue(Some("value1"))),

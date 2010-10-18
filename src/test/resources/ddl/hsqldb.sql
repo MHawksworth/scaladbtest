@@ -16,3 +16,13 @@ DROP TABLE IF EXISTS single_id_table;
 CREATE TABLE single_id_table(
   id INT
 );
+
+---------------------------------------------------------------------------
+-- date_table
+---------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS date_table;
+CREATE TABLE date_table(
+  id INT,
+  creation_date TIMESTAMP
+);
