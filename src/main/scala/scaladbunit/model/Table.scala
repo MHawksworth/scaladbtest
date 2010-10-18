@@ -16,9 +16,7 @@ package scaladbunit.model
 * limitations under the License.
 */
 
-import javax.sql.DataSource
-
-case class Table(dataSource: DataSource, name: String, defaultColumns: Set[Column], records: Set[Record]) {
+case class Table(testData: TestData, name: String, defaultColumns: Set[Column] = Set(), records: Set[Record] = Set()) {
 
 	def this(name: String, defaultColumns: Set[Column], records: Set[Record]) =
 		this(null, name, defaultColumns, records)
@@ -31,8 +29,12 @@ case class Table(dataSource: DataSource, name: String, defaultColumns: Set[Colum
 			else defaultColumn
 	}
 
-	def createRecord(label: String, columns: Set[Column]): Record = {
+	def createRecord(label: String, columns: Set[Column] = Set()): Record = {
 		new Record(this, label,	mergeInDefaultColumnValues(columns))
+	}
+
+	def delete() {
+		testData.jdbcTemplate.update("delete from " + name)
 	}
 
 }

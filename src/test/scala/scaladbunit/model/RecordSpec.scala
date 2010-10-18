@@ -1,5 +1,8 @@
 package scaladbunit.model
 
+import scaladbunit.DataSourceSpecSupport
+import value.StringValue
+
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -16,16 +19,21 @@ package scaladbunit.model
 * limitations under the License.
 */
 
-import scaladbunit.DataSourceTestSupport
-import value.StringValue
-
-class RecordSpec extends DataSourceTestSupport {
+class RecordSpec extends DataSourceSpecSupport {
 
 	createTables("hsqldb.sql");
 
+	override def afterEach() {
+		jdbcTemplate.update("delete from two_string_table")
+		jdbcTemplate.update("delete from single_id_table")
+		jdbcTemplate.update("delete from date_table")
+	}
+	
+	val testData = new TestData(dataSource)
+
 	describe("A record") {
 		describe("when it has two columns with string values") {
-			val table = new Table(dataSource, "two_string_table", Set(), Set())
+			val table = new Table(testData, "two_string_table", Set(), Set())
 			val record = table.createRecord("record", Set(
 	      new Column("col1", StringValue(Some("value1"))),
 				new Column("col2", StringValue(Some("value2")))
@@ -62,7 +70,7 @@ class RecordSpec extends DataSourceTestSupport {
 		}
 
 		describe("when it has None in the option values") {
-			val table = new Table(dataSource, "two_string_table", Set(), Set())
+			val table = new Table(testData, "two_string_table", Set(), Set())
 			val record = table.createRecord("record", Set(
 	      new Column("col1", StringValue(None)),
 				new Column("col2", StringValue(None))
@@ -79,7 +87,7 @@ class RecordSpec extends DataSourceTestSupport {
 		}
 
 		describe("when it has one integer id column") {
-			val table = new Table(dataSource, "single_id_table", Set(), Set())
+			val table = new Table(testData, "single_id_table", Set(), Set())
 			val record = table.createRecord("record", Set(
 	      new Column("id", StringValue(Some("1")))
 			))
@@ -87,14 +95,14 @@ class RecordSpec extends DataSourceTestSupport {
 			it("should insert") {
 				record.insert()
 
-				val map = jdbcTemplate.queryForMap("select * from single_id_table where id = ?", new Integer(1))
+				val map = jdbcTemplate.queryForMap("select * from single_id_table where id = ?", new java.lang.Integer(1))
 
 				map.get("id") should equal (1)
 			}
 		}
 
 		describe("when it has a date value") {
-			val table = new Table(dataSource, "date_table", Set(), Set())
+			val table = new Table(testData, "date_table", Set(), Set())
 			val record = table.createRecord("record", Set(
 	      new Column("id", StringValue(Some("1"))),
 				new Column("creation_date", StringValue(Some("2010-05-15 04:20:11")))
@@ -103,7 +111,7 @@ class RecordSpec extends DataSourceTestSupport {
 			it("should insert") {
 				record.insert()
 
-				val map = jdbcTemplate.queryForMap("select * from date_table where id = ?", new Integer(1))
+				val map = jdbcTemplate.queryForMap("select * from date_table where id = ?", new java.lang.Integer(1))
 
 				map.get("id") should equal (1)
 				map.get("creation_date").toString should equal ("2010-05-15 04:20:11.0")
@@ -111,7 +119,7 @@ class RecordSpec extends DataSourceTestSupport {
 		}
 
 		describe("when the has default values defined") {
-			val table = new Table(dataSource, "two_string_table", Set(
+			val table = new Table(testData, "two_string_table", Set(
 				new Column("col1", StringValue(Some("value1"))),
 				new Column("col2", StringValue(Some("value2")))
 			), Set())

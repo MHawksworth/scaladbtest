@@ -1,9 +1,8 @@
 package scaladbunit.model
 
-import scaladbunit.DataSourceTestSupport
+import scaladbunit.DataSourceSpecSupport
 import value.StringValue
 import collection.immutable.Set
-
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -20,11 +19,13 @@ import collection.immutable.Set
 * limitations under the License.
 */
 
-class TableSpec extends DataSourceTestSupport {
+class TableSpec extends DataSourceSpecSupport {
+
+	val testData = new TestData(dataSource)
 
 	describe("A Table") {
 		describe("when has no default columns") {
-			val table = new Table(dataSource, "a_table", Set(), Set())
+			val table = new Table(testData, "a_table")
 
 			it("should create records") {
 				val values = Set(Column("name", StringValue(Some("Value"))))
@@ -37,13 +38,13 @@ class TableSpec extends DataSourceTestSupport {
 		}
 
 		describe("when has default values") {
-			val table = new Table(dataSource, "a_table", Set(
+			val table = new Table(testData, "two_string_table", Set(
 				Column("col1", StringValue(Some("value1"))),
 				Column("col2", StringValue(Some("value2")))
-			), Set())
+			))
 
 			it("should copy all default values when creating a blank record") {
-				val record = table.createRecord("label", Set())
+				val record = table.createRecord("label")
 
 				record.columns should have size (2)
 				record.columns should contain (Column("col1", StringValue(Some("value1"))))
@@ -58,6 +59,16 @@ class TableSpec extends DataSourceTestSupport {
 				record.columns should have size (2)
 				record.columns should contain (Column("col1", StringValue(Some("spooked"))))
 				record.columns should contain (Column("col2", StringValue(Some("value2"))))
+			}
+
+			it("should be able to delete all records from table") {
+				jdbcTemplate.update("insert into two_string_table(col1, col2) values('value1', 'value2')")
+
+				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (1)
+
+				table.delete()
+
+				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (0)
 			}
 		}
 	}

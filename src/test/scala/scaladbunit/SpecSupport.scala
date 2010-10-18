@@ -1,5 +1,8 @@
 package scaladbunit
 
+import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{BeforeAndAfterEach, Spec, OneInstancePerTest}
+
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -16,9 +19,7 @@ package scaladbunit
 * limitations under the License.
 */
 
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.{Spec, OneInstancePerTest}
-
 class SpecSupport extends Spec
 	with ShouldMatchers
 	with OneInstancePerTest
+	with BeforeAndAfterEach

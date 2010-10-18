@@ -61,9 +61,9 @@ Goals:
   users.
 
 - Allow for flexibility in the columns that are specified. With DBUnit, the
-  first record must contain all the columns, even they are just null values.
-  This turns out to be a royal pain. Insert statements will be individually
-  crafted per record. This should make polymorphic objects (both single-table
-  and multi-table) much easier to build test-data for.
+  first record must contain all the columns, even when they are just null
+  values. This turns out to be a royal pain. Insert statements will be
+  individually crafted per record. This should make polymorphic objects (both
+  single-table and multi-table) much easier to build test-data for.
 
 - Provide support for nosql databases using the same dsls

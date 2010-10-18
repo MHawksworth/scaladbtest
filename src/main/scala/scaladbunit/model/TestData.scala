@@ -1,5 +1,9 @@
 package scaladbunit.model
 
+import javax.sql.DataSource
+import collection.mutable.ArrayBuffer
+import org.springframework.jdbc.core.JdbcTemplate
+
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -16,4 +20,39 @@ package scaladbunit.model
 * limitations under the License.
 */
 
-case class TestData(records: List[Record])
+class TestData(val dataSource: DataSource, val filename: String = "", val records: ArrayBuffer[Record] = ArrayBuffer()) {
+
+	val tables = ArrayBuffer[Table]()
+	val jdbcTemplate = new JdbcTemplate(dataSource)
+	var isLoaded = false
+
+	def createTable(name: String, defaultColumns: Set[Column] = Set(), records: Set[Record] = Set()) = {
+		val table = new Table(this, name, defaultColumns, records)
+
+		addTable(table)
+
+		table
+	}
+
+	def addTable(table: Table) {
+		if(!tables.contains(table)) tables += table
+	}
+
+	def +(record: Record) {
+		records += record
+		addTable(record.table)
+	}
+
+	def addRecord(record: Record) {
+		this + record
+	}
+	
+	def insertAll() {
+		records.foreach(_.insert())
+	}
+
+	def deleteAll() {
+		tables.foreach(_.delete())
+	}
+
+}

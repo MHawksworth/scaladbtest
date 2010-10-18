@@ -19,8 +19,10 @@ package scaladbunit
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate
 import io.Source
 
-abstract class DataSourceTestSupport extends SpecSupport
+abstract class DataSourceSpecSupport extends SpecSupport
 {
+	protected val resourceDir = "src/test/resources/"
+
 	protected val dataSource = TestContext.dataSource
 
 	protected val jdbcTemplate = new SimpleJdbcTemplate(dataSource)
@@ -36,7 +38,7 @@ abstract class DataSourceTestSupport extends SpecSupport
 	}
 
 	def createTables(filename: String) {
-		val sqlText = getSqlTextFromFile("src/test/resources/ddl/" + filename)
+		val sqlText = getSqlTextFromFile(resourceDir + "ddl/" + filename)
 
 		jdbcTemplate.update(sqlText)
 	}

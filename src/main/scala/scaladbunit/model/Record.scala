@@ -16,8 +16,6 @@ package scaladbunit.model
 * limitations under the License.
 */
 
-import org.springframework.jdbc.core.JdbcTemplate
-
 case class Record(table: Table, label: String, columns: Set[Column]) {
 	
 	def commaSeparatedString(columnToString: Column => String): String = {
@@ -46,7 +44,7 @@ case class Record(table: Table, label: String, columns: Set[Column]) {
 	}
 
 	def insert(): Unit = {
-		new JdbcTemplate(table.dataSource).update(insertSql)
+		table.testData.jdbcTemplate.update(insertSql)
 	}
 
 }
