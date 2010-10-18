@@ -3,7 +3,6 @@ package scaladbunit
 import org.scalatest.matchers.ShouldMatchers
 import com.mchange.v2.c3p0.ComboPooledDataSource
 import org.scalatest.{OneInstancePerTest, Spec}
-import org.springframework.jdbc.datasource.DataSourceUtils
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate
 import io.Source
 
