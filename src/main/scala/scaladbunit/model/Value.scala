@@ -1,7 +1,7 @@
 package scaladbunit.model.value
 
-import java.text.SimpleDateFormat
 import java.util.Date
+import java.text.SimpleDateFormat
 
 /*
 * Copyright 2010 Ken Egervari
@@ -19,12 +19,40 @@ import java.util.Date
 * limitations under the License.
 */
 
-case object TodayValue extends Value {
+object Value {
+
+	def string(value: String) = {
+		value match {
+			case null => new Value(None)
+	    case _ => new Value(Some(value))
+		}
+	}
 
 	def formatDate(date: java.util.Date): String = {
 		new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date)
 	}
 
-	def sqlValue = "'" + formatDate(new Date()) + "'"
+	def now() = new Value(Some(formatDate(new Date())))
+
+	def none() = new Value(None)
+
+	def parse(text: String) = {
+		text match {
+			case "$now" => Value.now()
+			case "$null" => Value.none()
+			case _ => Value.string(text)
+		}
+	}
+
+}
+
+case class Value(value: Option[String] = None) {
+
+	def sqlValue: String = {
+		value match {
+			case Some(text) => "'" + text + "'"
+			case None => "NULL"
+		}
+	}
 
 }

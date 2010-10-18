@@ -1,7 +1,7 @@
 package scaladbunit.model
 
 import scaladbunit.DataSourceSpecSupport
-import value.StringValue
+import value.Value
 
 /*
 * Copyright 2010 Ken Egervari
@@ -44,7 +44,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should create tables with default values specified") {
-				val defaultColumns = Set(Column("id", StringValue(Some("1"))))
+				val defaultColumns = Set(Column("id", Value(Some("1"))))
 				val table = testData.createTable("name", defaultColumns)
 
 				table.name should equal ("name")
@@ -56,7 +56,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should not re-add the same table twice") {
-				val defaultColumns = Set(Column("id", StringValue(Some("1"))))
+				val defaultColumns = Set(Column("id", Value(Some("1"))))
 				testData.createTable("name", defaultColumns)
 				testData.createTable("name", defaultColumns)
 
@@ -74,10 +74,6 @@ class TestDataSpec extends DataSourceSpecSupport {
 				testData.tables should have size (1)
 				testData.tables should contain (table)
 			}
-
-			it("should load from a file") {
-				pending
-			}
 		}
 	}
 	
@@ -85,9 +81,9 @@ class TestDataSpec extends DataSourceSpecSupport {
 		val testData = new TestData(dataSource)
 		val table = new Table(testData, "single_id_table")
 
-		testData + table.createRecord("record1", Set(Column("id", StringValue(Some("1")))))
-		testData + table.createRecord("record2", Set(Column("id", StringValue(Some("2")))))
-		testData + table.createRecord("record3", Set(Column("id", StringValue(Some("3")))))
+		testData + table.createRecord("record1", Set(Column("id", Value(Some("1")))))
+		testData + table.createRecord("record2", Set(Column("id", Value(Some("2")))))
+		testData + table.createRecord("record3", Set(Column("id", Value(Some("3")))))
 
 		it("should be able to insert and delete all records into the database") {
 			testData.insertAll()
@@ -105,8 +101,8 @@ class TestDataSpec extends DataSourceSpecSupport {
 		val table1 = new Table(testData, "single_id_table")
 		val table2 = new Table(testData, "two_string_table")
 
-		testData + table1.createRecord("record1", Set(Column("id", StringValue(Some("1")))))
-		testData + table2.createRecord("record2", Set(Column("col1", StringValue(Some("val2")))))
+		testData + table1.createRecord("record1", Set(Column("id", Value(Some("1")))))
+		testData + table2.createRecord("record2", Set(Column("col1", Value(Some("val2")))))
 
 		it("should be able to insert and delete all records into the database") {
 			testData.insertAll()
@@ -118,6 +114,12 @@ class TestDataSpec extends DataSourceSpecSupport {
 
 			jdbcTemplate.queryForInt("select count(*) from single_id_table") should equal (0)
 			jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (0)
+		}
+	}
+
+	describe("when has a dsl to load") {
+		it("should load all the records from the file") {
+			pending
 		}
 	}
 

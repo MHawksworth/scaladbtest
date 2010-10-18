@@ -1,7 +1,7 @@
 package scaladbunit.model
 
 import scaladbunit.DataSourceSpecSupport
-import value.StringValue
+import value.Value
 import collection.immutable.Set
 /*
 * Copyright 2010 Ken Egervari
@@ -23,12 +23,14 @@ class TableSpec extends DataSourceSpecSupport {
 
 	val testData = new TestData(dataSource)
 
+	createTables("hsqldb.sql")
+
 	describe("A Table") {
 		describe("when has no default columns") {
 			val table = new Table(testData, "a_table")
 
 			it("should create records") {
-				val values = Set(Column("name", StringValue(Some("Value"))))
+				val values = Set(Column("name", Value(Some("Value"))))
 				val record = table.createRecord("label", values)
 
 				record.table should equal (table)
@@ -39,26 +41,26 @@ class TableSpec extends DataSourceSpecSupport {
 
 		describe("when has default values") {
 			val table = new Table(testData, "two_string_table", Set(
-				Column("col1", StringValue(Some("value1"))),
-				Column("col2", StringValue(Some("value2")))
+				Column("col1", Value(Some("value1"))),
+				Column("col2", Value(Some("value2")))
 			))
 
 			it("should copy all default values when creating a blank record") {
 				val record = table.createRecord("label")
 
 				record.columns should have size (2)
-				record.columns should contain (Column("col1", StringValue(Some("value1"))))
-				record.columns should contain (Column("col2", StringValue(Some("value2"))))
+				record.columns should contain (Column("col1", Value(Some("value1"))))
+				record.columns should contain (Column("col2", Value(Some("value2"))))
 			}
 			
 			it("should copy only the unspecified default values when creating a record") {
 				val record = table.createRecord("label", Set(
-					Column("col1", StringValue(Some("spooked")))
+					Column("col1", Value(Some("spooked")))
 				))
 
 				record.columns should have size (2)
-				record.columns should contain (Column("col1", StringValue(Some("spooked"))))
-				record.columns should contain (Column("col2", StringValue(Some("value2"))))
+				record.columns should contain (Column("col1", Value(Some("spooked"))))
+				record.columns should contain (Column("col2", Value(Some("value2"))))
 			}
 
 			it("should be able to delete all records from table") {

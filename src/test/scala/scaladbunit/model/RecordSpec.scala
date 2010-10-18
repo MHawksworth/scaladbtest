@@ -1,7 +1,7 @@
 package scaladbunit.model
 
 import scaladbunit.DataSourceSpecSupport
-import value.StringValue
+import value.Value
 
 /*
 * Copyright 2010 Ken Egervari
@@ -33,18 +33,18 @@ class RecordSpec extends DataSourceSpecSupport {
 
 	describe("A record") {
 		describe("when it has two columns with string values") {
-			val table = new Table(testData, "two_string_table", Set(), Set())
+			val table = new Table(testData, "two_string_table")
 			val record = table.createRecord("record", Set(
-	      new Column("col1", StringValue(Some("value1"))),
-				new Column("col2", StringValue(Some("value2")))
+	      new Column("col1", Value(Some("value1"))),
+				new Column("col2", Value(Some("value2")))
 			))
 
 			it("should construct itself properly") {
 				record.table should equal (table)
 				record.label should equal ("record")
 				record.columns should have size (2)
-				record.columns should contain (new Column("col1", StringValue(Some("value1"))))
-				record.columns should contain (new Column("col2", StringValue(Some("value2"))))
+				record.columns should contain (new Column("col1", Value(Some("value1"))))
+				record.columns should contain (new Column("col2", Value(Some("value2"))))
 			}
 
 			it("should produce a comma-seperated string of column names") {
@@ -70,10 +70,10 @@ class RecordSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when it has None in the option values") {
-			val table = new Table(testData, "two_string_table", Set(), Set())
+			val table = new Table(testData, "two_string_table")
 			val record = table.createRecord("record", Set(
-	      new Column("col1", StringValue(None)),
-				new Column("col2", StringValue(None))
+	      new Column("col1", Value(None)),
+				new Column("col2", Value(None))
 			))
 
 			it("should insert NULL values") {
@@ -87,9 +87,9 @@ class RecordSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when it has one integer id column") {
-			val table = new Table(testData, "single_id_table", Set(), Set())
+			val table = new Table(testData, "single_id_table")
 			val record = table.createRecord("record", Set(
-	      new Column("id", StringValue(Some("1")))
+	      new Column("id", Value(Some("1")))
 			))
 
 			it("should insert") {
@@ -102,10 +102,10 @@ class RecordSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when it has a date value") {
-			val table = new Table(testData, "date_table", Set(), Set())
+			val table = new Table(testData, "date_table")
 			val record = table.createRecord("record", Set(
-	      new Column("id", StringValue(Some("1"))),
-				new Column("creation_date", StringValue(Some("2010-05-15 04:20:11")))
+	      new Column("id", Value(Some("1"))),
+				new Column("creation_date", Value(Some("2010-05-15 04:20:11")))
 			))
 
 			it("should insert") {
@@ -120,12 +120,12 @@ class RecordSpec extends DataSourceSpecSupport {
 
 		describe("when the has default values defined") {
 			val table = new Table(testData, "two_string_table", Set(
-				new Column("col1", StringValue(Some("value1"))),
-				new Column("col2", StringValue(Some("value2")))
+				new Column("col1", Value(Some("value1"))),
+				new Column("col2", Value(Some("value2")))
 			), Set())
 			
 			it("should insert all the default values if no values in the record are defined") {
-				val record = table.createRecord("record", Set())
+				val record = table.createRecord("record")
 				record.insert()
 
 				val map = jdbcTemplate.queryForMap("select * from two_string_table where col1 = ?", "value1")
