@@ -1,4 +1,4 @@
-package scaladbunit.model.value
+package scaladbunit
 
 /*
 * Copyright 2010 Ken Egervari
@@ -16,6 +16,9 @@ package scaladbunit.model.value
 * limitations under the License.
 */
 
-trait Value {
-	def sqlValue: String
-}
+import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Spec, OneInstancePerTest}
+
+class SpecSupport extends Spec
+	with ShouldMatchers
+	with OneInstancePerTest

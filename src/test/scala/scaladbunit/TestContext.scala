@@ -1,4 +1,4 @@
-package scaladbunit.model.value
+package scaladbunit
 
 /*
 * Copyright 2010 Ken Egervari
@@ -16,6 +16,12 @@ package scaladbunit.model.value
 * limitations under the License.
 */
 
-trait Value {
-	def sqlValue: String
+import com.mchange.v2.c3p0.ComboPooledDataSource
+
+object TestContext {
+	val dataSource = new ComboPooledDataSource()
+	dataSource.setDriverClass("org.hsqldb.jdbc.JDBCDriver")
+	dataSource.setJdbcUrl("jdbc:hsqldb:mem:scaladbunit")
+	dataSource.setUser("sa")
+	dataSource.setPassword("")
 }
