@@ -147,8 +147,21 @@ class TestDataSpec extends DataSourceSpecSupport {
 	}
 
 	describe("when has a dsl to load") {
+		val testData = new TestData(dataSource)
+
 		it("should load all the records from the file") {
-			pending
+			testData.load(resourceDir + "dsl/two_string_table.dbt")
+
+			testData.tables should have size (1)
+			testData.records should have size (2)
+
+			testData.insertAll()
+
+			jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (2)
+
+			testData.deleteAll()
+
+			jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (0)
 		}
 	}
 
