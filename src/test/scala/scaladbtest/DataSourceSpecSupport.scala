@@ -1,4 +1,4 @@
-package scaladbunit
+package scaladbtest
 
 /*
 * Copyright 2010 Ken Egervari

@@ -1,8 +1,8 @@
-package scaladbunit.model.value
+package scaladbtest.model.value
 
 import java.util.Date
 import java.text.SimpleDateFormat
-import scaladbunit.model.Record
+import scaladbtest.model.Record
 
 /*
 * Copyright 2010 Ken Egervari

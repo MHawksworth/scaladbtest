@@ -1,8 +1,8 @@
-package scaladbunit.model
+package scaladbtest.model
 
-import scaladbunit.SpecSupport
+import scaladbtest.SpecSupport
 import java.util.{Date, GregorianCalendar}
-import scaladbunit.model.value.Value
+import scaladbtest.model.value.Value
 
 /*
 * Copyright 2010 Ken Egervari

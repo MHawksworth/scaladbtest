@@ -1,6 +1,6 @@
-package scaladbunit.model
+package scaladbtest.model
 
-import scaladbunit.DataSourceSpecSupport
+import scaladbtest.DataSourceSpecSupport
 import value.Value
 import collection.immutable.Set
 /*

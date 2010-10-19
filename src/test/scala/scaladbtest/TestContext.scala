@@ -1,4 +1,4 @@
-package scaladbunit
+package scaladbtest
 
 /*
 * Copyright 2010 Ken Egervari
@@ -21,7 +21,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource
 object TestContext {
 	val dataSource = new ComboPooledDataSource()
 	dataSource.setDriverClass("org.hsqldb.jdbc.JDBCDriver")
-	dataSource.setJdbcUrl("jdbc:hsqldb:mem:scaladbunit")
+	dataSource.setJdbcUrl("jdbc:hsqldb:mem:scaladbtest")
 	dataSource.setUser("sa")
 	dataSource.setPassword("")
 }

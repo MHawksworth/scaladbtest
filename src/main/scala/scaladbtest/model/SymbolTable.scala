@@ -1,4 +1,4 @@
-package scaladbunit.model
+package scaladbtest.model
 
 /*
 * Copyright 2010 Ken Egervari
@@ -16,6 +16,4 @@ package scaladbunit.model
 * limitations under the License.
 */
 
-import value.Value
-
-case class Column(name: String, value: Value)
+class SymbolTable(symbols: Set[Symbol])

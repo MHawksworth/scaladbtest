@@ -1,4 +1,4 @@
-package scaladbunit.model
+package scaladbtest.model
 
 import javax.sql.DataSource
 import collection.mutable.ArrayBuffer

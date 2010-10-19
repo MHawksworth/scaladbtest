@@ -1,4 +1,4 @@
-package scaladbunit
+package scaladbtest
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{BeforeAndAfterEach, Spec, OneInstancePerTest}
