@@ -24,15 +24,15 @@ class ValueSpec extends SpecSupport {
 
 	describe("A Value Companion Object") {
 		it("should create string values") {
-			Value.string("value1").value.get should equal ("value1")
+			Value.string("value1").text.get should equal ("value1")
 		}
 
 		it("should create a None Value if string is null") {
-			Value.string(null).value should equal (None)
+			Value.string(null).text should equal (None)
 		}
 
 		it("should create a None value if asked to create none") {
-			Value.none().value should equal (None)
+			Value.none().text should equal (None)
 		}
 
 		it("should format a date and time") {
@@ -42,30 +42,30 @@ class ValueSpec extends SpecSupport {
 		}
 
 		it("should return a value of today's date") {
-			Value.now().value.get should startWith (Value.formatDate(new Date()).substring(0, 17))
+			Value.now().text.get should startWith (Value.formatDate(new Date()).substring(0, 17))
 		}
 
 		describe("when asked to parse") {
 			val record = new Record(null, "record1")
 
 			it("should create the value as a string if normal text") {
-				Value.parse("null").value.get should equal ("null")
+				Value.parse("null").text.get should equal ("null")
 			}
 
 			it("should create a None value if parses $null") {
-				Value.parse("$null").value should equal (None)
+				Value.parse("$null").text should equal (None)
 			}
 
 			it("should create a None value if parses a null value") {
-				Value.parse(null).value should equal (None)
+				Value.parse(null).text should equal (None)
 			}
 
 			it("should create today's date if parses $now") {
-				Value.parse("$now").value.get should startWith (Value.formatDate(new Date()).substring(0, 17))
+				Value.parse("$now").text.get should startWith (Value.formatDate(new Date()).substring(0, 17))
 			}
 
 			it("should use the record's label as the value if parses $label") {
-				Value.parse("$label", record).value.get should equal ("record1")
+				Value.parse("$label", record).text.get should equal ("record1")
 			}
 
 			it("should throw an exception if the record is null when asked to get the label") {
@@ -75,7 +75,7 @@ class ValueSpec extends SpecSupport {
 			}
 
 			it("should trim text argument") {
-				Value.parse(" $null ").value should equal (None)
+				Value.parse(" $null ").text should equal (None)
 			}
 		}
 	}

@@ -54,10 +54,10 @@ object Value {
 
 }
 
-case class Value(value: Option[String] = None) {
+case class Value(text: Option[String] = None) {
 
 	def sqlValue: String = {
-		value match {
+		text match {
 			case Some(text) => "'" + text + "'"
 			case None => "NULL"
 		}
