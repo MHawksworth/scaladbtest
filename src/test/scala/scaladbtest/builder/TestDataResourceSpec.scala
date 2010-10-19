@@ -3,6 +3,7 @@ package scaladbtest.builder
 import scaladbtest.DataSourceSpecSupport
 import scaladbtest.model.{Column, TestData}
 import scaladbtest.model.value.Value
+import java.util.Date
 
 /*
 * Copyright 2010 Ken Egervari
@@ -122,6 +123,15 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.records(2).columns should have size (2)
 			testData.records(2).columns should contain (Column("first_name", Value.string("Ben")))
 			testData.records(2).columns should contain (Column("last_name", Value.string("Sisko")))
+		}
+
+		it("should read in $now for a column value and infer today's date") {
+			testDataResource loadFrom (dslDir + "now_column.dbt")
+
+			val formattedDate = Value.formatDate(new Date()).substring(0, 15)
+
+			testData.records(0).columns(0).name should equal ("date")
+			testData.records(0).columns(0).value.text.get should startWith (formattedDate)
 		}
 	}
 
