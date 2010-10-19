@@ -26,20 +26,24 @@ class TestData(val dataSource: DataSource, val records: ArrayBuffer[Record] = Ar
 	val tables = ArrayBuffer[Table]()
 	val jdbcTemplate = new JdbcTemplate(dataSource)
 
-	def createTable(name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) = {
+	def createTable(name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()): Table = {
+		val table = new Table(this, name, defaultColumns, records)
+		addTable(table)
+		addRecords(table.records)
+		table
+	}
+
+	def createOrMergeTable(name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) = {
 		tables.find(_.name == name) match {
-			case Some(table) => {
-				records.foreach(_.table = table)
-				addRecords(records)
-				table
-			}
-			case None => {
-				val table = new Table(this, name, defaultColumns, records)
-				addTable(table)
-				addRecords(table.records)
-				table
-			}
+			case Some(table) => mergeRecordsWithExistingTable(records, table)
+			case None => createTable(name, defaultColumns, records)
 		}
+	}
+
+	private def mergeRecordsWithExistingTable(records: List[Record], table: Table): Table = {
+		records.foreach(_.table = table)
+		addRecords(records)
+		table
 	}
 
 	private def addRecords(records: List[Record]) {

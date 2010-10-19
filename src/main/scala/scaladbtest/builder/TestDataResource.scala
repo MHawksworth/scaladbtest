@@ -35,7 +35,7 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 
 	def table: Parser[Table] = "table:" ~ ident ~ rep(record) ^^ {
 		case "table:" ~ t ~ records => {
-			testData.createTable(t, List(), records)
+			testData.createOrMergeTable(t, List(), records)
 		}
 	}
 
