@@ -43,11 +43,13 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.tables(0).name should equal ("user_account")
 
 			testData.records should have size (1)
-			testData.records(0).table should equal (testData.tables(0))
+			testData.records(0).table.get should equal (testData.tables(0))
 			testData.records(0).label should equal ("ken")
 
 			testData.records(0).columns should have size (1)
-			testData.records(0).columns should contain (Column("first_name", Value.string("Ken")))
+			testData.records(0).columns should contain (
+				Column("first_name", Value.string("Ken"), Some(testData.records(0)))
+			)
 		}
 
 		it("should read in a value that contains many spaces") {
@@ -57,11 +59,43 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.tables(0).name should equal ("user_account")
 
 			testData.records should have size (1)
-			testData.records(0).table should equal (testData.tables(0))
+			testData.records(0).table.get should equal (testData.tables(0))
 			testData.records(0).label should equal ("ken")
 
 			testData.records(0).columns should have size (1)
-			testData.records(0).columns should contain (Column("full_name", Value.string("Ken Egervari")))
+			testData.records(0).columns should contain (
+				Column("full_name", Value.string("Ken Egervari"), Some(testData.records(0))))
+		}
+
+		it("should read in $now for a column value and infer today's date") {
+			testDataResource loadFrom (dslDir + "now_column.dbt")
+
+			val formattedDate = Value.formatDate(new Date()).substring(0, 15)
+
+			testData.records(0).columns(0).name should equal ("date")
+			testData.records(0).columns(0).value.text.get should startWith (formattedDate)
+		}
+
+		it("should read in $null or null for a column value and infer None") {
+			testDataResource loadFrom (dslDir + "null_column.dbt")
+
+			testData.records should have size (2)
+
+			testData.records(0).columns(0).name should equal ("col")
+			testData.records(0).columns(0).value.text should equal (None)
+
+			testData.records(1).columns(0).name should equal ("col")
+			testData.records(1).columns(0).value.text should equal (None)
+		}
+
+		it("should read in $label and replace it with the label's name") {
+			testDataResource loadFrom (dslDir + "label_column.dbt")
+
+			testData.records should have size (1)
+
+			testData.records(0).columns(0).name should equal ("col")
+			testData.records(0).columns(0).value.text.get should equal ("$label")
+			testData.records(0).columns(0).value.sqlValue should equal ("'record1'")
 		}
 
 		it("should read in a single row with 2 columns seperated by a comma") {
@@ -71,12 +105,14 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.tables(0).name should equal ("user_account")
 
 			testData.records should have size (1)
-			testData.records(0).table should equal (testData.tables(0))
+			testData.records(0).table.get should equal (testData.tables(0))
 			testData.records(0).label should equal ("ken")
 
 			testData.records(0).columns should have size (2)
-			testData.records(0).columns should contain (Column("first_name", Value.string("Ken")))
-			testData.records(0).columns should contain (Column("last_name", Value.string("Egervari")))
+			testData.records(0).columns should contain (
+				Column("first_name", Value.string("Ken"), Some(testData.records(0))))
+			testData.records(0).columns should contain (
+				Column("last_name", Value.string("Egervari"), Some(testData.records(0))))
 		}
 
 		it("should read in two records from the same table") {
@@ -86,17 +122,21 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.tables(0).name should equal ("user_account")
 
 			testData.records should have size (2)
-			testData.records(0).table should equal (testData.tables(0))
+			testData.records(0).table.get should equal (testData.tables(0))
 			testData.records(0).label should equal ("ken")
 			testData.records(0).columns should have size (2)
-			testData.records(0).columns should contain (Column("first_name", Value.string("Ken")))
-			testData.records(0).columns should contain (Column("last_name", Value.string("Egervari")))
+			testData.records(0).columns should contain (
+				Column("first_name", Value.string("Ken"), Some(testData.records(0))))
+			testData.records(0).columns should contain (
+				Column("last_name", Value.string("Egervari"), Some(testData.records(0))))
 
-			testData.records(1).table should equal (testData.tables(0))
+			testData.records(1).table.get should equal (testData.tables(0))
 			testData.records(1).label should equal ("ben")
 			testData.records(1).columns should have size (2)
-			testData.records(1).columns should contain (Column("first_name", Value.string("Ben")))
-			testData.records(1).columns should contain (Column("last_name", Value.string("Sisko")))
+			testData.records(1).columns should contain (
+				Column("first_name", Value.string("Ben"), Some(testData.records(1))))
+			testData.records(1).columns should contain (
+				Column("last_name", Value.string("Sisko"), Some(testData.records(1))))
 		}
 
 		it("should read in 3 records from 2 different tables and maintain order they were written in") {
@@ -107,31 +147,27 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.tables(1).name should equal ("country")
 
 			testData.records should have size (3)
-			testData.records(0).table should equal (testData.tables(0))
+			testData.records(0).table.get should equal (testData.tables(0))
 			testData.records(0).label should equal ("ken")
 			testData.records(0).columns should have size (2)
-			testData.records(0).columns should contain (Column("first_name", Value.string("Ken")))
-			testData.records(0).columns should contain (Column("last_name", Value.string("Egervari")))
+			testData.records(0).columns should contain (
+				Column("first_name", Value.string("Ken"), Some(testData.records(0))))
+			testData.records(0).columns should contain (
+				Column("last_name", Value.string("Egervari"), Some(testData.records(0))))
 
-			testData.records(1).table should equal (testData.tables(1))
+			testData.records(1).table.get should equal (testData.tables(1))
 			testData.records(1).label should equal ("canada")
 			testData.records(1).columns should have size (1)
-			testData.records(1).columns should contain (Column("name", Value.string("Canada")))
+			testData.records(1).columns should contain (
+				Column("name", Value.string("Canada"), Some(testData.records(1))))
 			
-			testData.records(2).table should equal (testData.tables(0))
+			testData.records(2).table.get should equal (testData.tables(0))
 			testData.records(2).label should equal ("ben")
 			testData.records(2).columns should have size (2)
-			testData.records(2).columns should contain (Column("first_name", Value.string("Ben")))
-			testData.records(2).columns should contain (Column("last_name", Value.string("Sisko")))
-		}
-
-		it("should read in $now for a column value and infer today's date") {
-			testDataResource loadFrom (dslDir + "now_column.dbt")
-
-			val formattedDate = Value.formatDate(new Date()).substring(0, 15)
-
-			testData.records(0).columns(0).name should equal ("date")
-			testData.records(0).columns(0).value.text.get should startWith (formattedDate)
+			testData.records(2).columns should contain (
+				Column("first_name", Value.string("Ben"), Some(testData.records(2))))
+			testData.records(2).columns should contain (
+				Column("last_name", Value.string("Sisko"), Some(testData.records(2))))
 		}
 	}
 

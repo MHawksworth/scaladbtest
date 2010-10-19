@@ -33,16 +33,35 @@ class RecordSpec extends DataSourceSpecSupport {
 
 	describe("A record") {
 		describe("when contains no columns or table") {
-			val record = new Record("label")
+			val record = Record("label")
 
 			it("should be constructed with just a label") {
 				record.label should equal ("label")
-				record.table should be (null)
+				record.table should be (None)
 				record.columns should have size (0)
 			}
 
 			it("should have a string respresentation that indicates N/A for the table") {
 				record.toString should equal ("Record(Table(N/A),label,List())")
+			}
+
+			it("should throw an exception if trying to get insert sql") {
+				intercept[IllegalStateException] {
+					record.insertSql
+				}
+			}
+
+			it("should throw an exception if trying to insert data") {
+				intercept[IllegalStateException] {
+					record.insert()
+				}
+			}
+
+			it("should be equal to a column with the same values") {
+				record should equal (Record("label"))
+				record should not equal (Record("anotherLabel"))
+				record should not equal (Record("label"), List(Column("col1", Value(Some("value1")))))
+				record should not equal (Record(label = "label", table = Some(Table(testData, "name"))))
 			}
 		}
 
@@ -54,11 +73,16 @@ class RecordSpec extends DataSourceSpecSupport {
 			))
 
 			it("should construct itself properly") {
-				record.table should equal (table)
+				record.table.get should equal (table)
 				record.label should equal ("record")
+
 				record.columns should have size (2)
-				record.columns should contain (new Column("col1", Value(Some("value1"))))
-				record.columns should contain (new Column("col2", Value(Some("value2"))))
+				record.columns(0).record.get should equal (record)
+				record.columns(0).name should equal ("col1")
+				record.columns(0).value.text.get should equal ("value1")
+				record.columns(1).record.get should equal (record)
+				record.columns(1).name should equal ("col2")
+				record.columns(1).value.text.get should equal ("value2")
 			}
 
 			it("should produce a comma-seperated string of column names") {

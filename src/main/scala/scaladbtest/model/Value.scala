@@ -2,8 +2,7 @@ package scaladbtest.model.value
 
 import java.util.Date
 import java.text.SimpleDateFormat
-import scaladbtest.model.Record
-
+import scaladbtest.model.{Column, Record}
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -21,6 +20,9 @@ import scaladbtest.model.Record
 */
 
 object Value {
+
+	def apply(text: Option[String] = None, column: Option[Column] = None) =
+		new Value(text, column)
 
 	def string(value: String) = {
 		value match {
@@ -43,10 +45,6 @@ object Value {
 			text.trim.toLowerCase match {
 				case "$now" => Value.now()
 				case "$null" => Value.none()
-				case "$label" => {
-					if(record == null) throw new IllegalArgumentException("The record argument must not be null")
-					Value.string(record.label)
-				}
 				case _ => Value.string(text)
 			}
 		}
@@ -54,13 +52,41 @@ object Value {
 
 }
 
-case class Value(text: Option[String] = None) {
+class Value(val text: Option[String] = None, var column: Option[Column] = None) {
+
+	private def processText(text: String): String = {
+		text.toLowerCase match {
+			case "$label" => {
+				if(column.isEmpty)
+					throw new IllegalStateException("Column must be defined for value: " + this)
+				if(column.get.record.isEmpty) 
+					throw new IllegalStateException("Record must be defined for column: " + column.get)
+
+				column.get.record.get.label
+			}
+			case _ => text
+		}
+	}
 
 	def sqlValue: String = {
 		text match {
-			case Some(text) => "'" + text + "'"
+			case Some(text) => "'" + processText(text) + "'"
 			case None => "NULL"
 		}
+	}
+
+	override def toString = "Value(" + text + ")"
+
+	override def equals(other: Any): Boolean = {
+		other match {
+			case that: Value =>
+				text == that.text 
+			case _ => false
+		}
+	}
+
+	override def hashCode: Int = {
+		41 + text.hashCode
 	}
 
 }

@@ -41,7 +41,7 @@ class TestData(val dataSource: DataSource, val records: ArrayBuffer[Record] = Ar
 	}
 
 	private def mergeRecordsWithExistingTable(records: List[Record], table: Table): Table = {
-		records.foreach(_.table = table)
+		records.foreach(_.table = Some(table))
 		addRecords(records)
 		table
 	}
@@ -56,7 +56,8 @@ class TestData(val dataSource: DataSource, val records: ArrayBuffer[Record] = Ar
 
 	def addRecord(record: Record) {
 		records += record
-		addTable(record.table)
+
+		if(record.table.isDefined) addTable(record.table.get)
 	}
 	
 	def insertAll() {

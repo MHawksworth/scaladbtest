@@ -18,7 +18,7 @@ package scaladbtest.model
 
 case class Table(testData: TestData, name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) {
 
-	records.map(_.table = this)
+	records.map(_.table = Some(this))
 
 	def mergeInDefaultColumnValues(columns: List[Column]): List[Column] = {
 		val columnNames = columns.groupBy(_.name)
@@ -29,7 +29,7 @@ case class Table(testData: TestData, name: String, defaultColumns: List[Column] 
 	}
 
 	def createRecord(label: String, columns: List[Column] = List()): Record = {
-		new Record(this, label,	mergeInDefaultColumnValues(columns))
+		new Record(label,	mergeInDefaultColumnValues(columns), Some(this))
 	}
 
 	def delete() {

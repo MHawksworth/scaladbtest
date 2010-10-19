@@ -16,9 +16,14 @@ package scaladbtest.model
 * limitations under the License.
 */
 
-class Record(var table: Table, val label: String, val columns: List[Column]) {
+object Record {
+	def apply(label: String, columns: List[Column] = List(), table: Option[Table] = None) =
+		new Record(label, columns, table)
+}
 
-	def this(label: String, columns: List[Column] = List()) = this(null, label, columns)
+class Record(val label: String, val columns: List[Column] = List(), var table: Option[Table] = None) {
+
+	columns.foreach(_.record = Some(this))
 
 	def commaSeparatedString(columnToString: Column => String): String = {
 		columns.tail.foldLeft(columnToString(columns.head))(_ + ", " + columnToString(_))
@@ -33,10 +38,11 @@ class Record(var table: Table, val label: String, val columns: List[Column]) {
 	}
 
 	def insertSql = {
+		verifyTableExists()
 
 		new StringBuilder()
 			.append("INSERT INTO ")
-			.append(table.name)
+			.append(table.get.name)
 			.append("(")
 			.append(commaSeparatedColumnNames)
 			.append(") VALUES(")
@@ -45,15 +51,41 @@ class Record(var table: Table, val label: String, val columns: List[Column]) {
 			.toString
 	}
 
-	def insert(): Unit = {
-		table.testData.jdbcTemplate.update(insertSql)
+	def insert() {
+		verifyTableExists()
+
+		table.get.testData.jdbcTemplate.update(insertSql)
+	}
+
+	def verifyTableExists() {
+		if (table.isEmpty)
+			throw new IllegalStateException("A table must be defined for record: " + this)
 	}
 
 	override def toString = {
 		val tableName =
-			if(table != null) table.name
+			if(table.isDefined) table.get.name
 			else "N/A"
 
 		"Record(Table(" + tableName + ")," + label + "," + columns + ")"
 	}
+
+	override def equals(other: Any): Boolean = {
+		other match {
+			case that: Record =>
+				label == that.label &&
+				columns == that.columns &&
+				table == that.table
+			case _ => false
+		}
+	}
+
+	override def hashCode: Int = {
+		41 * (
+			41 * (
+				41 + label.hashCode
+			) + columns.hashCode
+		) + table.hashCode
+	}
+
 }

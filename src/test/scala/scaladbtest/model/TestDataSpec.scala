@@ -78,11 +78,11 @@ class TestDataSpec extends DataSourceSpecSupport {
 				testData.tables should have size (1)
 				testData.records should have size (1)
 				testData.records(0) should equal (record)
-				testData.records(0).table.name should equal ("name") 
+				testData.records(0).table.get.name should equal ("name")
 			}
 
 			it("should be able to add records and also link the table if not already added") {
-				val record = new Record(table, "label", List())
+				val record = new Record("label", List(), Some(table))
 
 				testData addRecord record
 
@@ -94,7 +94,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should not add null table if the record doesn't have a table") {
-				val record = new Record(null, "label", List())
+				val record = new Record("label")
 
 				testData addRecord record
 

@@ -32,7 +32,7 @@ class TableSpec extends DataSourceSpecSupport {
 				val values = List(Column("name", Value(Some("Value"))))
 				val record = table.createRecord("label", values)
 
-				record.table should equal (table)
+				record.table.get should equal (table)
 				record.label should equal ("label")
 				record.columns should equal (values)
 			}
@@ -48,8 +48,8 @@ class TableSpec extends DataSourceSpecSupport {
 				val record = table.createRecord("label")
 
 				record.columns should have size (2)
-				record.columns should contain (Column("col1", Value(Some("value1"))))
-				record.columns should contain (Column("col2", Value(Some("value2"))))
+				record.columns should contain (Column("col1", Value(Some("value1")), Some(record)))
+				record.columns should contain (Column("col2", Value(Some("value2")), Some(record)))
 			}
 			
 			it("should copy only the unspecified default values when creating a record") {
@@ -58,8 +58,8 @@ class TableSpec extends DataSourceSpecSupport {
 				))
 
 				record.columns should have size (2)
-				record.columns should contain (Column("col1", Value(Some("spooked"))))
-				record.columns should contain (Column("col2", Value(Some("value2"))))
+				record.columns should contain (Column("col1", Value(Some("spooked")), Some(record)))
+				record.columns should contain (Column("col2", Value(Some("value2")), Some(record)))
 			}
 
 			it("should be able to delete all records from table") {
@@ -75,13 +75,12 @@ class TableSpec extends DataSourceSpecSupport {
 		
 		describe("when has records passed to the constructor") {
 			val table = new Table(testData, "a_table", List(), List(
-				new Record("label1", List()),
-				new Record("label2", List())
+				Record("label1"), Record("label2")
 			))
 
 			it("should link each record to the table when constructed") {
-				table.records(0).table should equal (table)
-				table.records(1).table should equal (table)
+				table.records(0).table.get should equal (table)
+				table.records(1).table.get should equal (table)
 			}
 		}
 	}

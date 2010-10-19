@@ -1,0 +1,5 @@
+table: some_table
+    record: record1
+        col: $null
+    record: record2
+        col: null

@@ -46,7 +46,7 @@ class ValueSpec extends SpecSupport {
 		}
 
 		describe("when asked to parse") {
-			val record = new Record(null, "record1", List())
+			val record = new Record("record1")
 
 			it("should create the value as a string if normal text") {
 				Value.parse("null").text.get should equal ("null")
@@ -62,16 +62,6 @@ class ValueSpec extends SpecSupport {
 
 			it("should create today's date if parses $now") {
 				Value.parse("$now").text.get should startWith (Value.formatDate(new Date()).substring(0, 17))
-			}
-
-			it("should use the record's label as the value if parses $label") {
-				Value.parse("$label", record).text.get should equal ("record1")
-			}
-
-			it("should throw an exception if the record is null when asked to get the label") {
-				intercept[IllegalArgumentException] {
-					Value.parse("$label", null)
-				}
 			}
 
 			it("should trim text argument") {
@@ -91,6 +81,18 @@ class ValueSpec extends SpecSupport {
 			it("should return the value with single-quotes when asked for it's sql value")	{
 				value.sqlValue should equal ("'value1'")
 			}
+
+			it("should have a string representation") {
+				value.toString should equal ("Value(Some(value1))")
+			}
+
+			it("should be equal to a value with the same values") {
+				value should equal (Value(Some("value1")))
+				value should not equal (Value(Some("Hey")))
+				value should not equal (Value(None))
+				//todo: Find a way to handle recursive relationships and do it properly. 
+				//value should not equal (Value(Some("value1"), Some(Column("col1", Value(Some("value1"))))))
+			}
 		}
 
 		describe("When None") {
@@ -98,6 +100,38 @@ class ValueSpec extends SpecSupport {
 
 			it("should return the value with single-quotes when asked for it's sql value")	{
 				value.sqlValue should equal ("NULL")
+			}
+		}
+		
+		describe("when it refers to the label") {
+			it("should return the record label's value and not $label") {
+				val column = new Column("col1", Value(Some("$label")))
+				val record = new Record("sex", List(column))
+
+				column.value.sqlValue should equal ("'sex'")
+			}
+
+			it("should return the record label if $label has a different case") {
+				val column = new Column("col1", Value(Some("$LABEL")))
+				val record = new Record("sex", List(column))
+
+				column.value.sqlValue should equal ("'sex'")
+			}
+
+			it("should throw an exception if column is not defined") {
+				val value = Value(Some("$label"))
+
+				intercept[IllegalStateException] {
+					value.sqlValue
+				}
+			}
+
+			it("should throw an exception if record is not defined") {
+				val column = new Column("col1", Value(Some("$label")))
+
+				intercept[IllegalStateException] {
+					column.value.sqlValue
+				}
 			}
 		}
 	}
