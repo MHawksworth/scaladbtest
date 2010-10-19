@@ -1,4 +1,4 @@
-table: some_table
+some_table:
     record: record1
         col: $null
     record: record2
