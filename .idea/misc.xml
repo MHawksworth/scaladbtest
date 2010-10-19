@@ -3,7 +3,7 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
-  <component name="IdProvider" IDEtalkID="20582F638FCAB032B1CE25590F9BBD06" />
+  <component name="IdProvider" IDEtalkID="133BE48377ED0F7C92C4C2AF1708FBD8" />
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
     <option name="OPTION_SCOPE" value="protected" />
@@ -22,7 +22,7 @@
     <option name="OPEN_IN_BROWSER" value="true" />
   </component>
   <component name="ProjectDetails">
-    <option value="ScalaDBUnit" name="projectName" />
+    <option value="ScalaDBTest" name="projectName" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />

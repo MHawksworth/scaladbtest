@@ -1,3 +1,4 @@
+out/**
 target/**
 project/plugins/target/**
 project/build/target/**

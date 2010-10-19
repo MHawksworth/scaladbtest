@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$//ScalaDBUnit.iml" filepath="$PROJECT_DIR$//ScalaDBUnit.iml" />
+      <module fileurl="file://$PROJECT_DIR$//ScalaDBTest.iml" filepath="$PROJECT_DIR$//ScalaDBTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/project/sbt_project_definition.iml" filepath="$PROJECT_DIR$/project/sbt_project_definition.iml" />
     </modules>
   </component>
