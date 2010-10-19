@@ -1,0 +1,3 @@
+table: stop_list
+record: stopList1 ->
+    id: 1, words: "the and in"

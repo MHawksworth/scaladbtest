@@ -36,7 +36,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.records should have size (0)
 		}
 
-		it("should read in a single row with a single column") {
+		it("should parse a single row with a single column") {
 			testDataResource loadFrom (dslDir + "one_column.dbt")
 
 			testData.tables should have size (1)
@@ -52,7 +52,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			)
 		}
 
-		it("should read in a value that contains many spaces") {
+		it("should parse a value that contains many spaces") {
 			testDataResource loadFrom (dslDir + "one_column_with_spaces.dbt")
 
 			testData.tables should have size (1)
@@ -67,7 +67,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				Column("full_name", Value.string("Ken Egervari"), Some(testData.records(0))))
 		}
 
-		it("should read in $now for a column value and infer today's date") {
+		it("should parse $now for a column value and infer today's date") {
 			testDataResource loadFrom (dslDir + "now_column.dbt")
 
 			val formattedDate = Value.formatDate(new Date()).substring(0, 15)
@@ -76,7 +76,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.records(0).columns(0).value.text.get should startWith (formattedDate)
 		}
 
-		it("should read in $null or null for a column value and infer None") {
+		it("should parse $null or null for a column value and infer None") {
 			testDataResource loadFrom (dslDir + "null_column.dbt")
 
 			testData.records should have size (2)
@@ -88,7 +88,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.records(1).columns(0).value.text should equal (None)
 		}
 
-		it("should read in $label and replace it with the label's name") {
+		it("should parse $label and replace it with the label's name") {
 			testDataResource loadFrom (dslDir + "label_column.dbt")
 
 			testData.records should have size (1)
@@ -98,7 +98,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.records(0).columns(0).value.sqlValue should equal ("'record1'")
 		}
 
-		it("should read in a single row with 2 columns seperated by a comma") {
+		it("should parse a single row with 2 columns seperated by a comma") {
 			testDataResource loadFrom (dslDir + "two_columns_with_comma.dbt")
 
 			testData.tables should have size (1)
@@ -115,7 +115,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				Column("last_name", Value.string("Egervari"), Some(testData.records(0))))
 		}
 
-		it("should read in two records from the same table") {
+		it("should parse two records from the same table") {
 			testDataResource loadFrom (dslDir + "two_records.dbt")
 
 			testData.tables should have size (1)
@@ -139,7 +139,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				Column("last_name", Value.string("Sisko"), Some(testData.records(1))))
 		}
 
-		it("should read in 3 records from 2 different tables and maintain order they were written in") {
+		it("should parse 3 records from 2 different tables and maintain order they were written in") {
 			testDataResource loadFrom (dslDir + "three_records_two_tables.dbt")
 
 			testData.tables should have size (2)
@@ -168,6 +168,22 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				Column("first_name", Value.string("Ben"), Some(testData.records(2))))
 			testData.records(2).columns should contain (
 				Column("last_name", Value.string("Sisko"), Some(testData.records(2))))
+		}
+
+		it("should parse the record with an optionla arrow seperating the record/columns") {
+			testDataResource loadFrom (dslDir + "optional_record_arrow.dbt")
+
+			testData.tables should have size (1)
+			testData.tables(0).name should equal ("stop_list")
+
+			testData.records should have size (1)
+			testData.records(0).table.get should equal (testData.tables(0))
+			testData.records(0).label should equal ("stopList1")
+			testData.records(0).columns should have size (2)
+			testData.records(0).columns should contain (
+				Column("id", Value.string("1"), Some(testData.records(0))))
+			testData.records(0).columns should contain (
+				Column("words", Value.string("the and in"), Some(testData.records(0))))
 		}
 	}
 

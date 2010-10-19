@@ -1,13 +1,13 @@
 stop_list:
-    stop list:
-        words: the and in
+record: stopList ->
+    words: "the and in"
 
 country:
     Canada:
-        name: ${label}
+        name: $label
 
     United States:
-        name: ${label}
+        name: $label
 
 province:
     default:
