@@ -77,6 +77,52 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.records(0).columns should contain (Column("first_name", Value.string("Ken")))
 			testData.records(0).columns should contain (Column("last_name", Value.string("Egervari")))
 		}
+
+		it("should read in two records from the same table") {
+			testDataResource loadFrom (dslDir + "two_records.dbt")
+
+			testData.tables should have size (1)
+			testData.tables(0).name should equal ("user_account")
+
+			testData.records should have size (2)
+			testData.records(0).table should equal (testData.tables(0))
+			testData.records(0).label should equal ("ken")
+			testData.records(0).columns should have size (2)
+			testData.records(0).columns should contain (Column("first_name", Value.string("Ken")))
+			testData.records(0).columns should contain (Column("last_name", Value.string("Egervari")))
+
+			testData.records(1).table should equal (testData.tables(0))
+			testData.records(1).label should equal ("ben")
+			testData.records(1).columns should have size (2)
+			testData.records(1).columns should contain (Column("first_name", Value.string("Ben")))
+			testData.records(1).columns should contain (Column("last_name", Value.string("Sisko")))
+		}
+
+		it("should read in 3 records from 2 different tables and maintain order they were written in") {
+			testDataResource loadFrom (dslDir + "three_records_two_tables.dbt")
+
+			testData.tables should have size (2)
+			testData.tables(0).name should equal ("user_account")
+			testData.tables(1).name should equal ("country")
+
+			testData.records should have size (3)
+			testData.records(0).table should equal (testData.tables(0))
+			testData.records(0).label should equal ("ken")
+			testData.records(0).columns should have size (2)
+			testData.records(0).columns should contain (Column("first_name", Value.string("Ken")))
+			testData.records(0).columns should contain (Column("last_name", Value.string("Egervari")))
+
+			testData.records(1).table should equal (testData.tables(1))
+			testData.records(1).label should equal ("canada")
+			testData.records(1).columns should have size (1)
+			testData.records(1).columns should contain (Column("name", Value.string("Canada")))
+			
+			testData.records(2).table should equal (testData.tables(0))
+			testData.records(2).label should equal ("ben")
+			testData.records(2).columns should have size (2)
+			testData.records(2).columns should contain (Column("first_name", Value.string("Ben")))
+			testData.records(2).columns should contain (Column("last_name", Value.string("Sisko")))
+		}
 	}
 
 }

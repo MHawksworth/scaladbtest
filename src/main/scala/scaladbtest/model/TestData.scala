@@ -27,29 +27,32 @@ class TestData(val dataSource: DataSource, val records: ArrayBuffer[Record] = Ar
 	val jdbcTemplate = new JdbcTemplate(dataSource)
 
 	def createTable(name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) = {
-		val table = new Table(this, name, defaultColumns, records)
-
-		addRecords(table)
-		addTable(table)
-
-		table
+		tables.find(_.name == name) match {
+			case Some(table) => {
+				records.foreach(_.table = table)
+				addRecords(records)
+				table
+			}
+			case None => {
+				val table = new Table(this, name, defaultColumns, records)
+				addTable(table)
+				addRecords(table.records)
+				table
+			}
+		}
 	}
 
-	def addRecords(table: Table) {
-		table.records.foreach(addRecord(_))
+	private def addRecords(records: List[Record]) {
+		records.foreach(addRecord(_))
 	}
-	
+
 	def addTable(table: Table) {
 		if(table != null && !tables.contains(table)) tables += table
 	}
 
-	def +(record: Record) {
+	def addRecord(record: Record) {
 		records += record
 		addTable(record.table)
-	}
-
-	def addRecord(record: Record) {
-		this + record
 	}
 	
 	def insertAll() {

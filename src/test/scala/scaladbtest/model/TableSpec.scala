@@ -28,7 +28,7 @@ class TableSpec extends DataSourceSpecSupport {
 		describe("when has no default columns") {
 			val table = new Table(testData, "a_table")
 
-			it("should create records that only contain their specified values") {
+			it("should create records that only contain their specified columns") {
 				val values = List(Column("name", Value(Some("Value"))))
 				val record = table.createRecord("label", values)
 

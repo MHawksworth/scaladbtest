@@ -68,6 +68,19 @@ class TestDataSpec extends DataSourceSpecSupport {
 				testData.tables should have size (1)
 			}
 
+			it("should not re-add the same table, but should merge its records if it has any with the same name") {
+				val record = new Record("record1")
+
+				val defaultColumns = List(Column("id", Value(Some("1"))))
+				testData.createTable("name", defaultColumns)
+				testData.createTable("name", defaultColumns, List(record))
+
+				testData.tables should have size (1)
+				testData.records should have size (1)
+				testData.records(0) should equal (record)
+				testData.records(0).table.name should equal ("name") 
+			}
+
 			it("should be able to add records and also link the table if not already added") {
 				val record = new Record(table, "label", List())
 

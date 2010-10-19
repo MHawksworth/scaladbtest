@@ -1,0 +1,7 @@
+table: user_account
+    record: ken
+        first_name: "Ken",
+        last_name: "Egervari"
+    record: ben
+        first_name: "Ben",
+        last_name: "Sisko"        
