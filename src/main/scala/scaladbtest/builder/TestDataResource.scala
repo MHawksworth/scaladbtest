@@ -42,11 +42,7 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 	def default: Parser[Any] = "default:" ~ repsep(column, ",")
 
 	def record: Parser[Record] = "record:" ~ ident ~ repsep(column, ",") ^^ {
-		case "record:" ~ label ~ columns => {
-			val record = new Record(label, columns)
-			testData.addRecord(record)
-			record
-		}
+		case "record:" ~ label ~ columns => new Record(label, columns)
 	}
 
 	def column: Parser[Column] = ident ~ ":" ~ value ^^ { 

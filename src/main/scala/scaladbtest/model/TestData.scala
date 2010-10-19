@@ -29,11 +29,16 @@ class TestData(val dataSource: DataSource, val records: ArrayBuffer[Record] = Ar
 	def createTable(name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) = {
 		val table = new Table(this, name, defaultColumns, records)
 
+		addRecords(table)
 		addTable(table)
 
 		table
 	}
 
+	def addRecords(table: Table) {
+		table.records.foreach(addRecord(_))
+	}
+	
 	def addTable(table: Table) {
 		if(table != null && !tables.contains(table)) tables += table
 	}

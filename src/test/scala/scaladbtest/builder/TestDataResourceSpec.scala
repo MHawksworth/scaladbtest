@@ -42,6 +42,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.tables(0).name should equal ("user_account")
 
 			testData.records should have size (1)
+			testData.records(0).table should equal (testData.tables(0))
 			testData.records(0).label should equal ("ken")
 
 			testData.records(0).columns should have size (1)
@@ -55,6 +56,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.tables(0).name should equal ("user_account")
 
 			testData.records should have size (1)
+			testData.records(0).table should equal (testData.tables(0))
 			testData.records(0).label should equal ("ken")
 
 			testData.records(0).columns should have size (1)
@@ -68,6 +70,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 			testData.tables(0).name should equal ("user_account")
 
 			testData.records should have size (1)
+			testData.records(0).table should equal (testData.tables(0))
 			testData.records(0).label should equal ("ken")
 
 			testData.records(0).columns should have size (2)

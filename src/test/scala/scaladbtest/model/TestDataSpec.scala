@@ -48,6 +48,16 @@ class TestDataSpec extends DataSourceSpecSupport {
 
 				testData.tables should have size (1)
 				testData.tables should contain (table)
+
+				testData.records should have size (0)
+			}
+
+			it("should add all the previous records from the table") {
+				val record = new Record("label", List())
+				val table = testData.createTable("name", List(), List(record))
+
+				testData.records should have size (1)
+				testData.records(0) should equal (record)
 			}
 
 			it("should not re-add the same table twice") {
