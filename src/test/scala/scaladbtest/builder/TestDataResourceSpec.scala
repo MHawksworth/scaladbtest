@@ -44,7 +44,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 
 			testData.records should have size (1)
 			testData.records(0).table.get should equal (testData.tables(0))
-			testData.records(0).label should equal ("ken")
+			testData.records(0).label.get should equal ("ken")
 
 			testData.records(0).columns should have size (1)
 			testData.records(0).columns should contain (
@@ -60,7 +60,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 
 			testData.records should have size (1)
 			testData.records(0).table.get should equal (testData.tables(0))
-			testData.records(0).label should equal ("ken")
+			testData.records(0).label.get should equal ("ken")
 
 			testData.records(0).columns should have size (1)
 			testData.records(0).columns should contain (
@@ -106,7 +106,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 
 			testData.records should have size (1)
 			testData.records(0).table.get should equal (testData.tables(0))
-			testData.records(0).label should equal ("ken")
+			testData.records(0).label.get should equal ("ken")
 
 			testData.records(0).columns should have size (2)
 			testData.records(0).columns should contain (
@@ -123,7 +123,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 
 			testData.records should have size (2)
 			testData.records(0).table.get should equal (testData.tables(0))
-			testData.records(0).label should equal ("ken")
+			testData.records(0).label.get should equal ("ken")
 			testData.records(0).columns should have size (2)
 			testData.records(0).columns should contain (
 				Column("first_name", Value.string("Ken"), Some(testData.records(0))))
@@ -131,12 +131,36 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				Column("last_name", Value.string("Egervari"), Some(testData.records(0))))
 
 			testData.records(1).table.get should equal (testData.tables(0))
-			testData.records(1).label should equal ("ben")
+			testData.records(1).label.get should equal ("ben")
 			testData.records(1).columns should have size (2)
 			testData.records(1).columns should contain (
 				Column("first_name", Value.string("Ben"), Some(testData.records(1))))
 			testData.records(1).columns should contain (
 				Column("last_name", Value.string("Sisko"), Some(testData.records(1))))
+		}
+
+		it("should parse two anonyomous records (doesn't have labels)") {
+			testDataResource loadFrom (dslDir + "anonymous_records.dbt")
+
+			testData.tables should have size (1)
+			testData.tables(0).name should equal ("country")
+
+			testData.records should have size (2)
+			testData.records(0).table.get should equal (testData.tables(0))
+			testData.records(0).label should equal (None)
+			testData.records(0).columns should have size (2)
+			testData.records(0).columns should contain (
+				Column("id", Value.string("1"), Some(testData.records(0))))
+			testData.records(0).columns should contain (
+				Column("name", Value.string("Canada"), Some(testData.records(0))))
+
+			testData.records(1).table.get should equal (testData.tables(0))
+			testData.records(1).label should equal (None)
+			testData.records(1).columns should have size (2)
+			testData.records(1).columns should contain (
+				Column("id", Value.string("2"), Some(testData.records(1))))
+			testData.records(1).columns should contain (
+				Column("name", Value.string("United States"), Some(testData.records(1))))
 		}
 
 		it("should parse 3 records from 2 different tables and maintain order they were written in") {
@@ -148,7 +172,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 
 			testData.records should have size (3)
 			testData.records(0).table.get should equal (testData.tables(0))
-			testData.records(0).label should equal ("ken")
+			testData.records(0).label.get should equal ("ken")
 			testData.records(0).columns should have size (2)
 			testData.records(0).columns should contain (
 				Column("first_name", Value.string("Ken"), Some(testData.records(0))))
@@ -156,13 +180,13 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				Column("last_name", Value.string("Egervari"), Some(testData.records(0))))
 
 			testData.records(1).table.get should equal (testData.tables(1))
-			testData.records(1).label should equal ("canada")
+			testData.records(1).label.get should equal ("canada")
 			testData.records(1).columns should have size (1)
 			testData.records(1).columns should contain (
 				Column("name", Value.string("Canada"), Some(testData.records(1))))
 			
 			testData.records(2).table.get should equal (testData.tables(0))
-			testData.records(2).label should equal ("ben")
+			testData.records(2).label.get should equal ("ben")
 			testData.records(2).columns should have size (2)
 			testData.records(2).columns should contain (
 				Column("first_name", Value.string("Ben"), Some(testData.records(2))))
@@ -178,7 +202,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 
 			testData.records should have size (1)
 			testData.records(0).table.get should equal (testData.tables(0))
-			testData.records(0).label should equal ("stopList1")
+			testData.records(0).label.get should equal ("stopList1")
 			testData.records(0).columns should have size (2)
 			testData.records(0).columns should contain (
 				Column("id", Value.string("1"), Some(testData.records(0))))

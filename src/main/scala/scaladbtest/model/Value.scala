@@ -61,8 +61,10 @@ class Value(val text: Option[String] = None, var column: Option[Column] = None) 
 					throw new IllegalStateException("Column must be defined for value: " + this)
 				if(column.get.record.isEmpty) 
 					throw new IllegalStateException("Record must be defined for column: " + column.get)
+				if(column.get.record.get.label.isEmpty)
+					throw new IllegalStateException("Label must be defined for record: " + column.get.record.get)
 
-				column.get.record.get.label
+				column.get.record.get.label.get
 			}
 			case _ => text
 		}

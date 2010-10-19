@@ -37,18 +37,18 @@ class ColumnSpec extends SpecSupport {
 				column should equal (Column("col1", Value(Some("Hey"))))
 				column should not equal (Column("col2", Value(Some("Hey"))))
 				column should not equal (Column("col1", Value(Some("Hey1"))))
-				column should not equal (Column("col1", Value(Some("Hey")), Some(Record("label"))))
+				column should not equal (Column("col1", Value(Some("Hey")), Some(Record(Some("label")))))
 			}
 		}
 
 		describe("when belongs to a record") {
-			val column = Column("col1", Value(Some("Hey")), Some(Record("label")))
+			val column = Column("col1", Value(Some("Hey")), Some(Record(Some("label"))))
 
 			it("should be equal to a column with the same values") {
-				column should equal (Column("col1", Value(Some("Hey")), Some(Record("label"))))
-				column should not equal (Column("col2", Value(Some("Hey")), Some(Record("label"))))
-				column should not equal (Column("col1", Value(Some("Hey1")), Some(Record("label"))))
-				column should not equal (Column("col1", Value(Some("Hey")), Some(Record("anotherLabel"))))
+				column should equal (Column("col1", Value(Some("Hey")), Some(Record(Some("label")))))
+				column should not equal (Column("col2", Value(Some("Hey")), Some(Record(Some("label")))))
+				column should not equal (Column("col1", Value(Some("Hey1")), Some(Record(Some("label")))))
+				column should not equal (Column("col1", Value(Some("Hey")), Some(Record(Some("anotherLabel")))))
 			}
 		}
 	}

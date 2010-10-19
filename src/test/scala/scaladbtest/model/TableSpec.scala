@@ -30,10 +30,10 @@ class TableSpec extends DataSourceSpecSupport {
 
 			it("should create records that only contain their specified columns") {
 				val values = List(Column("name", Value(Some("Value"))))
-				val record = table.createRecord("label", values)
+				val record = table.createRecord(Some("label"), values)
 
 				record.table.get should equal (table)
-				record.label should equal ("label")
+				record.label.get should equal ("label")
 				record.columns should equal (values)
 			}
 		}
@@ -45,7 +45,7 @@ class TableSpec extends DataSourceSpecSupport {
 			))
 
 			it("should copy all default values when creating a blank record") {
-				val record = table.createRecord("label")
+				val record = table.createRecord(Some("label"))
 
 				record.columns should have size (2)
 				record.columns should contain (Column("col1", Value(Some("value1")), Some(record)))
@@ -53,7 +53,7 @@ class TableSpec extends DataSourceSpecSupport {
 			}
 			
 			it("should copy only the unspecified default values when creating a record") {
-				val record = table.createRecord("label", List(
+				val record = table.createRecord(Some("label"), List(
 					Column("col1", Value(Some("spooked")))
 				))
 
@@ -75,7 +75,7 @@ class TableSpec extends DataSourceSpecSupport {
 		
 		describe("when has records passed to the constructor") {
 			val table = new Table(testData, "a_table", List(), List(
-				Record("label1"), Record("label2")
+				Record(Some("label1")), Record(Some("label2"))
 			))
 
 			it("should link each record to the table when constructed") {

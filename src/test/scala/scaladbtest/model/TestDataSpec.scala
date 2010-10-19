@@ -53,7 +53,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should add all the previous records from the table") {
-				val record = new Record("label", List())
+				val record = new Record(Some("label"))
 				val table = testData.createOrMergeTable("name", List(), List(record))
 
 				testData.records should have size (1)
@@ -69,7 +69,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should not re-add the same table, but should merge its records if it has any with the same name") {
-				val record = new Record("record1")
+				val record = new Record(Some("record1"))
 
 				val defaultColumns = List(Column("id", Value(Some("1"))))
 				testData.createOrMergeTable("name", defaultColumns)
@@ -82,7 +82,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should be able to add records and also link the table if not already added") {
-				val record = new Record("label", List(), Some(table))
+				val record = new Record(Some("label"), List(), Some(table))
 
 				testData addRecord record
 
@@ -94,7 +94,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should not add null table if the record doesn't have a table") {
-				val record = new Record("label")
+				val record = new Record(Some("label"))
 
 				testData addRecord record
 
@@ -110,9 +110,9 @@ class TestDataSpec extends DataSourceSpecSupport {
 		val testData = new TestData(dataSource)
 		val table = new Table(testData, "single_id_table")
 
-		testData addRecord table.createRecord("record1", List(Column("id", Value(Some("1")))))
-		testData addRecord table.createRecord("record2", List(Column("id", Value(Some("2")))))
-		testData addRecord table.createRecord("record3", List(Column("id", Value(Some("3")))))
+		testData addRecord table.createRecord(Some("record1"), List(Column("id", Value(Some("1")))))
+		testData addRecord table.createRecord(Some("record2"), List(Column("id", Value(Some("2")))))
+		testData addRecord table.createRecord(Some("record3"), List(Column("id", Value(Some("3")))))
 
 		it("should be able to insert and delete all records into the database") {
 			testData.insertAll()
@@ -130,8 +130,8 @@ class TestDataSpec extends DataSourceSpecSupport {
 		val table1 = new Table(testData, "single_id_table")
 		val table2 = new Table(testData, "two_string_table")
 
-		testData addRecord table1.createRecord("record1", List(Column("id", Value(Some("1")))))
-		testData addRecord table2.createRecord("record2", List(Column("col1", Value(Some("val2")))))
+		testData addRecord table1.createRecord(Some("record1"), List(Column("id", Value(Some("1")))))
+		testData addRecord table2.createRecord(Some("record2"), List(Column("col1", Value(Some("val2")))))
 
 		it("should be able to insert and delete all records into the database") {
 			testData.insertAll()

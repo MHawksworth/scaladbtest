@@ -28,7 +28,7 @@ case class Table(testData: TestData, name: String, defaultColumns: List[Column] 
 		columns ++ defaultColumnsNeeded
 	}
 
-	def createRecord(label: String, columns: List[Column] = List()): Record = {
+	def createRecord(label: Option[String], columns: List[Column] = List()): Record = {
 		new Record(label,	mergeInDefaultColumnValues(columns), Some(this))
 	}
 

@@ -46,7 +46,7 @@ class ValueSpec extends SpecSupport {
 		}
 
 		describe("when asked to parse") {
-			val record = new Record("record1")
+			val record = Record(Some("record1"))
 
 			it("should create the value as a string if normal text") {
 				Value.parse("null").text.get should equal ("null")
@@ -106,14 +106,14 @@ class ValueSpec extends SpecSupport {
 		describe("when it refers to the label") {
 			it("should return the record label's value and not $label") {
 				val column = new Column("col1", Value(Some("$label")))
-				val record = new Record("sex", List(column))
+				val record = new Record(Some("sex"), List(column))
 
 				column.value.sqlValue should equal ("'sex'")
 			}
 
 			it("should return the record label if $label has a different case") {
 				val column = new Column("col1", Value(Some("$LABEL")))
-				val record = new Record("sex", List(column))
+				val record = new Record(Some("sex"), List(column))
 
 				column.value.sqlValue should equal ("'sex'")
 			}
@@ -128,6 +128,15 @@ class ValueSpec extends SpecSupport {
 
 			it("should throw an exception if record is not defined") {
 				val column = new Column("col1", Value(Some("$label")))
+
+				intercept[IllegalStateException] {
+					column.value.sqlValue
+				}
+			}
+
+			it("should throw an exception if label is not defined") {
+				val column = new Column("col1", Value(Some("$label")))
+				val record = new Record(None, List(column))
 
 				intercept[IllegalStateException] {
 					column.value.sqlValue

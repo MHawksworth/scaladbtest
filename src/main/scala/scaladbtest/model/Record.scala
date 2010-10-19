@@ -17,11 +17,11 @@ package scaladbtest.model
 */
 
 object Record {
-	def apply(label: String, columns: List[Column] = List(), table: Option[Table] = None) =
+	def apply(label: Option[String], columns: List[Column] = List(), table: Option[Table] = None) =
 		new Record(label, columns, table)
 }
 
-class Record(val label: String, val columns: List[Column] = List(), var table: Option[Table] = None) {
+class Record(val label: Option[String], val columns: List[Column] = List(), var table: Option[Table] = None) {
 
 	columns.foreach(_.record = Some(this))
 
