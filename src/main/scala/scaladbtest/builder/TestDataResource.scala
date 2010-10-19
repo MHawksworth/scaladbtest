@@ -1,9 +1,9 @@
 package scaladbtest.builder
 
 import util.parsing.combinator.JavaTokenParsers
-import java.io.FileReader
 import scaladbtest.model.value.Value
 import scaladbtest.model.{Record, Column, Table, TestData}
+import io.Source
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -64,7 +64,8 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 		"null" ^^ ("$" + _)
 
 	def loadFrom(filename: String) {
-		println(parse(tables, new FileReader(filename)))
+		val source = Source.fromFile(filename).getLines.filterNot(_.startsWith("#")).mkString("\n")
+		println(parse(tables, source))
 	}
 
 }

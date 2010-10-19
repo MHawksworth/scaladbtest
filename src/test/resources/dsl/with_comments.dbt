@@ -1,0 +1,5 @@
+#start
+country:
+# middle
+- id: 1, name: "Canada"
+#end
