@@ -2,6 +2,7 @@ package scaladbunit.model.value
 
 import java.util.Date
 import java.text.SimpleDateFormat
+import scaladbunit.model.Record
 
 /*
 * Copyright 2010 Ken Egervari
@@ -36,11 +37,18 @@ object Value {
 
 	def none() = new Value(None)
 
-	def parse(text: String) = {
-		text match {
-			case "$now" => Value.now()
-			case "$null" => Value.none()
-			case _ => Value.string(text)
+	def parse(text: String, record: Record = null) = {
+		if(text == null) Value.none()
+		else {
+			text.trim match {
+				case "$now" => Value.now()
+				case "$null" => Value.none()
+				case "$label" => {
+					if(record == null) throw new IllegalArgumentException("The record argument must not be null")
+					Value.string(record.label)
+				}
+				case _ => Value.string(text)
+			}
 		}
 	}
 

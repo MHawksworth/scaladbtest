@@ -16,7 +16,7 @@ package scaladbunit.model
 * limitations under the License.
 */
 
-case class Record(table: Table, label: String, columns: Set[Column]) {
+case class Record(table: Table, label: String, columns: Set[Column] = Set()) {
 	
 	def commaSeparatedString(columnToString: Column => String): String = {
 		columns.tail.foldLeft(columnToString(columns.head))(_ + ", " + columnToString(_))

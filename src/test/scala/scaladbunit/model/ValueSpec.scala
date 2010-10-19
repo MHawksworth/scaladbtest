@@ -1,4 +1,8 @@
-package scaladbunit.model.value
+package scaladbunit.model
+
+import scaladbunit.SpecSupport
+import java.util.{Date, GregorianCalendar}
+import scaladbunit.model.value.Value
 
 /*
 * Copyright 2010 Ken Egervari
@@ -15,9 +19,6 @@ package scaladbunit.model.value
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-
-import scaladbunit.SpecSupport
-import java.util.{Date, GregorianCalendar}
 
 class ValueSpec extends SpecSupport {
 
@@ -44,20 +45,38 @@ class ValueSpec extends SpecSupport {
 			Value.now().value.get should startWith (Value.formatDate(new Date()).substring(0, 17))
 		}
 
-		it("should create the value as a string if normal text") {
-			Value.parse("null").value.get should equal ("null")
-		}
+		describe("when asked to parse") {
+			val record = new Record(null, "record1")
 
-		it("should create a None value if parses $null") {
-			Value.parse("$null").value should equal (None)
-		}
+			it("should create the value as a string if normal text") {
+				Value.parse("null").value.get should equal ("null")
+			}
 
-		it("should create a None value if parses a null value") {
-			Value.parse(null).value should equal (None)
-		}
+			it("should create a None value if parses $null") {
+				Value.parse("$null").value should equal (None)
+			}
 
-		it("should create today's date if parses $now") {
-			Value.parse("$now").value.get should startWith (Value.formatDate(new Date()).substring(0, 17))
+			it("should create a None value if parses a null value") {
+				Value.parse(null).value should equal (None)
+			}
+
+			it("should create today's date if parses $now") {
+				Value.parse("$now").value.get should startWith (Value.formatDate(new Date()).substring(0, 17))
+			}
+
+			it("should use the record's label as the value if parses $label") {
+				Value.parse("$label", record).value.get should equal ("record1")
+			}
+
+			it("should throw an exception if the record is null when asked to get the label") {
+				intercept[IllegalArgumentException] {
+					Value.parse("$label", null)
+				}
+			}
+
+			it("should trim text argument") {
+				Value.parse(" $null ").value should equal (None)
+			}
 		}
 	}
 

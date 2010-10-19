@@ -2,21 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f799b9f-8e78-414e-84a0-f72e008679fe" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/value/ValueSpec.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/RecordSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/RecordSpec.scala" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/scala/scaladbunit/model/value/ExpressionValue.scala" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/TestDataSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/TestDataSpec.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scaladbunit/model/Record.scala" afterPath="$PROJECT_DIR$/src/main/scala/scaladbunit/model/Record.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/scaladbunit/model/Value.scala" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/value/StringValueSpec.scala" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/value/TodayValueSpec.scala" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/scala/scaladbunit/model/value/StringValue.scala" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/TableSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/TableSpec.scala" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/scala/scaladbunit/model/value/TodayValue.scala" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/scala/scaladbunit/model/value/Value.scala" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/value/ValueSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/scaladbunit/model/ValueSpec.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scaladbunit/model/Value.scala" afterPath="$PROJECT_DIR$/src/main/scala/scaladbunit/model/Value.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ScalaDBUnit.iml" afterPath="$PROJECT_DIR$/ScalaDBUnit.iml" />
     </list>
-    <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
+    <ignored path="$USER_HOME_GRIFFON$/" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,28 +67,19 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ValueSpec.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbunit/model/value/ValueSpec.scala">
+      <file leaf-file-name="ValueSpec.scala" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbunit/model/ValueSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="2" selection-start="2141" selection-end="2141" vertical-scroll-proportion="0.0">
+            <state line="56" column="29" selection-start="1750" selection-end="1750" vertical-scroll-proportion="3.9419644">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TableSpec.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbunit/model/TableSpec.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="2" selection-start="842" selection-end="842" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Value.scala" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Value.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbunit/model/Value.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="27" selection-start="1034" selection-end="1034" vertical-scroll-proportion="0.08919598">
+            <state line="42" column="37" selection-start="1153" selection-end="1153" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -114,9 +99,7 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/test/scala/scaladbunit/DataSourceTestSupport.scala" />
         <option value="$PROJECT_DIR$/README" />
-        <option value="$PROJECT_DIR$/src/main/scala/scaladbunit/model/Record.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scaladbunit/model/Table.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scaladbunit/SpecSupport.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scaladbunit/model/TestData.scala" />
@@ -127,9 +110,11 @@
         <option value="$PROJECT_DIR$/src/main/scala/scaladbunit/model/value/TodayValue.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scaladbunit/model/TestDataSpec.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scaladbunit/model/RecordSpec.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/scaladbunit/model/Value.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scaladbunit/model/value/ValueSpec.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scaladbunit/model/TableSpec.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/scaladbunit/model/Record.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/scaladbunit/model/ValueSpec.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/scaladbunit/model/Value.scala" />
       </list>
     </option>
   </component>
@@ -261,40 +246,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scaladbunit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="value" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scaladbunit-stable" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scaladbunit-stable" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -394,41 +345,11 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scaladbunit" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scaladbunit-stable" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scaladbunit-stable" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -446,9 +367,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -466,18 +387,6 @@
     </key>
   </component>
   <component name="RunManager" selected="ScalaTest.scaladbunit">
-    <configuration default="false" name="StringValueSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
-      <module name="ScalaDBUnit" />
-      <setting name="path" value="scaladbunit.model.value.StringValueSpec" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="version" value="false" />
-      <setting name="workingDirectory" value="$PROJECT_DIR$" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
     <configuration default="false" name="TableSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
       <module name="ScalaDBUnit" />
       <setting name="path" value="scaladbunit.model.TableSpec" />
@@ -526,6 +435,18 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="ValueSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
+      <module name="ScalaDBUnit" />
+      <setting name="path" value="scaladbunit.model.ValueSpec" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="version" value="false" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="true" type="PhpRunConfigurationType" factoryName="PHP">
       <method>
         <option name="AntTarget" enabled="false" />
@@ -558,15 +479,6 @@
         <option name="SBT.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" adl_options="" air_descriptor_path="" air_program_params="" air_publisher_id="" air_root_dir_path="" air_run_mode="AppDescriptor" class_name="" debugger_sdk="Module SDK" html_or_swf_file_path="" main_class_name="" method_name="" module_name="" output_log_level="" package_name="" port="0" run_mode="HtmlOrSwfFile" scope="Class" socket_policy_port="0" url_to_launch="http://">
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-        <option name="SBT.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="true" type="SpecsRunConfiguration" factoryName="Specs">
       <module name="" />
       <setting name="path" value="" />
@@ -576,6 +488,15 @@
       <setting name="workingDirectory" value="$PROJECT_DIR$" />
       <setting name="sysFilter" value=".*" />
       <setting name="exampleFilter" value=".*" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="SBT.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" adl_options="" air_descriptor_path="" air_program_params="" air_publisher_id="" air_root_dir_path="" air_run_mode="AppDescriptor" class_name="" debugger_sdk="Module SDK" html_or_swf_file_path="" main_class_name="" method_name="" module_name="" output_log_level="" package_name="" port="0" run_mode="HtmlOrSwfFile" scope="Class" socket_policy_port="0" url_to_launch="http://">
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -714,11 +635,11 @@
       </method>
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="ScalaTest.StringValueSpec" />
-      <item index="1" class="java.lang.String" itemvalue="ScalaTest.TableSpec" />
-      <item index="2" class="java.lang.String" itemvalue="ScalaTest.TodayValueSpec" />
-      <item index="3" class="java.lang.String" itemvalue="ScalaTest.TestDataSpec" />
-      <item index="4" class="java.lang.String" itemvalue="ScalaTest.scaladbunit" />
+      <item index="0" class="java.lang.String" itemvalue="ScalaTest.TableSpec" />
+      <item index="1" class="java.lang.String" itemvalue="ScalaTest.TodayValueSpec" />
+      <item index="2" class="java.lang.String" itemvalue="ScalaTest.TestDataSpec" />
+      <item index="3" class="java.lang.String" itemvalue="ScalaTest.scaladbunit" />
+      <item index="4" class="java.lang.String" itemvalue="ScalaTest.ValueSpec" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -736,11 +657,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="24" width="1682" height="1003" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891566" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7373494" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -751,11 +671,12 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24845488" sideWeight="0.32972324" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24845488" sideWeight="0.32972324" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6618532" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6618532" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -773,7 +694,7 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added new TestData object, which is responsible for loading all the test data and inserting all the records into the database. Meant to be one per test class. Test data exposes jdbc templates so children don't need to concern themselves with datasources.&#10;&#10;Tables now relate to test data objects." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored Value classes into a single class. Created companion object to be a factory for creating a variety of values from strings, null values, dates, etc. Also created a parse function to access special commands to represent nulls and today's date as strings." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -792,6 +713,7 @@
     <MESSAGE value="Can now insert null values, integer values, and it will pre-populate default values if not specified." />
     <MESSAGE value="Added today's date placeholder and tests to insert dates." />
     <MESSAGE value="Added new TestData object, which is responsible for loading all the test data and inserting all the records into the database. Meant to be one per test class. Test data exposes jdbc templates so children don't need to concern themselves with datasources.&#10;&#10;Tables now relate to test data objects." />
+    <MESSAGE value="Refactored Value classes into a single class. Created companion object to be a factory for creating a variety of values from strings, null values, dates, etc. Also created a parse function to access special commands to represent nulls and today's date as strings." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -808,91 +730,71 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/resources/ddl/mysql.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="37" selection-end="37" vertical-scroll-proportion="0.14572865">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbunit/model/Record.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="32" selection-start="1355" selection-end="1355" vertical-scroll-proportion="0.67211056">
-          <folding />
-        </state>
+        <state line="4" column="13" selection-start="37" selection-end="37" vertical-scroll-proportion="0.14572865" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbunit/model/Table.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="53" selection-start="779" selection-end="779" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="20" column="53" selection-start="779" selection-end="779" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbunit/SpecSupport.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="714" selection-end="714" vertical-scroll-proportion="0.7650754">
-          <folding />
-        </state>
+        <state line="21" column="0" selection-start="714" selection-end="714" vertical-scroll-proportion="0.7650754" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbunit/DataSourceSpecSupport.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="6" selection-start="1116" selection-end="1116" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="39" column="6" selection-start="1116" selection-end="1116" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbunit/model/TestData.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="4" selection-start="1138" selection-end="1138" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="33" column="4" selection-start="1138" selection-end="1138" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/resources/ddl/hsqldb.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="37" selection-start="194" selection-end="210" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="4" column="37" selection-start="194" selection-end="210" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbunit/model/RecordSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="60" selection-start="3444" selection-end="3444" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="107" column="60" selection-start="3444" selection-end="3444" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbunit/model/TestDataSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="65" selection-start="3448" selection-end="3448" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbunit/model/value/ValueSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="2" selection-start="2141" selection-end="2141" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="104" column="65" selection-start="3448" selection-end="3448" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbunit/model/TableSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="2" selection-start="842" selection-end="842" vertical-scroll-proportion="0.0">
+        <state line="28" column="2" selection-start="842" selection-end="842" vertical-scroll-proportion="0.8065327" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbunit/model/Record.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="75" selection-start="681" selection-end="681" vertical-scroll-proportion="0.33291456">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbunit/model/Value.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="27" selection-start="1034" selection-end="1034" vertical-scroll-proportion="0.08919598">
+        <state line="42" column="37" selection-start="1153" selection-end="1153" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbunit/model/ValueSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="29" selection-start="1750" selection-end="1750" vertical-scroll-proportion="3.9419644">
           <folding />
         </state>
       </provider>
