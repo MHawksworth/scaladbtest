@@ -40,7 +40,7 @@ object Value {
 	def parse(text: String, record: Record = null) = {
 		if(text == null) Value.none()
 		else {
-			text.trim match {
+			text.trim.toLowerCase match {
 				case "$now" => Value.now()
 				case "$null" => Value.none()
 				case "$label" => {

@@ -77,6 +77,10 @@ class ValueSpec extends SpecSupport {
 			it("should trim text argument") {
 				Value.parse(" $null ").text should equal (None)
 			}
+			
+			it("should ignore case when matching strings with $") {
+				Value.parse("$NULL").text should equal (None)
+			}
 		}
 	}
 
