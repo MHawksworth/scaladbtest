@@ -46,7 +46,7 @@ class ValueSpec extends SpecSupport {
 		}
 
 		describe("when asked to parse") {
-			val record = new Record(null, "record1")
+			val record = new Record(null, "record1", List())
 
 			it("should create the value as a string if normal text") {
 				Value.parse("null").text.get should equal ("null")

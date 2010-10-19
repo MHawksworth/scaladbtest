@@ -16,20 +16,19 @@ package scaladbtest.model
 * limitations under the License.
 */
 
-case class Table(testData: TestData, name: String, defaultColumns: Set[Column] = Set(), records: Set[Record] = Set()) {
+case class Table(testData: TestData, name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) {
 
-	def this(name: String, defaultColumns: Set[Column], records: Set[Record]) =
-		this(null, name, defaultColumns, records)
+	records.map(_.table = this)
 
-	def mergeInDefaultColumnValues(values: Set[Column]): Set[Column] = {
-		val columnMap = values.groupBy(_.name)
+	def mergeInDefaultColumnValues(columns: List[Column]): List[Column] = {
+		val columnNames = columns.groupBy(_.name)
+		val defaultColumnsNeeded = defaultColumns.filterNot(
+			(c: Column) => columnNames.contains(c.name))
 
-		for(defaultColumn <- defaultColumns ++ values) yield
-			if(columnMap.contains(defaultColumn.name)) columnMap(defaultColumn.name).last
-			else defaultColumn
+		columns ++ defaultColumnsNeeded
 	}
 
-	def createRecord(label: String, columns: Set[Column] = Set()): Record = {
+	def createRecord(label: String, columns: List[Column] = List()): Record = {
 		new Record(this, label,	mergeInDefaultColumnValues(columns))
 	}
 

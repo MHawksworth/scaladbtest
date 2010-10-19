@@ -3,6 +3,7 @@ package scaladbtest.model
 import javax.sql.DataSource
 import collection.mutable.ArrayBuffer
 import org.springframework.jdbc.core.JdbcTemplate
+import scaladbtest.builder.TestDataResource
 
 /*
 * Copyright 2010 Ken Egervari
@@ -20,13 +21,12 @@ import org.springframework.jdbc.core.JdbcTemplate
 * limitations under the License.
 */
 
-class TestData(val dataSource: DataSource, val filename: String = "", val records: ArrayBuffer[Record] = ArrayBuffer()) {
+class TestData(val dataSource: DataSource, val records: ArrayBuffer[Record] = ArrayBuffer()) {
 
 	val tables = ArrayBuffer[Table]()
 	val jdbcTemplate = new JdbcTemplate(dataSource)
-	var isLoaded = false
 
-	def createTable(name: String, defaultColumns: Set[Column] = Set(), records: Set[Record] = Set()) = {
+	def createTable(name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) = {
 		val table = new Table(this, name, defaultColumns, records)
 
 		addTable(table)
@@ -35,7 +35,7 @@ class TestData(val dataSource: DataSource, val filename: String = "", val record
 	}
 
 	def addTable(table: Table) {
-		if(!tables.contains(table)) tables += table
+		if(table != null && !tables.contains(table)) tables += table
 	}
 
 	def +(record: Record) {
@@ -55,4 +55,11 @@ class TestData(val dataSource: DataSource, val filename: String = "", val record
 		tables.foreach(_.delete())
 	}
 
+	def load(filenames: String*) {
+		for(filename <- filenames) {
+			new TestDataResource(this).loadFrom(filename)
+		}
+	}
+
+	override def toString = "TestData()"
 }

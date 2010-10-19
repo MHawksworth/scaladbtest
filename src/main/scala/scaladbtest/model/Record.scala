@@ -16,8 +16,10 @@ package scaladbtest.model
 * limitations under the License.
 */
 
-case class Record(table: Table, label: String, columns: Set[Column] = Set()) {
-	
+class Record(var table: Table, val label: String, val columns: List[Column]) {
+
+	def this(label: String, columns: List[Column] = List()) = this(null, label, columns)
+
 	def commaSeparatedString(columnToString: Column => String): String = {
 		columns.tail.foldLeft(columnToString(columns.head))(_ + ", " + columnToString(_))
 	}
@@ -47,4 +49,11 @@ case class Record(table: Table, label: String, columns: Set[Column] = Set()) {
 		table.testData.jdbcTemplate.update(insertSql)
 	}
 
+	override def toString = {
+		val tableName =
+			if(table != null) table.name
+			else "N/A"
+
+		"Record(Table(" + tableName + ")," + label + "," + columns + ")"
+	}
 }

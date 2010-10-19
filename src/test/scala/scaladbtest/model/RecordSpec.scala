@@ -32,9 +32,23 @@ class RecordSpec extends DataSourceSpecSupport {
 	val testData = new TestData(dataSource)
 
 	describe("A record") {
+		describe("when contains no columns or table") {
+			val record = new Record("label")
+
+			it("should be constructed with just a label") {
+				record.label should equal ("label")
+				record.table should be (null)
+				record.columns should have size (0)
+			}
+
+			it("should have a string respresentation that indicates N/A for the table") {
+				record.toString should equal ("Record(Table(N/A),label,List())")
+			}
+		}
+
 		describe("when it has two columns with string values") {
 			val table = new Table(testData, "two_string_table")
-			val record = table.createRecord("record", Set(
+			val record = table.createRecord("record", List(
 	      new Column("col1", Value(Some("value1"))),
 				new Column("col2", Value(Some("value2")))
 			))
@@ -67,11 +81,15 @@ class RecordSpec extends DataSourceSpecSupport {
 				map.get("col1") should equal ("value1")
 				map.get("col2") should equal ("value2")
 			}
+
+			it("should have a nice string respresentation") {
+				record.toString should equal ("Record(Table(two_string_table),record,List(Column(col1,Value(Some(value1))), Column(col2,Value(Some(value2)))))")
+			}
 		}
 
 		describe("when it has None in the option values") {
 			val table = new Table(testData, "two_string_table")
-			val record = table.createRecord("record", Set(
+			val record = table.createRecord("record", List(
 	      new Column("col1", Value(None)),
 				new Column("col2", Value(None))
 			))
@@ -88,7 +106,7 @@ class RecordSpec extends DataSourceSpecSupport {
 
 		describe("when it has one integer id column") {
 			val table = new Table(testData, "single_id_table")
-			val record = table.createRecord("record", Set(
+			val record = table.createRecord("record", List(
 	      new Column("id", Value(Some("1")))
 			))
 
@@ -103,7 +121,7 @@ class RecordSpec extends DataSourceSpecSupport {
 
 		describe("when it has a date value") {
 			val table = new Table(testData, "date_table")
-			val record = table.createRecord("record", Set(
+			val record = table.createRecord("record", List(
 	      new Column("id", Value(Some("1"))),
 				new Column("creation_date", Value(Some("2010-05-15 04:20:11")))
 			))
@@ -119,10 +137,10 @@ class RecordSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when the has default values defined") {
-			val table = new Table(testData, "two_string_table", Set(
+			val table = new Table(testData, "two_string_table", List(
 				new Column("col1", Value(Some("value1"))),
 				new Column("col2", Value(Some("value2")))
-			), Set())
+			))
 			
 			it("should insert all the default values if no values in the record are defined") {
 				val record = table.createRecord("record")

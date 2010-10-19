@@ -2,7 +2,6 @@ package scaladbtest.model
 
 import scaladbtest.DataSourceSpecSupport
 import value.Value
-import collection.immutable.Set
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -29,8 +28,8 @@ class TableSpec extends DataSourceSpecSupport {
 		describe("when has no default columns") {
 			val table = new Table(testData, "a_table")
 
-			it("should create records") {
-				val values = Set(Column("name", Value(Some("Value"))))
+			it("should create records that only contain their specified values") {
+				val values = List(Column("name", Value(Some("Value"))))
 				val record = table.createRecord("label", values)
 
 				record.table should equal (table)
@@ -40,7 +39,7 @@ class TableSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when has default values") {
-			val table = new Table(testData, "two_string_table", Set(
+			val table = new Table(testData, "two_string_table", List(
 				Column("col1", Value(Some("value1"))),
 				Column("col2", Value(Some("value2")))
 			))
@@ -54,7 +53,7 @@ class TableSpec extends DataSourceSpecSupport {
 			}
 			
 			it("should copy only the unspecified default values when creating a record") {
-				val record = table.createRecord("label", Set(
+				val record = table.createRecord("label", List(
 					Column("col1", Value(Some("spooked")))
 				))
 
@@ -71,6 +70,18 @@ class TableSpec extends DataSourceSpecSupport {
 				table.delete()
 
 				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (0)
+			}
+		}
+		
+		describe("when has records passed to the constructor") {
+			val table = new Table(testData, "a_table", List(), List(
+				new Record("label1", List()),
+				new Record("label2", List())
+			))
+
+			it("should link each record to the table when constructed") {
+				table.records(0).table should equal (table)
+				table.records(1).table should equal (table)
 			}
 		}
 	}

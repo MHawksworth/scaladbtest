@@ -28,23 +28,18 @@ class TestDataSpec extends DataSourceSpecSupport {
 	}
 	
 	describe("Test Data") {
-		val testData = new TestData(dataSource, "somefile.dbu")
+		val testData = new TestData(dataSource)
 		val table = new Table(testData, "single_id_table")
 
 		describe("when constructed") {
 			it("should have a data source, a jdbc template and a filename") {
 				testData.dataSource should equal (dataSource)
 				testData.jdbcTemplate.getDataSource should equal (dataSource)
-				testData.filename should equal ("somefile.dbu")
 				testData.records should have size (0)
 			}
 
-			it("should not be loaded") {
-				testData.isLoaded should be (false)
-			}
-
 			it("should create tables with default values specified") {
-				val defaultColumns = Set(Column("id", Value(Some("1"))))
+				val defaultColumns = List(Column("id", Value(Some("1"))))
 				val table = testData.createTable("name", defaultColumns)
 
 				table.name should equal ("name")
@@ -56,7 +51,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should not re-add the same table twice") {
-				val defaultColumns = Set(Column("id", Value(Some("1"))))
+				val defaultColumns = List(Column("id", Value(Some("1"))))
 				testData.createTable("name", defaultColumns)
 				testData.createTable("name", defaultColumns)
 
@@ -64,7 +59,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should be able to add records and also link the table if not already added") {
-				val record = new Record(table, "label", Set())
+				val record = new Record(table, "label", List())
 
 				testData + record
 
@@ -74,6 +69,17 @@ class TestDataSpec extends DataSourceSpecSupport {
 				testData.tables should have size (1)
 				testData.tables should contain (table)
 			}
+
+			it("should not add null table if the record doesn't have a table") {
+				val record = new Record(null, "label", List())
+
+				testData + record
+
+				testData.records should have size (1)
+				testData.records should contain (record)
+
+				testData.tables should have size (0)
+			}
 		}
 	}
 	
@@ -81,9 +87,9 @@ class TestDataSpec extends DataSourceSpecSupport {
 		val testData = new TestData(dataSource)
 		val table = new Table(testData, "single_id_table")
 
-		testData + table.createRecord("record1", Set(Column("id", Value(Some("1")))))
-		testData + table.createRecord("record2", Set(Column("id", Value(Some("2")))))
-		testData + table.createRecord("record3", Set(Column("id", Value(Some("3")))))
+		testData + table.createRecord("record1", List(Column("id", Value(Some("1")))))
+		testData + table.createRecord("record2", List(Column("id", Value(Some("2")))))
+		testData + table.createRecord("record3", List(Column("id", Value(Some("3")))))
 
 		it("should be able to insert and delete all records into the database") {
 			testData.insertAll()
@@ -101,8 +107,8 @@ class TestDataSpec extends DataSourceSpecSupport {
 		val table1 = new Table(testData, "single_id_table")
 		val table2 = new Table(testData, "two_string_table")
 
-		testData + table1.createRecord("record1", Set(Column("id", Value(Some("1")))))
-		testData + table2.createRecord("record2", Set(Column("col1", Value(Some("val2")))))
+		testData + table1.createRecord("record1", List(Column("id", Value(Some("1")))))
+		testData + table2.createRecord("record2", List(Column("col1", Value(Some("val2")))))
 
 		it("should be able to insert and delete all records into the database") {
 			testData.insertAll()
