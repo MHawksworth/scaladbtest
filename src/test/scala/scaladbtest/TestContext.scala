@@ -19,11 +19,11 @@ package scaladbtest
 import com.mchange.v2.c3p0.ComboPooledDataSource
 
 object TestContext {
-	val dataSource = new ComboPooledDataSource()
-	dataSource.setDriverClass("org.hsqldb.jdbc.JDBCDriver")
-	dataSource.setJdbcUrl("jdbc:hsqldb:mem:scaladbtest")
-	dataSource.setUser("sa")
-	dataSource.setPassword("")
+	val hsqldbDataSource = new ComboPooledDataSource()
+	hsqldbDataSource.setDriverClass("org.hsqldb.jdbc.JDBCDriver")
+	hsqldbDataSource.setJdbcUrl("jdbc:hsqldb:mem:scaladbtest")
+	hsqldbDataSource.setUser("sa")
+	hsqldbDataSource.setPassword("")
 
 	//val statement = dataSource.getConnection.createStatement
 	//statement.execute("SET DATABASE REFERENTIAL INTEGRITY FALSE;")

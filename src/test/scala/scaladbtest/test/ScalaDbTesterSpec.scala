@@ -2,7 +2,7 @@ package scaladbtest.test
 
 import scaladbtest.DataSourceSpecSupport
 import org.scalatest.PrivateMethodTester
-
+import javax.sql.DataSource
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -21,16 +21,14 @@ import org.scalatest.PrivateMethodTester
 
 class ScalaDbTesterSpec extends DataSourceSpecSupport with PrivateMethodTester {
 
-	createTables("hsqldb.sql")
+	var tester: ScalaDbTester = _
 
-	override protected def beforeEach() {
-		jdbcTemplate.update("delete from two_string_table")
+	override protected def initializeDataSourceReferences(dataSource: DataSource) {
+		tester = new ScalaDbTester(dataSource, Some("src/test/resources/dsl"))
 	}
-
+	
 	describe("Scala DB Tester") {
 		describe("with a base directory") {
-			val tester = new ScalaDbTester(dataSource, Some("src/test/resources/dsl"))
-
 			it("should add missing slash to the path if it's missing") {
 				val addMissingSlash = PrivateMethod[String]('addMissingSlash)
 

@@ -2,6 +2,7 @@ package scaladbtest.model
 
 import scaladbtest.DataSourceSpecSupport
 import value.Value
+import javax.sql.DataSource
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -20,10 +21,12 @@ import value.Value
 
 class TableSpec extends DataSourceSpecSupport {
 
-	val testData = new TestData(dataSource)
+	var testData: TestData = _
 
-	createTables("hsqldb.sql")
-
+	override protected def initializeDataSourceReferences(dataSource: DataSource) {
+		testData = new TestData(dataSource)
+	}
+	
 	describe("A Table") {
 		describe("when has no default columns or records") {
 			val column = Column("name", Value(Some("Value")))
@@ -51,16 +54,20 @@ class TableSpec extends DataSourceSpecSupport {
 		}
 		
 		describe("when has records") {
-			val table = new Table(testData, "two_string_table", List(), List(
-				Record(Some("label1")), Record(Some("label2"))
-			))
-
 			it("should link each record to the table when constructed") {
+				val table = new Table(testData, "two_string_table", List(), List(
+					Record(Some("label1")), Record(Some("label2"))
+				))
+
 				table.records(0).table.get should equal (table)
 				table.records(1).table.get should equal (table)
 			}
 
 			it("should be able to delete all records from table") {
+				val table = new Table(testData, "two_string_table", List(), List(
+					Record(Some("label1")), Record(Some("label2"))
+				))
+
 				jdbcTemplate.update("insert into two_string_table(col1, col2) values('value1', 'value2')")
 
 				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (1)
@@ -93,12 +100,12 @@ class TableSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when has default values AND records that are partially populated") {
-			val table = new Table(testData, "two_string_table",
-				List(DefaultColumn("col1", Value(Some("value1"))), DefaultColumn("col2", Value(Some("value2"))))	,
-				List(Record(Some("label1"), List(Column("col1", Value.string("spooked")))))
-			)
-		
 			it("should merge only the unspecified default values when creating a record") {
+				val table = new Table(testData, "two_string_table",
+					List(DefaultColumn("col1", Value(Some("value1"))), DefaultColumn("col2", Value(Some("value2"))))	,
+					List(Record(Some("label1"), List(Column("col1", Value.string("spooked")))))
+				)
+
 				table.records(0).columns should have size (2)
 				table.records(0).columns should contain (Column("col1", Value(Some("spooked")), Some(table.records(0))))
 				table.records(0).columns should contain (Column("col2", Value(Some("value2")), Some(table.records(0))))

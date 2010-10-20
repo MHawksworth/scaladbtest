@@ -2,6 +2,7 @@ package scaladbtest.model
 
 import scaladbtest.DataSourceSpecSupport
 import value.Value
+import javax.sql.DataSource
 
 /*
 * Copyright 2010 Ken Egervari
@@ -21,16 +22,12 @@ import value.Value
 
 class RecordSpec extends DataSourceSpecSupport {
 
-	createTables("hsqldb.sql");
+	var testData: TestData = _
 
-	override def afterEach() {
-		jdbcTemplate.update("delete from two_string_table")
-		jdbcTemplate.update("delete from single_id_table")
-		jdbcTemplate.update("delete from date_table")
+	override protected def initializeDataSourceReferences(dataSource: DataSource) {
+		testData = new TestData(dataSource)
 	}
 	
-	val testData = new TestData(dataSource)
-
 	describe("A record") {
 		describe("when contains no columns or table") {
 			val record = Record(Some("label"))
@@ -100,6 +97,8 @@ class RecordSpec extends DataSourceSpecSupport {
 			}
 			
 			it("should insert its values as a new record into the table") {
+				val table = new Table(testData, "two_string_table", List(), List(record)	)
+
 				record.insert()
 
 				val map = jdbcTemplate.queryForMap("select * from two_string_table where col1 = ?", "value1")
@@ -119,9 +118,10 @@ class RecordSpec extends DataSourceSpecSupport {
 	      new Column("col1", Value(None)),
 				new Column("col2", Value(None))
 			))
-			val table = new Table(testData, "two_string_table", List(), List(record))
 
 			it("should insert NULL values") {
+				val table = new Table(testData, "two_string_table", List(), List(record))
+
 				record.insert()
 
 				val map = jdbcTemplate.queryForMap("select * from two_string_table where col1 is null")
@@ -135,9 +135,10 @@ class RecordSpec extends DataSourceSpecSupport {
 			val record = Record(Some("record"), List(
 	      new Column("id", Value(Some("1")))
 			))
-			val table = new Table(testData, "single_id_table", List(), List(record))
 
 			it("should insert") {
+				val table = new Table(testData, "single_id_table", List(), List(record))
+
 				record.insert()
 
 				val map = jdbcTemplate.queryForMap("select * from single_id_table where id = ?", new java.lang.Integer(1))
@@ -151,9 +152,10 @@ class RecordSpec extends DataSourceSpecSupport {
 	      new Column("id", Value(Some("1"))),
 				new Column("creation_date", Value(Some("2010-05-15 04:20:11")))
 			))
-			val table = new Table(testData, "date_table", List(), List(record))
 
 			it("should insert") {
+				val table = new Table(testData, "date_table", List(), List(record))
+
 				record.insert()
 
 				val map = jdbcTemplate.queryForMap("select * from date_table where id = ?", new java.lang.Integer(1))
@@ -165,12 +167,13 @@ class RecordSpec extends DataSourceSpecSupport {
 
 		describe("when the has default values defined") {
 			val record = Record(Some("record"))
-			val table = new Table(testData, "two_string_table", List(
-				new DefaultColumn("col1", Value(Some("value1"))),
-				new DefaultColumn("col2", Value(Some("value2")))
-			), List(record))
-			
+
 			it("should insert all the default values if no values in the record are defined") {
+				val table = new Table(testData, "two_string_table", List(
+					new DefaultColumn("col1", Value(Some("value1"))),
+					new DefaultColumn("col2", Value(Some("value2")))
+				), List(record))
+
 				record.insert()
 
 				val map = jdbcTemplate.queryForMap("select * from two_string_table where col1 = ?", "value1")

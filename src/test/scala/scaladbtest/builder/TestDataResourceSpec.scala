@@ -4,6 +4,7 @@ import scaladbtest.DataSourceSpecSupport
 import scaladbtest.model.value.Value
 import java.util.Date
 import scaladbtest.model.{DefaultColumn, Column, TestData}
+import javax.sql.DataSource
 
 /*
 * Copyright 2010 Ken Egervari
@@ -25,9 +26,15 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 
 	val dslDir = resourceDir + "dsl/"
 
+	var testData: TestData = _
+	var testDataResource: TestDataResource = _
+
+	override protected def initializeDataSourceReferences(dataSource: DataSource) {
+		testData = new TestData(dataSource)
+		testDataResource = new TestDataResource(testData)
+	}
+
 	describe("A Test Data Dsl") {
-		val testData = new TestData(dataSource)
-		val testDataResource = new TestDataResource(testData)
 
 		describe("when has valid syntax") {
 			it("should do nothing if file is empty") {

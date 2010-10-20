@@ -2,6 +2,7 @@ package scaladbtest.model
 
 import scaladbtest.DataSourceSpecSupport
 import value.Value
+import javax.sql.DataSource
 
 /*
 * Copyright 2010 Ken Egervari
@@ -21,16 +22,15 @@ import value.Value
 
 class TestDataSpec extends DataSourceSpecSupport {
 
-	createTables("hsqldb.sql")
+	var testData: TestData = _
+	var table: Table = _
 
-	override def afterEach() {
-		jdbcTemplate.update("delete from single_id_table")
+	override protected def initializeDataSourceReferences(dataSource: DataSource) {
+		testData = new TestData(dataSource)
+		table = new Table(testData, "single_id_table")
 	}
-	
-	describe("Test Data") {
-		val testData = new TestData(dataSource)
-		val table = new Table(testData, "single_id_table")
 
+	describe("Test Data") {
 		describe("when constructed") {
 			it("should have a data source, a jdbc template and a filename") {
 				testData.dataSource should equal (dataSource)
@@ -83,63 +83,59 @@ class TestDataSpec extends DataSourceSpecSupport {
 				testData.tables(1).records(0).table.get.name should equal ("name")
 			}
 		}
-	}
-	
-	describe("when contains a few records from the same table") {
-		val testData = new TestData(dataSource)
-		val table = testData.createTable("single_id_table", List(), List(
-			Record(None, List(Column("id", Value(Some("1"))))),
-			Record(None, List(Column("id", Value(Some("2"))))),
-			Record(None, List(Column("id", Value(Some("3")))))
-		))
 
-		it("should be able to insert and delete all records into the database") {
-			testData.insertAll()
+		describe("when contains a few records from the same table") {
+			it("should be able to insert and delete all records into the database") {
+				val table = testData.createTable("single_id_table", List(), List(
+					Record(None, List(Column("id", Value(Some("1"))))),
+					Record(None, List(Column("id", Value(Some("2"))))),
+					Record(None, List(Column("id", Value(Some("3")))))
+				))
 
-			jdbcTemplate.queryForInt("select count(*) from single_id_table") should equal (3)
+				testData.insertAll()
 
-			testData.deleteAll()
+				jdbcTemplate.queryForInt("select count(*) from single_id_table") should equal (3)
 
-			jdbcTemplate.queryForInt("select count(*) from single_id_table") should equal (0)
+				testData.deleteAll()
+
+				jdbcTemplate.queryForInt("select count(*) from single_id_table") should equal (0)
+			}
 		}
-	}
 
-	describe("when contains a few records from different tables") {
-		val testData = new TestData(dataSource)
-		val table1 = testData.createTable("single_id_table", List(),
-			List(Record(Some("record1"), List(Column("id", Value(Some("1")))))))
-		val table2 = testData.createTable("two_string_table", List(),
-			List(Record(Some("record2"), List(Column("col1", Value(Some("val2")))))))
+		describe("when contains a few records from different tables") {
+			it("should be able to insert and delete all records into the database") {
+				val table1 = testData.createTable("single_id_table", List(),
+					List(Record(Some("record1"), List(Column("id", Value(Some("1")))))))
+				val table2 = testData.createTable("two_string_table", List(),
+					List(Record(Some("record2"), List(Column("col1", Value(Some("val2")))))))
 
-		it("should be able to insert and delete all records into the database") {
-			testData.insertAll()
+				testData.insertAll()
 
-			jdbcTemplate.queryForInt("select count(*) from single_id_table") should equal (1)
-			jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (1)
+				jdbcTemplate.queryForInt("select count(*) from single_id_table") should equal (1)
+				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (1)
 
-			testData.deleteAll()
+				testData.deleteAll()
 
-			jdbcTemplate.queryForInt("select count(*) from single_id_table") should equal (0)
-			jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (0)
+				jdbcTemplate.queryForInt("select count(*) from single_id_table") should equal (0)
+				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (0)
+			}
 		}
-	}
 
-	describe("when has a dsl to load") {
-		val testData = new TestData(dataSource)
+		describe("when has a dsl to load") {
+			it("should load all the records from the file") {
+				testData.load(resourceDir + "dsl/two_string_table.dbt")
 
-		it("should load all the records from the file") {
-			testData.load(resourceDir + "dsl/two_string_table.dbt")
+				testData.tables should have size (1)
+				testData.tables(0).records should have size (2)
 
-			testData.tables should have size (1)
-			testData.tables(0).records should have size (2)
+				testData.insertAll()
 
-			testData.insertAll()
+				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (2)
 
-			jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (2)
+				testData.deleteAll()
 
-			testData.deleteAll()
-
-			jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (0)
+				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (0)
+			}
 		}
 	}
 

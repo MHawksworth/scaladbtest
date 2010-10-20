@@ -1,5 +1,8 @@
 package scaladbtest
 
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate
+import io.Source
+import javax.sql.DataSource
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -16,16 +19,13 @@ package scaladbtest
 * limitations under the License.
 */
 
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate
-import io.Source
-
-abstract class DataSourceSpecSupport extends SpecSupport
-{
+trait DataSourceSpecSupport extends SpecSupport {
+	
 	protected val resourceDir = "src/test/resources/"
 
-	protected val dataSource = TestContext.dataSource
+	protected var dataSource: DataSource = _
 
-	protected val jdbcTemplate = new SimpleJdbcTemplate(dataSource)
+	protected var jdbcTemplate: SimpleJdbcTemplate = _
 
 	def getSqlTextFromFile(filename: String) = {
 		val sqlStatements =
@@ -43,4 +43,31 @@ abstract class DataSourceSpecSupport extends SpecSupport
 		jdbcTemplate.update(sqlText)
 	}
 
+	override protected def withFixture(test: NoArgTest) {
+		runTestWithDataSourceAndDdl(test, TestContext.hsqldbDataSource, "hsqldb.sql")
+	}
+
+	private def runTestWithDataSourceAndDdl(test: NoArgTest, dataSource: DataSource, ddlFilename: String) {
+		this.dataSource = dataSource;
+		this.jdbcTemplate = new SimpleJdbcTemplate(dataSource)
+
+		createTables(ddlFilename)
+
+		initializeDataSourceReferences(dataSource)
+
+		test()
+
+		cleanUpTables()
+	}
+
+	protected def initializeDataSourceReferences(dataSource: DataSource) {
+
+	}
+
+	private def cleanUpTables() {
+		jdbcTemplate.update("delete from two_string_table")
+		jdbcTemplate.update("delete from single_id_table")
+		jdbcTemplate.update("delete from date_table")
+	}
+	
 }
