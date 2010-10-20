@@ -1,13 +1,13 @@
 user_account:
-    record: ken
+    -[ken]
         first_name: "Ken",
         last_name: "Egervari"
 
 country:
-    record: canada
+    -[canada]
         name: "Canada"
 
 user_account:
-    record: ben
+    -[ben]
         first_name: "Ben",
         last_name: "Sisko"        

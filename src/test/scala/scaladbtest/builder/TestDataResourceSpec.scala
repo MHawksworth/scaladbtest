@@ -195,22 +195,6 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 					Column("last_name", Value.string("Sisko"), Some(testData.records(2))))
 			}
 
-			it("should parse the record with an optionla arrow seperating the record/columns") {
-				testDataResource loadFrom (dslDir + "optional_record_arrow.dbt")
-
-				testData.tables should have size (1)
-				testData.tables(0).name should equal ("stop_list")
-
-				testData.records should have size (1)
-				testData.records(0).table.get should equal (testData.tables(0))
-				testData.records(0).label.get should equal ("stopList1")
-				testData.records(0).columns should have size (2)
-				testData.records(0).columns should contain (
-					Column("id", Value.string("1"), Some(testData.records(0))))
-				testData.records(0).columns should contain (
-					Column("words", Value.string("the and in"), Some(testData.records(0))))
-			}
-
 			it("should parse a file and skip any comments that begin with #") {
 				testDataResource loadFrom (dslDir + "with_comments.dbt")
 

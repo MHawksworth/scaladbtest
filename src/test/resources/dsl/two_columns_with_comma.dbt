@@ -1,4 +1,4 @@
 user_account:
-    record: ken
+    -[ken]
         first_name: "Ken",
         last_name: "Egervari"

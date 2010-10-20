@@ -1,7 +1,7 @@
 user_account:
-    record: ken
+    -[ken]
         first_name: "Ken",
         last_name: "Egervari"
-    record: ben
+    -[ben]
         first_name: "Ben",
         last_name: "Sisko"        

@@ -46,13 +46,12 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 		case "?" ~ columns => columns  
 	}
 
-	def record: Parser[Record] = optionalRecordLabel ~ opt("->") ~ repsep(column, ",") ^^ {
-		case label ~ arrow ~ columns => new Record(label, columns)
+	def record: Parser[Record] = "-" ~ opt(recordLabel) ~ repsep(column, ",") ^^ {
+		case "-" ~ label ~ columns => new Record(label, columns)
 	}
 
-	def optionalRecordLabel: Parser[Option[String]] =
-		"-" ^^ (x => None) |
-		"record:" ~ ident ^^ { case "record:" ~ label => Some(label) }
+	def recordLabel: Parser[String] =
+		"[" ~ ident ~ "]" ^^ { case "[" ~ label ~ "]" => label }
 
 	def column: Parser[Column] = ident ~ ":" ~ value ^^ { 
 		case c ~ ":" ~ v => Column(c.toString, Value.parse(v))

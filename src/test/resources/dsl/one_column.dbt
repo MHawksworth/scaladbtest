@@ -1,3 +1,2 @@
 user_account:
-    record: ken
-        first_name: "Ken"
+    -[ken] first_name: "Ken"

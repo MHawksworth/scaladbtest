@@ -1,3 +1,2 @@
 some_table:
-    record: record1
-        date: $now
+-[record1] date: $now

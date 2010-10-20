@@ -1,5 +1,5 @@
 some_table:
-    record: record1
+    -[record1]
         col: $null
-    record: record2
+    -[record2]
         col: null

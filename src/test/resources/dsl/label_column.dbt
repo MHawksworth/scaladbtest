@@ -1,3 +1,2 @@
 some_table:
-    record: record1
-        col: $label
+-[record1] col: $label

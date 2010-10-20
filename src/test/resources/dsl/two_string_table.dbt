@@ -1,6 +1,6 @@
 two_string_table:
-    record: record1
+    -[record1]
         col1: "Value1", col2: "Value2"
-    record: record2
+    -[record2]
         col1: "Value3",
         col2: "Value4"
