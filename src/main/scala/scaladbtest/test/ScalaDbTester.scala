@@ -22,25 +22,11 @@ import scalaj.collection.Imports._
 
 class ScalaDbTester(
 	val dataSource: DataSource,
-	val basePath: Option[String] = None,
+	var basePath: Option[String] = None,
 	var disableForeignKeys: Boolean = true
 ) {
 
 	val testData = new TestData(dataSource)
-
-	def addMissingSlash(basePath: String): String = {
-		if(basePath.endsWith("/")) basePath
-		else basePath + "/"
-	}
-
-	def absoluteFilenames(filenames: Traversable[String]) = {
-		filenames.map((filename: String) =>
-			if(basePath.isDefined) {
-				addMissingSlash(basePath.get) + filename
-			}
-			else filename
-		)
-	}
 
 	def onBefore(filename: String) {
 		onBefore(List(filename))
@@ -57,5 +43,19 @@ class ScalaDbTester(
 
 	def onAfter() {
 		testData.deleteAll()
+	}
+
+	private def addMissingSlash(basePath: String): String = {
+		if(basePath.endsWith("/")) basePath
+		else basePath + "/"
+	}
+
+	private def absoluteFilenames(filenames: Traversable[String]) = {
+		filenames.map((filename: String) =>
+			if(basePath.isDefined) {
+				addMissingSlash(basePath.get) + filename
+			}
+			else filename
+		)
 	}
 }

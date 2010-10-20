@@ -1,6 +1,7 @@
 package scaladbtest.test
 
 import scaladbtest.DataSourceSpecSupport
+import org.scalatest.PrivateMethodTester
 
 /*
 * Copyright 2010 Ken Egervari
@@ -18,7 +19,7 @@ import scaladbtest.DataSourceSpecSupport
 * limitations under the License.
 */
 
-class ScalaDbTesterSpec extends DataSourceSpecSupport {
+class ScalaDbTesterSpec extends DataSourceSpecSupport with PrivateMethodTester {
 
 	createTables("hsqldb.sql")
 
@@ -31,15 +32,21 @@ class ScalaDbTesterSpec extends DataSourceSpecSupport {
 			val tester = new ScalaDbTester(dataSource, Some("src/test/resources/dsl"))
 
 			it("should add missing slash to the path if it's missing") {
-				tester.addMissingSlash("some/path") should equal ("some/path/")
+				val addMissingSlash = PrivateMethod[String]('addMissingSlash)
+
+				tester invokePrivate addMissingSlash("some/path") should equal ("some/path/")
 			}
 
 			it("should not add missing slash to the path if it's present") {
-				tester.addMissingSlash("some/path/") should equal ("some/path/")
+				val addMissingSlash = PrivateMethod[String]('addMissingSlash)
+
+				tester invokePrivate addMissingSlash("some/path/") should equal ("some/path/")
 			}
 
 			it("should transform a list of files to add base path and any missing slashes") {
-				tester.absoluteFilenames(List("file1.dbt", "file2.dbt")) should equal (
+				val absoluteFilenames = PrivateMethod[Traversable[String]]('absoluteFilenames)
+
+				tester invokePrivate absoluteFilenames(List("file1.dbt", "file2.dbt")) should equal (
 					List("src/test/resources/dsl/file1.dbt", "src/test/resources/dsl/file2.dbt"))
 			}
 
