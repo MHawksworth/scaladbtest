@@ -25,6 +25,12 @@ object TestContext {
 	hsqldbDataSource.setUser("sa")
 	hsqldbDataSource.setPassword("")
 
+	val mysqlDataSource = new ComboPooledDataSource()
+	mysqlDataSource.setDriverClass("com.mysql.jdbc.Driver")
+	mysqlDataSource.setJdbcUrl("jdbc:mysql://localhost:3306/scaladbtest")
+	mysqlDataSource.setUser("sa")
+	mysqlDataSource.setPassword("")
+
 	//val statement = dataSource.getConnection.createStatement
 	//statement.execute("SET DATABASE REFERENTIAL INTEGRITY FALSE;")
 	//statement.close()

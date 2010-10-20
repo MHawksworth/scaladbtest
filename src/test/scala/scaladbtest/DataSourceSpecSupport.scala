@@ -44,14 +44,17 @@ trait DataSourceSpecSupport extends SpecSupport {
 	}
 
 	override protected def withFixture(test: NoArgTest) {
-		runTestWithDataSourceAndDdl(test, TestContext.hsqldbDataSource, "hsqldb.sql")
+		runTestWithDataSourceAndDdl(test, TestContext.hsqldbDataSource, Some("hsqldb.sql"))
+		runTestWithDataSourceAndDdl(test, TestContext.mysqlDataSource, None)
 	}
 
-	private def runTestWithDataSourceAndDdl(test: NoArgTest, dataSource: DataSource, ddlFilename: String) {
+	private def runTestWithDataSourceAndDdl(test: NoArgTest, dataSource: DataSource, ddlFilename: Option[String]) {
 		this.dataSource = dataSource;
 		this.jdbcTemplate = new SimpleJdbcTemplate(dataSource)
 
-		createTables(ddlFilename)
+		if(ddlFilename.isDefined) {
+			createTables(ddlFilename.get)
+		}
 
 		initializeDataSourceReferences(dataSource)
 
