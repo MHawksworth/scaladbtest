@@ -26,7 +26,7 @@ class TestData(val dataSource: DataSource) {
 	val tables = ArrayBuffer[Table]()
 	val jdbcTemplate = new JdbcTemplate(dataSource)
 
-	def createTable(name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()): Table = {
+	def createTable(name: String, defaultColumns: List[DefaultColumn] = List(), records: List[Record] = List()): Table = {
 		val table = new Table(this, name, defaultColumns, records)
 		addTable(table)
 		table

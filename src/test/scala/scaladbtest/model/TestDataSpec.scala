@@ -39,7 +39,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should create tables with default values specified") {
-				val defaultColumns = List(Column("id", Value(Some("1"))))
+				val defaultColumns = List(DefaultColumn("id", Value(Some("1"))))
 				val table = testData.createTable("name", defaultColumns)
 
 				table.name should equal ("name")
@@ -61,7 +61,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			}
 
 			it("should be able to create a table with the same name") {
-				val defaultColumns = List(Column("id", Value(Some("1"))))
+				val defaultColumns = List(DefaultColumn("id", Value(Some("1"))))
 				testData.createTable("name", defaultColumns)
 				testData.createTable("name", defaultColumns)
 
@@ -71,7 +71,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			it("should be able to create a table with the same name and keep records with correct table reference") {
 				val record = new Record(Some("record1"))
 
-				val defaultColumns = List(Column("id", Value(Some("1"))))
+				val defaultColumns = List(DefaultColumn("id", Value(Some("1"))))
 				testData.createTable("name", defaultColumns)
 				testData.createTable("name", defaultColumns, List(record))
 

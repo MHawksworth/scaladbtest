@@ -2,8 +2,8 @@ package scaladbtest.builder
 
 import util.parsing.combinator.JavaTokenParsers
 import scaladbtest.model.value.Value
-import scaladbtest.model.{Record, Column, Table, TestData}
 import io.Source
+import scaladbtest.model._
 
 /*
 * Copyright 2010 Ken Egervari
@@ -22,6 +22,7 @@ import io.Source
 */
 
 object TestDataResource {
+
 	def removeQuotes(stringLiteral: String) = {
 		stringLiteral.substring(1, stringLiteral.length - 1)
 	}
@@ -34,7 +35,7 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 
 	def tables: Parser[Any] = rep(table)
 
-	def table: Parser[Table] = ident ~ ":" ~ opt(default) ~ rep(record) ^^ {
+	def table: Parser[Table] = ident ~ ":" ~ opt(defaultColumns) ~ rep(record) ^^ {
 		case t ~ ":" ~ Some(defaultColumns) ~ records => {
 			testData.createTable(t, defaultColumns, records)
 		}
@@ -43,8 +44,12 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 		}
 	}
 
-	def default: Parser[List[Column]] = "?" ~ repsep(column, ",") ^^ {
+	def defaultColumns: Parser[List[DefaultColumn]] = "?" ~ repsep(defaultColumn, ",") ^^ {
 		case "?" ~ columns => columns  
+	}
+
+	def defaultColumn: Parser[DefaultColumn] = ident ~ ":" ~ value ^^ {
+		case n ~ ":" ~ v => DefaultColumn(n.toString, Value.parse(v))
 	}
 
 	def record: Parser[Record] = "-" ~ opt(recordLabel) ~ repsep(column, ",") ^^ {
@@ -55,7 +60,7 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 		"[" ~ ident ~ "]" ^^ { case "[" ~ label ~ "]" => label }
 
 	def column: Parser[Column] = ident ~ ":" ~ value ^^ { 
-		case c ~ ":" ~ v => Column(c.toString, Value.parse(v))
+		case n ~ ":" ~ v => Column(n.toString, Value.parse(v))
 	}
 
 	def value: Parser[String] =

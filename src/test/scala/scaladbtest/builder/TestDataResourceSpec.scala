@@ -1,9 +1,9 @@
 package scaladbtest.builder
 
 import scaladbtest.DataSourceSpecSupport
-import scaladbtest.model.{Column, TestData}
 import scaladbtest.model.value.Value
 import java.util.Date
+import scaladbtest.model.{DefaultColumn, Column, TestData}
 
 /*
 * Copyright 2010 Ken Egervari
@@ -212,9 +212,9 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables(0).name should equal ("province")
 				testData.tables(0).defaultColumns should have size (2)
 				testData.tables(0).defaultColumns should contain (
-					Column("country_id", Value.string("1")))
+					DefaultColumn("country_id", Value.string("1"), Some(testData.tables(0))))
 				testData.tables(0).defaultColumns should contain (
-					Column("nice_weather", Value.string("true")))
+					DefaultColumn("nice_weather", Value.string("true"), Some(testData.tables(0))))
 
 				testData.tables(0).records should have size (3)
 

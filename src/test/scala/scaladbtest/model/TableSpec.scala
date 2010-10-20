@@ -26,40 +26,38 @@ class TableSpec extends DataSourceSpecSupport {
 
 	describe("A Table") {
 		describe("when has no default columns or records") {
-			val table = new Table(testData, "a_table")
+			val column = Column("name", Value(Some("Value")))
+			val table = new Table(testData, "a_table", List(),
+				List(Record(Some("label"), List(column)))
+			)
 
 			it("should create records that only contain their specified columns") {
-				val values = List(Column("name", Value(Some("Value"))))
-				val record = table.createRecord(Some("label"), values)
-
-				record.table.get should equal (table)
-				record.label.get should equal ("label")
-				record.columns should equal (values)
+				table.records(0).table.get should equal (table)
+				table.records(0).label.get should equal ("label")
+				table.records(0).columns should equal (List(column))
 			}
 		}
 
 		describe("when has default columns") {
 			val table = new Table(testData, "two_string_table", List(
-				Column("col1", Value(Some("value1"))),
-				Column("col2", Value(Some("value2")))
+				DefaultColumn("col1", Value(Some("value1"))),
+				DefaultColumn("col2", Value(Some("value2")))
 			))
 
-			it("should copy all default values when creating a blank record") {
-				val record = table.createRecord(Some("label"))
-
-				record.columns should have size (2)
-				record.columns should contain (Column("col1", Value(Some("value1")), Some(record)))
-				record.columns should contain (Column("col2", Value(Some("value2")), Some(record)))
+			it("should link the default columns to the table definiton") {
+				table.defaultColumns(0).table.get should equal (table)
+				table.defaultColumns(1).table.get should equal (table)
 			}
-			
-			it("should copy only the unspecified default values when creating a record") {
-				val record = table.createRecord(Some("label"), List(
-					Column("col1", Value(Some("spooked")))
-				))
+		}
+		
+		describe("when has records") {
+			val table = new Table(testData, "two_string_table", List(), List(
+				Record(Some("label1")), Record(Some("label2"))
+			))
 
-				record.columns should have size (2)
-				record.columns should contain (Column("col1", Value(Some("spooked")), Some(record)))
-				record.columns should contain (Column("col2", Value(Some("value2")), Some(record)))
+			it("should link each record to the table when constructed") {
+				table.records(0).table.get should equal (table)
+				table.records(1).table.get should equal (table)
 			}
 
 			it("should be able to delete all records from table") {
@@ -73,20 +71,9 @@ class TableSpec extends DataSourceSpecSupport {
 			}
 		}
 		
-		describe("when has records") {
-			val table = new Table(testData, "a_table", List(), List(
-				Record(Some("label1")), Record(Some("label2"))
-			))
-
-			it("should link each record to the table when constructed") {
-				table.records(0).table.get should equal (table)
-				table.records(1).table.get should equal (table)
-			}
-		}
-		
-		describe("when has default values AND records") {
+		describe("when has default values AND empty records") {
 			val table = new Table(testData, "two_string_table",
-				List(Column("col1", Value(Some("value1"))), Column("col2", Value(Some("value2"))))	,
+				List(DefaultColumn("col1", Value(Some("value1"))), DefaultColumn("col2", Value(Some("value2"))))	,
 				List(Record(Some("label1")), Record(Some("label2")))
 			)
 
@@ -102,6 +89,19 @@ class TableSpec extends DataSourceSpecSupport {
 					Column("col1", Value(Some("value1")), Some(table.records(1))))
 				table.records(1).columns should contain (
 					Column("col2", Value(Some("value2")), Some(table.records(1))))
+			}
+		}
+
+		describe("when has default values AND records that are partially populated") {
+			val table = new Table(testData, "two_string_table",
+				List(DefaultColumn("col1", Value(Some("value1"))), DefaultColumn("col2", Value(Some("value2"))))	,
+				List(Record(Some("label1"), List(Column("col1", Value.string("spooked")))))
+			)
+		
+			it("should merge only the unspecified default values when creating a record") {
+				table.records(0).columns should have size (2)
+				table.records(0).columns should contain (Column("col1", Value(Some("spooked")), Some(table.records(0))))
+				table.records(0).columns should contain (Column("col2", Value(Some("value2")), Some(table.records(0))))
 			}
 		}
 	}

@@ -16,32 +16,29 @@ package scaladbtest.model
 * limitations under the License.
 */
 
-case class Table(testData: TestData, name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) {
+case class Table(testData: TestData, name: String, defaultColumns: List[DefaultColumn] = List(), records: List[Record] = List()) {
+
+	defaultColumns.foreach(_.table = Some(this))
 
 	// TODO: Seriously look at implementing this better, as this is a mix between mutable/immutable is actually kind of bad.
-	// set table references, generate default columns if not present in record, and then make sure
-	// those default columns point to the record they are in contained in.
+	// set table references, generate defaultColumns columns if not present in record, and then make sure
+	// those defaultColumns columns point to the record they are in contained in.
 	records.foreach((record: Record) => {
 		record.table = Some(this)
-		record.columns = mergeInDefaultColumnValues(record.columns)
-		record.columns.foreach(_.record = Some(record))
+		record.columns = mergeInDefaultColumnValues(record.columns, Some(record))
 	})
 
-	def mergeInDefaultColumnValues(columns: List[Column]): List[Column] = {
+	private def mergeInDefaultColumnValues(columns: List[Column], record: Option[Record]): List[Column] = {
 		val columnNames = columns.groupBy(_.name)
 		val defaultColumnsNeeded = defaultColumns.filterNot(
-			(c: Column) => columnNames.contains(c.name))
+			(c: DefaultColumn) => columnNames.contains(c.name))
 
-		columns ++ copyDefaultColumns(defaultColumnsNeeded)
+		columns ++ copyDefaultColumns(defaultColumnsNeeded, record)
 	}
 
-	def copyDefaultColumns(defaultColumns: List[Column]): List[Column] = {
-		defaultColumns.map((defaultColumn: Column) =>
-			Column(defaultColumn.name, defaultColumn.value))
-	}
-
-	def createRecord(label: Option[String], columns: List[Column] = List()): Record = {
-		new Record(label,	mergeInDefaultColumnValues(columns), Some(this))
+	private def copyDefaultColumns(defaultColumns: List[DefaultColumn], record: Option[Record]): List[Column] = {
+		defaultColumns.map((defaultColumn: DefaultColumn) =>
+			defaultColumn.create(record))
 	}
 
 	def delete() {

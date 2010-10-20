@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2f799b9f-8e78-414e-84a0-f72e008679fe" name="Default" comment="">
+    <list default="true" id="2f799b9f-8e78-414e-84a0-f72e008679fe" name="Default" comment="Removed various create*() methods on Table and TestData. Now, you must use the constructors to create objects. This makes things more immutable, but not quite. Anyway, at least the programmer must go through the same interface as the combinational parser.&#10;&#10;Also added a new model class called DefaultColumn, which links to the Table it belongs. It has a factory for creating new columns, which ensures that default columns are never shared across records - only copies.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scaladbtest/model/Table.scala" afterPath="$PROJECT_DIR$/src/main/scala/scaladbtest/model/Table.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scaladbtest/test/ScalaDbTester.scala" afterPath="$PROJECT_DIR$/src/main/scala/scaladbtest/test/ScalaDbTester.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/scaladbtest/model/TestDataSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/scaladbtest/model/TestDataSpec.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/scala/scaladbtest/model/DefaultColumnSpec.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/scaladbtest/model/DefaultColumn.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/scaladbtest/builder/TestDataResourceSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/scaladbtest/builder/TestDataResourceSpec.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/scaladbtest/model/RecordSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/scaladbtest/model/RecordSpec.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scaladbtest/model/TestData.scala" afterPath="$PROJECT_DIR$/src/main/scala/scaladbtest/model/TestData.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/scaladbtest/model/TableSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/scaladbtest/model/TableSpec.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scaladbtest/builder/TestDataResource.scala" afterPath="$PROJECT_DIR$/src/main/scala/scaladbtest/builder/TestDataResource.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -73,28 +76,46 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TestDataSpec.scala" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="DefaultColumnSpec.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/DefaultColumnSpec.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="34" selection-start="825" selection-end="825" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ColumnSpec.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/ColumnSpec.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="18" selection-start="1000" selection-end="1000" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DefaultColumn.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/model/DefaultColumn.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="22" selection-start="1233" selection-end="1233" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableSpec.scala" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/TableSpec.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="56" column="67" selection-start="1834" selection-end="1834" vertical-scroll-proportion="0.04040404">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestDataSpec.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/TestDataSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="95" column="102" selection-start="3355" selection-end="3355" vertical-scroll-proportion="0.5138191">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Table.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/model/Table.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="16" selection-start="622" selection-end="622" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestDataResource.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/builder/TestDataResource.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="26" selection-start="1288" selection-end="1288" vertical-scroll-proportion="0.0">
+            <state line="73" column="35" selection-start="2443" selection-end="2443" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -103,7 +124,7 @@
       <file leaf-file-name="TestData.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/model/TestData.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="6" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.0">
+            <state line="28" column="60" selection-start="957" selection-end="957" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -112,7 +133,34 @@
       <file leaf-file-name="TestDataResourceSpec.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/builder/TestDataResourceSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="190" column="0" selection-start="8434" selection-end="8434" vertical-scroll-proportion="0.0">
+            <state line="214" column="83" selection-start="9683" selection-end="9683" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecordSpec.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/RecordSpec.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="169" column="19" selection-start="5543" selection-end="5543" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestDataResource.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/builder/TestDataResource.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="32" selection-start="1881" selection-end="1881" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Table.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/model/Table.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="10" selection-start="1572" selection-end="1572" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -132,10 +180,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/test/resources/dsl/optional_record_arrow.dbt" />
-        <option value="$PROJECT_DIR$/src/test/resources/dsl/three_records_two_tables.dbt" />
-        <option value="$PROJECT_DIR$/src/test/resources/dsl/two_columns_with_comma.dbt" />
-        <option value="$PROJECT_DIR$/src/test/resources/dsl/two_records.dbt" />
         <option value="$PROJECT_DIR$/src/test/resources/dsl/two_string_table.dbt" />
         <option value="$PROJECT_DIR$/src/test/scala/scaladbtest/TestContext.scala" />
         <option value="$PROJECT_DIR$/src/test/resources/ddl/hsqldb.sql" />
@@ -143,11 +187,15 @@
         <option value="$PROJECT_DIR$/src/main/scala/scaladbtest/test/ScalaDb4ScalaTest.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scaladbtest/test/ScalaDbTesterSpec.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scaladbtest/test/ScalaDbTester.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/scaladbtest/builder/TestDataResource.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/scaladbtest/model/DefaultColumnSpec.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/scaladbtest/model/DefaultColumn.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scaladbtest/model/Table.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scaladbtest/model/TestData.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/scaladbtest/builder/TestDataResource.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scaladbtest/builder/TestDataResourceSpec.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scaladbtest/model/TestDataSpec.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/scaladbtest/model/RecordSpec.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/scaladbtest/model/TableSpec.scala" />
       </list>
     </option>
   </component>
@@ -171,7 +219,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="2" />
+    <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
@@ -187,6 +235,8 @@
     </navigator>
     <panes>
       <pane id="Favorites" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -394,6 +444,36 @@
               <option name="myItemId" value="scaladbtest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scaladbtest-stable" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scaladbtest-stable" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scaladbtest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -447,8 +527,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -466,9 +544,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -579,15 +657,6 @@
         <option name="SBT.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" adl_options="" air_descriptor_path="" air_program_params="" air_publisher_id="" air_root_dir_path="" air_run_mode="AppDescriptor" class_name="" debugger_sdk="Module SDK" html_or_swf_file_path="" main_class_name="" method_name="" module_name="" output_log_level="" package_name="" port="0" run_mode="HtmlOrSwfFile" scope="Class" socket_policy_port="0" url_to_launch="http://">
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-        <option name="SBT.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="true" type="SpecsRunConfiguration" factoryName="Specs">
       <module name="" />
       <setting name="path" value="" />
@@ -597,6 +666,15 @@
       <setting name="workingDirectory" value="$PROJECT_DIR$" />
       <setting name="sysFilter" value=".*" />
       <setting name="exampleFilter" value=".*" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="SBT.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" adl_options="" air_descriptor_path="" air_program_params="" air_publisher_id="" air_root_dir_path="" air_run_mode="AppDescriptor" class_name="" debugger_sdk="Module SDK" html_or_swf_file_path="" main_class_name="" method_name="" module_name="" output_log_level="" package_name="" port="0" run_mode="HtmlOrSwfFile" scope="Class" socket_policy_port="0" url_to_launch="http://">
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -781,7 +859,6 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32851985" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7364621" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -792,11 +869,12 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3998764" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24845488" sideWeight="0.32972324" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24845488" sideWeight="0.6618532" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6618532" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6618532" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -814,7 +892,7 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed some of the methods in ScalaDbTester to private and now use scalatest's private method tester." />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed various create*() methods on Table and TestData. Now, you must use the constructors to create objects. This makes things more immutable, but not quite. Anyway, at least the programmer must go through the same interface as the combinational parser.&#10;&#10;Also added a new model class called DefaultColumn, which links to the Table it belongs. It has a factory for creating new columns, which ensures that default columns are never shared across records - only copies." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -827,8 +905,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Can now insert null values, integer values, and it will pre-populate default values if not specified." />
-    <MESSAGE value="Added today's date placeholder and tests to insert dates." />
     <MESSAGE value="Added new TestData object, which is responsible for loading all the test data and inserting all the records into the database. Meant to be one per test class. Test data exposes jdbc templates so children don't need to concern themselves with datasources.&#10;&#10;Tables now relate to test data objects." />
     <MESSAGE value="Refactored Value classes into a single class. Created companion object to be a factory for creating a variety of values from strings, null values, dates, etc. Also created a parse function to access special commands to represent nulls and today's date as strings." />
     <MESSAGE value="Can now process labels to refer to the record's label, which will help avoid some duplication in the dsl later on." />
@@ -852,6 +928,8 @@
     <MESSAGE value="Added class ScalaDbTester which now reads in dsls and inserts all data on startup." />
     <MESSAGE value="ScalaDbTester can now delete data on after" />
     <MESSAGE value="Changed some of the methods in ScalaDbTester to private and now use scalatest's private method tester." />
+    <MESSAGE value="Removed Records List from TestData and tables are now responsible for inserting their own records. The order is now maintained because you can add tables with the same name to the test data list, which also allows multiple duplicate column values for different table definitions." />
+    <MESSAGE value="Removed various create*() methods on Table and TestData. Now, you must use the constructors to create objects. This makes things more immutable, but not quite. Anyway, at least the programmer must go through the same interface as the combinational parser.&#10;&#10;Also added a new model class called DefaultColumn, which links to the Table it belongs. It has a factory for creating new columns, which ensures that default columns are never shared across records - only copies." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -861,114 +939,88 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/lib_managed/scala_2.8.0/compile/spring-jdbc-3.0.3.RELEASE.jar!/org/springframework/jdbc/core/simple/SimpleJdbcTemplate.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="25" selection-start="1406" selection-end="1406" vertical-scroll-proportion="0.33289298">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/sbt_project_definition.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/build/ScalaDBTestProject.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="591" selection-end="591" vertical-scroll-proportion="0.5829146">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/project/boot/scala-2.8.0/lib/scala-library.jar!/scala/collection/Traversable.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="6" selection-start="31" selection-end="31" vertical-scroll-proportion="0.037131883">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/project/boot/scala-2.8.0/lib/scala-library.jar!/scala/collection/Iterable.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="70" selection-start="95" selection-end="95" vertical-scroll-proportion="0.037131883">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/project/boot/scala-2.8.0/lib/scala-library.jar!/scala/collection/Seq.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="107" selection-start="132" selection-end="132" vertical-scroll-proportion="0.037131883">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/project/boot/scala-2.8.0/lib/scala-library.jar!/scala/package.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="17" selection-start="1088" selection-end="1099" vertical-scroll-proportion="0.5569782">
-          <folding />
-        </state>
+        <state line="18" column="17" selection-start="1088" selection-end="1099" vertical-scroll-proportion="0.5569782" />
       </provider>
     </entry>
     <entry file="jar:///opt/jdk1.6.0_22/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="11" selection-start="5154" selection-end="5154" vertical-scroll-proportion="0.33291456">
-          <folding />
-        </state>
+        <state line="117" column="11" selection-start="5154" selection-end="5154" vertical-scroll-proportion="0.33291456" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/test/ScalaDbTester.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="14" selection-start="1519" selection-end="1519" vertical-scroll-proportion="1.9861809">
-          <folding />
-        </state>
+        <state line="58" column="14" selection-start="1519" selection-end="1519" vertical-scroll-proportion="1.9861809" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/test/ScalaDbTesterSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="29" selection-start="114" selection-end="141" vertical-scroll-proportion="0.114321604">
+        <state line="6" column="29" selection-start="114" selection-end="141" vertical-scroll-proportion="0.114321604" />
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib_managed/scala_2.8.0/compile/scalatest-1.2.jar!/org/scalatest/matchers/Matchers.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="620" column="6" selection-start="60625" selection-end="60625" vertical-scroll-proportion="0.33290654" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/model/Column.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="0" selection-start="935" selection-end="1247" vertical-scroll-proportion="0.9271357" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/DefaultColumnSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="34" selection-start="825" selection-end="825" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/ColumnSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="18" selection-start="1000" selection-end="1000" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/model/DefaultColumn.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="22" selection-start="1233" selection-end="1233" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/model/TestData.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="60" selection-start="957" selection-end="957" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/builder/TestDataResourceSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="214" column="83" selection-start="9683" selection-end="9683" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/builder/TestDataResource.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="32" selection-start="1881" selection-end="1881" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/model/Table.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="10" selection-start="1572" selection-end="1572" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/TestDataSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="35" selection-start="2443" selection-end="2443" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/RecordSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="169" column="19" selection-start="5543" selection-end="5543" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/TableSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="6" selection-start="672" selection-end="672" vertical-scroll-proportion="0.32663316">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/model/Table.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="16" selection-start="622" selection-end="622" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/builder/TestDataResourceSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="0" selection-start="8434" selection-end="8434" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/model/TestData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="6" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scaladbtest/builder/TestDataResource.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="26" selection-start="1288" selection-end="1288" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/scaladbtest/model/TestDataSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="102" selection-start="3355" selection-end="3355" vertical-scroll-proportion="0.5138191">
+        <state line="56" column="67" selection-start="1834" selection-end="1834" vertical-scroll-proportion="0.04040404">
           <folding />
         </state>
       </provider>

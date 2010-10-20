@@ -67,11 +67,12 @@ class RecordSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when it has two columns with string values") {
-			val table = new Table(testData, "two_string_table")
-			val record = table.createRecord(Some("record"), List(
-	      new Column("col1", Value(Some("value1"))),
+			val record = Record(Some("record"), List(
+				new Column("col1", Value(Some("value1"))),
 				new Column("col2", Value(Some("value2")))
 			))
+
+			val table = new Table(testData, "two_string_table", List(), List(record)	)
 
 			it("should construct itself properly") {
 				record.table.get should equal (table)
@@ -114,11 +115,11 @@ class RecordSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when it has None in the option values") {
-			val table = new Table(testData, "two_string_table")
-			val record = table.createRecord(Some("record"), List(
+			val record = Record(Some("record"), List(
 	      new Column("col1", Value(None)),
 				new Column("col2", Value(None))
 			))
+			val table = new Table(testData, "two_string_table", List(), List(record))
 
 			it("should insert NULL values") {
 				record.insert()
@@ -131,10 +132,10 @@ class RecordSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when it has one integer id column") {
-			val table = new Table(testData, "single_id_table")
-			val record = table.createRecord(Some("record"), List(
+			val record = Record(Some("record"), List(
 	      new Column("id", Value(Some("1")))
 			))
+			val table = new Table(testData, "single_id_table", List(), List(record))
 
 			it("should insert") {
 				record.insert()
@@ -146,11 +147,11 @@ class RecordSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when it has a date value") {
-			val table = new Table(testData, "date_table")
-			val record = table.createRecord(Some("record"), List(
+			val record = Record(Some("record"), List(
 	      new Column("id", Value(Some("1"))),
 				new Column("creation_date", Value(Some("2010-05-15 04:20:11")))
 			))
+			val table = new Table(testData, "date_table", List(), List(record))
 
 			it("should insert") {
 				record.insert()
@@ -163,13 +164,13 @@ class RecordSpec extends DataSourceSpecSupport {
 		}
 
 		describe("when the has default values defined") {
+			val record = Record(Some("record"))
 			val table = new Table(testData, "two_string_table", List(
-				new Column("col1", Value(Some("value1"))),
-				new Column("col2", Value(Some("value2")))
-			))
+				new DefaultColumn("col1", Value(Some("value1"))),
+				new DefaultColumn("col2", Value(Some("value2")))
+			), List(record))
 			
 			it("should insert all the default values if no values in the record are defined") {
-				val record = table.createRecord(Some("record"))
 				record.insert()
 
 				val map = jdbcTemplate.queryForMap("select * from two_string_table where col1 = ?", "value1")
