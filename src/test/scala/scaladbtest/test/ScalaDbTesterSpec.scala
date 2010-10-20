@@ -43,10 +43,14 @@ class ScalaDbTesterSpec extends DataSourceSpecSupport {
 					List("src/test/resources/dsl/file1.dbt", "src/test/resources/dsl/file2.dbt"))
 			}
 
-			it("should insert all data before test") {
+			it("should insert and delete all data before test") {
 			  tester.onBefore("two_string_table.dbt")
 
 				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (2)
+
+				tester.onAfter()
+
+				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (0)
 			}
 
 			it("should insert all data from a java collection") {
