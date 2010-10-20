@@ -1,0 +1,5 @@
+province:
+? country_id: 1, nice_weather: true
+- province_id: 1, name: "British Columbia"
+- province_id: 2, name: "Manitoba", nice_weather: false
+- province_id: 3, name: "New York", country_id: 2

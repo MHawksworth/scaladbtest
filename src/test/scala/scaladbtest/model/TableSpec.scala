@@ -25,7 +25,7 @@ class TableSpec extends DataSourceSpecSupport {
 	createTables("hsqldb.sql")
 
 	describe("A Table") {
-		describe("when has no default columns") {
+		describe("when has no default columns or records") {
 			val table = new Table(testData, "a_table")
 
 			it("should create records that only contain their specified columns") {
@@ -38,7 +38,7 @@ class TableSpec extends DataSourceSpecSupport {
 			}
 		}
 
-		describe("when has default values") {
+		describe("when has default columns") {
 			val table = new Table(testData, "two_string_table", List(
 				Column("col1", Value(Some("value1"))),
 				Column("col2", Value(Some("value2")))
@@ -73,7 +73,7 @@ class TableSpec extends DataSourceSpecSupport {
 			}
 		}
 		
-		describe("when has records passed to the constructor") {
+		describe("when has records") {
 			val table = new Table(testData, "a_table", List(), List(
 				Record(Some("label1")), Record(Some("label2"))
 			))
@@ -81,6 +81,27 @@ class TableSpec extends DataSourceSpecSupport {
 			it("should link each record to the table when constructed") {
 				table.records(0).table.get should equal (table)
 				table.records(1).table.get should equal (table)
+			}
+		}
+		
+		describe("when has default values AND records") {
+			val table = new Table(testData, "two_string_table",
+				List(Column("col1", Value(Some("value1"))), Column("col2", Value(Some("value2"))))	,
+				List(Record(Some("label1")), Record(Some("label2")))
+			)
+
+			it("should merge default values when table is constructed") {
+				table.records(0).columns should have size (2)
+				table.records(0).columns should contain (
+					Column("col1", Value(Some("value1")), Some(table.records(0))))
+				table.records(0).columns should contain (
+					Column("col2", Value(Some("value2")), Some(table.records(0))))
+
+				table.records(1).columns should have size (2)
+				table.records(1).columns should contain (
+					Column("col1", Value(Some("value1")), Some(table.records(1))))
+				table.records(1).columns should contain (
+					Column("col2", Value(Some("value2")), Some(table.records(1))))
 			}
 		}
 	}

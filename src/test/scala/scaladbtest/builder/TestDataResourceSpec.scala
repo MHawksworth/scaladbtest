@@ -218,6 +218,50 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.records should have size (1)
 				testData.records(0).columns should have size (2)
 			}
+
+			it("should parse table default values and populate the missing values in records") {
+				testDataResource loadFrom (dslDir + "default_values.dbt")
+
+				testData.tables should have size (1)
+				testData.tables(0).name should equal ("province")
+				testData.tables(0).defaultColumns should have size (2)
+				testData.tables(0).defaultColumns should contain (
+					Column("country_id", Value.string("1")))
+				testData.tables(0).defaultColumns should contain (
+					Column("nice_weather", Value.string("true")))
+
+				testData.records should have size (3)
+
+				testData.records(0).columns should have size (4)
+				testData.records(0).columns should contain (
+					Column("province_id", Value.string("1"), Some(testData.records(0))))
+				testData.records(0).columns should contain (
+					Column("name", Value.string("British Columbia"), Some(testData.records(0))))
+				testData.records(0).columns should contain (
+					Column("country_id", Value.string("1"), Some(testData.records(0))))
+				testData.records(0).columns should contain (
+					Column("nice_weather", Value.string("true"), Some(testData.records(0))))
+
+				testData.records(1).columns should have size (4)
+				testData.records(1).columns should contain (
+					Column("province_id", Value.string("2"), Some(testData.records(1))))
+				testData.records(1).columns should contain (
+					Column("name", Value.string("Manitoba"), Some(testData.records(1))))
+				testData.records(1).columns should contain (
+					Column("country_id", Value.string("1"), Some(testData.records(1))))
+				testData.records(1).columns should contain (
+					Column("nice_weather", Value.string("false"), Some(testData.records(1))))
+
+				testData.records(2).columns should have size (4)
+				testData.records(2).columns should contain (
+					Column("province_id", Value.string("3"), Some(testData.records(2))))
+				testData.records(2).columns should contain (
+					Column("name", Value.string("New York"), Some(testData.records(2))))
+				testData.records(2).columns should contain (
+					Column("country_id", Value.string("2"), Some(testData.records(2))))
+				testData.records(2).columns should contain (
+					Column("nice_weather", Value.string("true"), Some(testData.records(2))))
+			}
 		}
 	}
 

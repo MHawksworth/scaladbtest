@@ -18,14 +18,25 @@ package scaladbtest.model
 
 case class Table(testData: TestData, name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) {
 
-	records.map(_.table = Some(this))
+	// TODO: Seriously look at implementing this better, as this mix between mutable/immutable is actually kind of bad.
+
+	records.foreach((record: Record) => {
+		record.table = Some(this)
+		record.columns = mergeInDefaultColumnValues(record.columns)
+		record.columns.foreach(_.record = Some(record))
+	})
 
 	def mergeInDefaultColumnValues(columns: List[Column]): List[Column] = {
 		val columnNames = columns.groupBy(_.name)
 		val defaultColumnsNeeded = defaultColumns.filterNot(
 			(c: Column) => columnNames.contains(c.name))
 
-		columns ++ defaultColumnsNeeded
+		columns ++ copyDefaultColumns(defaultColumnsNeeded)
+	}
+
+	def copyDefaultColumns(defaultColumns: List[Column]): List[Column] = {
+		defaultColumns.map((defaultColumn: Column) =>
+			Column(defaultColumn.name, defaultColumn.value))
 	}
 
 	def createRecord(label: Option[String], columns: List[Column] = List()): Record = {

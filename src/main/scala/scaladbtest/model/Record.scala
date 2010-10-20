@@ -21,7 +21,7 @@ object Record {
 		new Record(label, columns, table)
 }
 
-class Record(val label: Option[String], val columns: List[Column] = List(), var table: Option[Table] = None) {
+class Record(val label: Option[String], var columns: List[Column] = List(), var table: Option[Table] = None) {
 
 	columns.foreach(_.record = Some(this))
 
