@@ -26,3 +26,13 @@ CREATE TABLE date_table(
   id INT,
   creation_date TIMESTAMP
 );
+
+---------------------------------------------------------------------------
+-- boolean_table
+---------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS boolean_table;
+CREATE TABLE boolean_table(
+  id INT NOT NULL PRIMARY KEY,
+  is_valid BIT,
+);

@@ -4,6 +4,7 @@ import util.parsing.combinator.JavaTokenParsers
 import scaladbtest.model.value.Value
 import scaladbtest.model.{Record, Column, Table, TestData}
 import io.Source
+
 /*
 * Copyright 2010 Ken Egervari
 *

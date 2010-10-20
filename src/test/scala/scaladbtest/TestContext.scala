@@ -24,4 +24,8 @@ object TestContext {
 	dataSource.setJdbcUrl("jdbc:hsqldb:mem:scaladbtest")
 	dataSource.setUser("sa")
 	dataSource.setPassword("")
+
+	//val statement = dataSource.getConnection.createStatement
+	//statement.execute("SET DATABASE REFERENTIAL INTEGRITY FALSE;")
+	//statement.close()
 }

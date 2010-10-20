@@ -2,6 +2,7 @@ package scaladbtest.test
 
 import javax.sql.DataSource
 import scaladbtest.model.TestData
+import scalaj.collection.Imports._
 
 /*
 * Copyright 2010 Ken Egervari
@@ -27,15 +28,30 @@ class ScalaDbTester(
 
 	val testData = new TestData(dataSource)
 
-	def absoluteFilenames(filenames: String*) = {
+	def addMissingSlash(basePath: String): String = {
+		if(basePath.endsWith("/")) basePath
+		else basePath + "/"
+	}
+
+	def absoluteFilenames(filenames: Traversable[String]) = {
 		filenames.map((filename: String) =>
-			if(basePath.isDefined) basePath + filename
+			if(basePath.isDefined) {
+				addMissingSlash(basePath.get) + filename
+			}
 			else filename
 		)
 	}
 
-	def onBefore(filenames: String*) {
-		//testData.loadFrom(absoluteFilenames(filenames))
+	def onBefore(filename: String) {
+		onBefore(List(filename))
+	}
+
+	def onBefore(filenames: java.util.Collection[String]) {
+		onBefore(filenames.asScala)
+	}
+
+	def onBefore(filenames: Traversable[String]) {
+		testData.load(absoluteFilenames(filenames))
 		testData.insertAll()
 	}
 

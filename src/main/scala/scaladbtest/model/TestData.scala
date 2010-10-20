@@ -68,7 +68,11 @@ class TestData(val dataSource: DataSource, val records: ArrayBuffer[Record] = Ar
 		tables.foreach(_.delete())
 	}
 
-	def load(filenames: String*) {
+	def load(filename: String) {
+		load(List(filename))
+	}
+
+	def load(filenames: Traversable[String]) {
 		for(filename <- filenames) {
 			new TestDataResource(this).loadFrom(filename)
 		}

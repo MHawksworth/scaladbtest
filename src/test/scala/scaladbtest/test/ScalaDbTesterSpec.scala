@@ -1,5 +1,7 @@
 package scaladbtest.test
 
+import scaladbtest.DataSourceSpecSupport
+
 /*
 * Copyright 2010 Ken Egervari
 *
@@ -16,6 +18,45 @@ package scaladbtest.test
 * limitations under the License.
 */
 
-class ScalaDbTesterSpec {
+class ScalaDbTesterSpec extends DataSourceSpecSupport {
+
+	createTables("hsqldb.sql")
+
+	override protected def beforeEach() {
+		jdbcTemplate.update("delete from two_string_table")
+	}
+
+	describe("Scala DB Tester") {
+		describe("with a base directory") {
+			val tester = new ScalaDbTester(dataSource, Some("src/test/resources/dsl"))
+
+			it("should add missing slash to the path if it's missing") {
+				tester.addMissingSlash("some/path") should equal ("some/path/")
+			}
+
+			it("should not add missing slash to the path if it's present") {
+				tester.addMissingSlash("some/path/") should equal ("some/path/")
+			}
+
+			it("should transform a list of files to add base path and any missing slashes") {
+				tester.absoluteFilenames(List("file1.dbt", "file2.dbt")) should equal (
+					List("src/test/resources/dsl/file1.dbt", "src/test/resources/dsl/file2.dbt"))
+			}
+
+			it("should insert all data before test") {
+			  tester.onBefore("two_string_table.dbt")
+
+				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (2)
+			}
+
+			it("should insert all data from a java collection") {
+				val list: java.util.Collection[String] = new java.util.ArrayList[String]()
+				list.add("two_string_table.dbt")
+				tester.onBefore(list)
+
+				jdbcTemplate.queryForInt("select count(*) from two_string_table") should equal (2)
+			}
+		}
+	}
 
 }
