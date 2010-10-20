@@ -18,8 +18,9 @@ package scaladbtest.model
 
 case class Table(testData: TestData, name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) {
 
-	// TODO: Seriously look at implementing this better, as this mix between mutable/immutable is actually kind of bad.
-
+	// TODO: Seriously look at implementing this better, as this is a mix between mutable/immutable is actually kind of bad.
+	// set table references, generate default columns if not present in record, and then make sure
+	// those default columns point to the record they are in contained in.
 	records.foreach((record: Record) => {
 		record.table = Some(this)
 		record.columns = mergeInDefaultColumnValues(record.columns)

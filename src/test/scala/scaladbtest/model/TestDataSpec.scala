@@ -35,12 +35,12 @@ class TestDataSpec extends DataSourceSpecSupport {
 			it("should have a data source, a jdbc template and a filename") {
 				testData.dataSource should equal (dataSource)
 				testData.jdbcTemplate.getDataSource should equal (dataSource)
-				testData.records should have size (0)
+				testData.tables should have size (0)
 			}
 
 			it("should create tables with default values specified") {
 				val defaultColumns = List(Column("id", Value(Some("1"))))
-				val table = testData.createOrMergeTable("name", defaultColumns)
+				val table = testData.createTable("name", defaultColumns)
 
 				table.name should equal ("name")
 				table.defaultColumns should equal (defaultColumns)
@@ -49,70 +49,49 @@ class TestDataSpec extends DataSourceSpecSupport {
 				testData.tables should have size (1)
 				testData.tables should contain (table)
 
-				testData.records should have size (0)
+				testData.tables(0).records should have size (0)
 			}
 
 			it("should add all the previous records from the table") {
 				val record = new Record(Some("label"))
-				val table = testData.createOrMergeTable("name", List(), List(record))
+				val table = testData.createTable("name", List(), List(record))
 
-				testData.records should have size (1)
-				testData.records(0) should equal (record)
+				testData.tables(0).records should have size (1)
+				testData.tables(0).records(0) should equal (record)
 			}
 
-			it("should not re-add the same table twice") {
+			it("should be able to create a table with the same name") {
 				val defaultColumns = List(Column("id", Value(Some("1"))))
-				testData.createOrMergeTable("name", defaultColumns)
-				testData.createOrMergeTable("name", defaultColumns)
+				testData.createTable("name", defaultColumns)
+				testData.createTable("name", defaultColumns)
 
-				testData.tables should have size (1)
+				testData.tables should have size (2)
 			}
 
-			it("should not re-add the same table, but should merge its records if it has any with the same name") {
+			it("should be able to create a table with the same name and keep records with correct table reference") {
 				val record = new Record(Some("record1"))
 
 				val defaultColumns = List(Column("id", Value(Some("1"))))
-				testData.createOrMergeTable("name", defaultColumns)
-				testData.createOrMergeTable("name", defaultColumns, List(record))
+				testData.createTable("name", defaultColumns)
+				testData.createTable("name", defaultColumns, List(record))
 
-				testData.tables should have size (1)
-				testData.records should have size (1)
-				testData.records(0) should equal (record)
-				testData.records(0).table.get.name should equal ("name")
-			}
-
-			it("should be able to add records and also link the table if not already added") {
-				val record = new Record(Some("label"), List(), Some(table))
-
-				testData addRecord record
-
-				testData.records should have size (1)
-				testData.records should contain (record)
-
-				testData.tables should have size (1)
-				testData.tables should contain (table)
-			}
-
-			it("should not add null table if the record doesn't have a table") {
-				val record = new Record(Some("label"))
-
-				testData addRecord record
-
-				testData.records should have size (1)
-				testData.records should contain (record)
-
-				testData.tables should have size (0)
+				testData.tables should have size (2)
+				testData.tables(0).records should have size (0)
+				testData.tables(1).records should have size (1)
+				testData.tables(1).records(0) should equal (record)
+				testData.tables(1).records(0).table.get should equal (testData.tables(1))
+				testData.tables(1).records(0).table.get.name should equal ("name")
 			}
 		}
 	}
 	
 	describe("when contains a few records from the same table") {
 		val testData = new TestData(dataSource)
-		val table = new Table(testData, "single_id_table")
-
-		testData addRecord table.createRecord(Some("record1"), List(Column("id", Value(Some("1")))))
-		testData addRecord table.createRecord(Some("record2"), List(Column("id", Value(Some("2")))))
-		testData addRecord table.createRecord(Some("record3"), List(Column("id", Value(Some("3")))))
+		val table = testData.createTable("single_id_table", List(), List(
+			Record(None, List(Column("id", Value(Some("1"))))),
+			Record(None, List(Column("id", Value(Some("2"))))),
+			Record(None, List(Column("id", Value(Some("3")))))
+		))
 
 		it("should be able to insert and delete all records into the database") {
 			testData.insertAll()
@@ -127,11 +106,10 @@ class TestDataSpec extends DataSourceSpecSupport {
 
 	describe("when contains a few records from different tables") {
 		val testData = new TestData(dataSource)
-		val table1 = new Table(testData, "single_id_table")
-		val table2 = new Table(testData, "two_string_table")
-
-		testData addRecord table1.createRecord(Some("record1"), List(Column("id", Value(Some("1")))))
-		testData addRecord table2.createRecord(Some("record2"), List(Column("col1", Value(Some("val2")))))
+		val table1 = testData.createTable("single_id_table", List(),
+			List(Record(Some("record1"), List(Column("id", Value(Some("1")))))))
+		val table2 = testData.createTable("two_string_table", List(),
+			List(Record(Some("record2"), List(Column("col1", Value(Some("val2")))))))
 
 		it("should be able to insert and delete all records into the database") {
 			testData.insertAll()
@@ -153,7 +131,7 @@ class TestDataSpec extends DataSourceSpecSupport {
 			testData.load(resourceDir + "dsl/two_string_table.dbt")
 
 			testData.tables should have size (1)
-			testData.records should have size (2)
+			testData.tables(0).records should have size (2)
 
 			testData.insertAll()
 

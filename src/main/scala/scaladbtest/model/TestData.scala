@@ -21,7 +21,7 @@ import scaladbtest.builder.TestDataResource
 * limitations under the License.
 */
 
-class TestData(val dataSource: DataSource, val records: ArrayBuffer[Record] = ArrayBuffer()) {
+class TestData(val dataSource: DataSource) {
 
 	val tables = ArrayBuffer[Table]()
 	val jdbcTemplate = new JdbcTemplate(dataSource)
@@ -29,39 +29,17 @@ class TestData(val dataSource: DataSource, val records: ArrayBuffer[Record] = Ar
 	def createTable(name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()): Table = {
 		val table = new Table(this, name, defaultColumns, records)
 		addTable(table)
-		addRecords(table.records)
 		table
-	}
-
-	def createOrMergeTable(name: String, defaultColumns: List[Column] = List(), records: List[Record] = List()) = {
-		tables.find(_.name == name) match {
-			case Some(table) => mergeRecordsWithExistingTable(records, table)
-			case None => createTable(name, defaultColumns, records)
-		}
-	}
-
-	private def mergeRecordsWithExistingTable(records: List[Record], table: Table): Table = {
-		records.foreach(_.table = Some(table))
-		addRecords(records)
-		table
-	}
-
-	private def addRecords(records: List[Record]) {
-		records.foreach(addRecord(_))
 	}
 
 	def addTable(table: Table) {
-		if(table != null && !tables.contains(table)) tables += table
+		if(table != null) tables += table
 	}
 
-	def addRecord(record: Record) {
-		records += record
-
-		if(record.table.isDefined) addTable(record.table.get)
-	}
-	
 	def insertAll() {
-		records.foreach(_.insert())
+		for(table <- tables;	record <- table.records) {
+			record.insert()
+		}
 	}
 
 	def deleteAll() {

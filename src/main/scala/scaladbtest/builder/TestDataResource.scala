@@ -36,10 +36,10 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 
 	def table: Parser[Table] = ident ~ ":" ~ opt(default) ~ rep(record) ^^ {
 		case t ~ ":" ~ Some(defaultColumns) ~ records => {
-			testData.createOrMergeTable(t, defaultColumns, records)
+			testData.createTable(t, defaultColumns, records)
 		}
 		case t ~ ":" ~ None ~ records => {
-			testData.createOrMergeTable(t, List(), records)
+			testData.createTable(t, List(), records)
 		}
 	}
 

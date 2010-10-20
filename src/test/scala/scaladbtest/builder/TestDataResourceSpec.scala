@@ -34,7 +34,6 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testDataResource loadFrom (dslDir + "empty.dbt")
 
 				testData.tables should have size (0)
-				testData.records should have size (0)
 			}
 
 			it("should parse a single row with a single column") {
@@ -43,13 +42,13 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables should have size (1)
 				testData.tables(0).name should equal ("user_account")
 
-				testData.records should have size (1)
-				testData.records(0).table.get should equal (testData.tables(0))
-				testData.records(0).label.get should equal ("ken")
+				testData.tables(0).records should have size (1)
+				testData.tables(0).records(0).table.get should equal (testData.tables(0))
+				testData.tables(0).records(0).label.get should equal ("ken")
 
-				testData.records(0).columns should have size (1)
-				testData.records(0).columns should contain (
-					Column("first_name", Value.string("Ken"), Some(testData.records(0)))
+				testData.tables(0).records(0).columns should have size (1)
+				testData.tables(0).records(0).columns should contain (
+					Column("first_name", Value.string("Ken"), Some(testData.tables(0).records(0)))
 				)
 			}
 
@@ -59,13 +58,13 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables should have size (1)
 				testData.tables(0).name should equal ("user_account")
 
-				testData.records should have size (1)
-				testData.records(0).table.get should equal (testData.tables(0))
-				testData.records(0).label.get should equal ("ken")
+				testData.tables(0).records should have size (1)
+				testData.tables(0).records(0).table.get should equal (testData.tables(0))
+				testData.tables(0).records(0).label.get should equal ("ken")
 
-				testData.records(0).columns should have size (1)
-				testData.records(0).columns should contain (
-					Column("full_name", Value.string("Ken Egervari"), Some(testData.records(0))))
+				testData.tables(0).records(0).columns should have size (1)
+				testData.tables(0).records(0).columns should contain (
+					Column("full_name", Value.string("Ken Egervari"), Some(testData.tables(0).records(0))))
 			}
 
 			it("should parse $now for a column value and infer today's date") {
@@ -73,30 +72,30 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 
 				val formattedDate = Value.formatDate(new Date()).substring(0, 15)
 
-				testData.records(0).columns(0).name should equal ("date")
-				testData.records(0).columns(0).value.text.get should startWith (formattedDate)
+				testData.tables(0).records(0).columns(0).name should equal ("date")
+				testData.tables(0).records(0).columns(0).value.text.get should startWith (formattedDate)
 			}
 
 			it("should parse $null or null for a column value and infer None") {
 				testDataResource loadFrom (dslDir + "null_column.dbt")
 
-				testData.records should have size (2)
+				testData.tables(0).records should have size (2)
 
-				testData.records(0).columns(0).name should equal ("col")
-				testData.records(0).columns(0).value.text should equal (None)
+				testData.tables(0).records(0).columns(0).name should equal ("col")
+				testData.tables(0).records(0).columns(0).value.text should equal (None)
 
-				testData.records(1).columns(0).name should equal ("col")
-				testData.records(1).columns(0).value.text should equal (None)
+				testData.tables(0).records(1).columns(0).name should equal ("col")
+				testData.tables(0).records(1).columns(0).value.text should equal (None)
 			}
 
 			it("should parse $label and replace it with the label's name") {
 				testDataResource loadFrom (dslDir + "label_column.dbt")
 
-				testData.records should have size (1)
+				testData.tables(0).records should have size (1)
 
-				testData.records(0).columns(0).name should equal ("col")
-				testData.records(0).columns(0).value.text.get should equal ("$label")
-				testData.records(0).columns(0).value.sqlValue should equal ("'record1'")
+				testData.tables(0).records(0).columns(0).name should equal ("col")
+				testData.tables(0).records(0).columns(0).value.text.get should equal ("$label")
+				testData.tables(0).records(0).columns(0).value.sqlValue should equal ("'record1'")
 			}
 
 			it("should parse a single row with 2 columns seperated by a comma") {
@@ -105,15 +104,15 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables should have size (1)
 				testData.tables(0).name should equal ("user_account")
 
-				testData.records should have size (1)
-				testData.records(0).table.get should equal (testData.tables(0))
-				testData.records(0).label.get should equal ("ken")
+				testData.tables(0).records should have size (1)
+				testData.tables(0).records(0).table.get should equal (testData.tables(0))
+				testData.tables(0).records(0).label.get should equal ("ken")
 
-				testData.records(0).columns should have size (2)
-				testData.records(0).columns should contain (
-					Column("first_name", Value.string("Ken"), Some(testData.records(0))))
-				testData.records(0).columns should contain (
-					Column("last_name", Value.string("Egervari"), Some(testData.records(0))))
+				testData.tables(0).records(0).columns should have size (2)
+				testData.tables(0).records(0).columns should contain (
+					Column("first_name", Value.string("Ken"), Some(testData.tables(0).records(0))))
+				testData.tables(0).records(0).columns should contain (
+					Column("last_name", Value.string("Egervari"), Some(testData.tables(0).records(0))))
 			}
 
 			it("should parse two records from the same table") {
@@ -122,22 +121,22 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables should have size (1)
 				testData.tables(0).name should equal ("user_account")
 
-				testData.records should have size (2)
-				testData.records(0).table.get should equal (testData.tables(0))
-				testData.records(0).label.get should equal ("ken")
-				testData.records(0).columns should have size (2)
-				testData.records(0).columns should contain (
-					Column("first_name", Value.string("Ken"), Some(testData.records(0))))
-				testData.records(0).columns should contain (
-					Column("last_name", Value.string("Egervari"), Some(testData.records(0))))
+				testData.tables(0).records should have size (2)
+				testData.tables(0).records(0).table.get should equal (testData.tables(0))
+				testData.tables(0).records(0).label.get should equal ("ken")
+				testData.tables(0).records(0).columns should have size (2)
+				testData.tables(0).records(0).columns should contain (
+					Column("first_name", Value.string("Ken"), Some(testData.tables(0).records(0))))
+				testData.tables(0).records(0).columns should contain (
+					Column("last_name", Value.string("Egervari"), Some(testData.tables(0).records(0))))
 
-				testData.records(1).table.get should equal (testData.tables(0))
-				testData.records(1).label.get should equal ("ben")
-				testData.records(1).columns should have size (2)
-				testData.records(1).columns should contain (
-					Column("first_name", Value.string("Ben"), Some(testData.records(1))))
-				testData.records(1).columns should contain (
-					Column("last_name", Value.string("Sisko"), Some(testData.records(1))))
+				testData.tables(0).records(1).table.get should equal (testData.tables(0))
+				testData.tables(0).records(1).label.get should equal ("ben")
+				testData.tables(0).records(1).columns should have size (2)
+				testData.tables(0).records(1).columns should contain (
+					Column("first_name", Value.string("Ben"), Some(testData.tables(0).records(1))))
+				testData.tables(0).records(1).columns should contain (
+					Column("last_name", Value.string("Sisko"), Some(testData.tables(0).records(1))))
 			}
 
 			it("should parse two anonyomous records (doesn't have labels)") {
@@ -146,61 +145,64 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables should have size (1)
 				testData.tables(0).name should equal ("country")
 
-				testData.records should have size (2)
-				testData.records(0).table.get should equal (testData.tables(0))
-				testData.records(0).label should equal (None)
-				testData.records(0).columns should have size (2)
-				testData.records(0).columns should contain (
-					Column("id", Value.string("1"), Some(testData.records(0))))
-				testData.records(0).columns should contain (
-					Column("name", Value.string("Canada"), Some(testData.records(0))))
+				testData.tables(0).records should have size (2)
+				testData.tables(0).records(0).table.get should equal (testData.tables(0))
+				testData.tables(0).records(0).label should equal (None)
+				testData.tables(0).records(0).columns should have size (2)
+				testData.tables(0).records(0).columns should contain (
+					Column("id", Value.string("1"), Some(testData.tables(0).records(0))))
+				testData.tables(0).records(0).columns should contain (
+					Column("name", Value.string("Canada"), Some(testData.tables(0).records(0))))
 
-				testData.records(1).table.get should equal (testData.tables(0))
-				testData.records(1).label should equal (None)
-				testData.records(1).columns should have size (2)
-				testData.records(1).columns should contain (
-					Column("id", Value.string("2"), Some(testData.records(1))))
-				testData.records(1).columns should contain (
-					Column("name", Value.string("United States"), Some(testData.records(1))))
+				testData.tables(0).records(1).table.get should equal (testData.tables(0))
+				testData.tables(0).records(1).label should equal (None)
+				testData.tables(0).records(1).columns should have size (2)
+				testData.tables(0).records(1).columns should contain (
+					Column("id", Value.string("2"), Some(testData.tables(0).records(1))))
+				testData.tables(0).records(1).columns should contain (
+					Column("name", Value.string("United States"), Some(testData.tables(0).records(1))))
 			}
 
 			it("should parse 3 records from 2 different tables and maintain order they were written in") {
 				testDataResource loadFrom (dslDir + "three_records_two_tables.dbt")
 
-				testData.tables should have size (2)
+				testData.tables should have size (3)
 				testData.tables(0).name should equal ("user_account")
 				testData.tables(1).name should equal ("country")
+				testData.tables(2).name should equal ("user_account")
 
-				testData.records should have size (3)
-				testData.records(0).table.get should equal (testData.tables(0))
-				testData.records(0).label.get should equal ("ken")
-				testData.records(0).columns should have size (2)
-				testData.records(0).columns should contain (
-					Column("first_name", Value.string("Ken"), Some(testData.records(0))))
-				testData.records(0).columns should contain (
-					Column("last_name", Value.string("Egervari"), Some(testData.records(0))))
+				testData.tables(0).records should have size (1)
+				testData.tables(0).records(0).table.get should equal (testData.tables(0))
+				testData.tables(0).records(0).label.get should equal ("ken")
+				testData.tables(0).records(0).columns should have size (2)
+				testData.tables(0).records(0).columns should contain (
+					Column("first_name", Value.string("Ken"), Some(testData.tables(0).records(0))))
+				testData.tables(0).records(0).columns should contain (
+					Column("last_name", Value.string("Egervari"), Some(testData.tables(0).records(0))))
 
-				testData.records(1).table.get should equal (testData.tables(1))
-				testData.records(1).label.get should equal ("canada")
-				testData.records(1).columns should have size (1)
-				testData.records(1).columns should contain (
-					Column("name", Value.string("Canada"), Some(testData.records(1))))
+				testData.tables(0).records should have size (1)
+				testData.tables(1).records(0).table.get should equal (testData.tables(1))
+				testData.tables(1).records(0).label.get should equal ("canada")
+				testData.tables(1).records(0).columns should have size (1)
+				testData.tables(1).records(0).columns should contain (
+					Column("name", Value.string("Canada"), Some(testData.tables(1).records(0))))
 
-				testData.records(2).table.get should equal (testData.tables(0))
-				testData.records(2).label.get should equal ("ben")
-				testData.records(2).columns should have size (2)
-				testData.records(2).columns should contain (
-					Column("first_name", Value.string("Ben"), Some(testData.records(2))))
-				testData.records(2).columns should contain (
-					Column("last_name", Value.string("Sisko"), Some(testData.records(2))))
+				testData.tables(0).records should have size (1)
+				testData.tables(2).records(0).table.get should equal (testData.tables(2))
+				testData.tables(2).records(0).label.get should equal ("ben")
+				testData.tables(2).records(0).columns should have size (2)
+				testData.tables(2).records(0).columns should contain (
+					Column("first_name", Value.string("Ben"), Some(testData.tables(2).records(0))))
+				testData.tables(2).records(0).columns should contain (
+					Column("last_name", Value.string("Sisko"), Some(testData.tables(2).records(0))))
 			}
 
 			it("should parse a file and skip any comments that begin with #") {
 				testDataResource loadFrom (dslDir + "with_comments.dbt")
 
 				testData.tables should have size (1)
-				testData.records should have size (1)
-				testData.records(0).columns should have size (2)
+				testData.tables(0).records should have size (1)
+				testData.tables(0).records(0).columns should have size (2)
 			}
 
 			it("should parse table default values and populate the missing values in records") {
@@ -214,37 +216,37 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables(0).defaultColumns should contain (
 					Column("nice_weather", Value.string("true")))
 
-				testData.records should have size (3)
+				testData.tables(0).records should have size (3)
 
-				testData.records(0).columns should have size (4)
-				testData.records(0).columns should contain (
-					Column("province_id", Value.string("1"), Some(testData.records(0))))
-				testData.records(0).columns should contain (
-					Column("name", Value.string("British Columbia"), Some(testData.records(0))))
-				testData.records(0).columns should contain (
-					Column("country_id", Value.string("1"), Some(testData.records(0))))
-				testData.records(0).columns should contain (
-					Column("nice_weather", Value.string("true"), Some(testData.records(0))))
+				testData.tables(0).records(0).columns should have size (4)
+				testData.tables(0).records(0).columns should contain (
+					Column("province_id", Value.string("1"), Some(testData.tables(0).records(0))))
+				testData.tables(0).records(0).columns should contain (
+					Column("name", Value.string("British Columbia"), Some(testData.tables(0).records(0))))
+				testData.tables(0).records(0).columns should contain (
+					Column("country_id", Value.string("1"), Some(testData.tables(0).records(0))))
+				testData.tables(0).records(0).columns should contain (
+					Column("nice_weather", Value.string("true"), Some(testData.tables(0).records(0))))
 
-				testData.records(1).columns should have size (4)
-				testData.records(1).columns should contain (
-					Column("province_id", Value.string("2"), Some(testData.records(1))))
-				testData.records(1).columns should contain (
-					Column("name", Value.string("Manitoba"), Some(testData.records(1))))
-				testData.records(1).columns should contain (
-					Column("country_id", Value.string("1"), Some(testData.records(1))))
-				testData.records(1).columns should contain (
-					Column("nice_weather", Value.string("false"), Some(testData.records(1))))
+				testData.tables(0).records(1).columns should have size (4)
+				testData.tables(0).records(1).columns should contain (
+					Column("province_id", Value.string("2"), Some(testData.tables(0).records(1))))
+				testData.tables(0).records(1).columns should contain (
+					Column("name", Value.string("Manitoba"), Some(testData.tables(0).records(1))))
+				testData.tables(0).records(1).columns should contain (
+					Column("country_id", Value.string("1"), Some(testData.tables(0).records(1))))
+				testData.tables(0).records(1).columns should contain (
+					Column("nice_weather", Value.string("false"), Some(testData.tables(0).records(1))))
 
-				testData.records(2).columns should have size (4)
-				testData.records(2).columns should contain (
-					Column("province_id", Value.string("3"), Some(testData.records(2))))
-				testData.records(2).columns should contain (
-					Column("name", Value.string("New York"), Some(testData.records(2))))
-				testData.records(2).columns should contain (
-					Column("country_id", Value.string("2"), Some(testData.records(2))))
-				testData.records(2).columns should contain (
-					Column("nice_weather", Value.string("true"), Some(testData.records(2))))
+				testData.tables(0).records(2).columns should have size (4)
+				testData.tables(0).records(2).columns should contain (
+					Column("province_id", Value.string("3"), Some(testData.tables(0).records(2))))
+				testData.tables(0).records(2).columns should contain (
+					Column("name", Value.string("New York"), Some(testData.tables(0).records(2))))
+				testData.tables(0).records(2).columns should contain (
+					Column("country_id", Value.string("2"), Some(testData.tables(0).records(2))))
+				testData.tables(0).records(2).columns should contain (
+					Column("nice_weather", Value.string("true"), Some(testData.tables(0).records(2))))
 			}
 		}
 	}

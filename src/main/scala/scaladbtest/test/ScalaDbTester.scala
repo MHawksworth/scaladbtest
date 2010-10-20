@@ -52,9 +52,7 @@ class ScalaDbTester(
 
 	private def absoluteFilenames(filenames: Traversable[String]) = {
 		filenames.map((filename: String) =>
-			if(basePath.isDefined) {
-				addMissingSlash(basePath.get) + filename
-			}
+			if(basePath.isDefined) addMissingSlash(basePath.get) + filename
 			else filename
 		)
 	}
