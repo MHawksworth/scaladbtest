@@ -292,7 +292,7 @@ steps would be similar for other testing frameworks.
 
 As long as you've specified your DBT file in the correct location, everything
 should just work out of the box. Before your tests are run, scaladbtest will
-parse your dbt files and load everything in the database. You can even specify
+parse your DBT files and load everything into the database. You can even specify
 multiple DBT files to *scalaDbTester.onBefore()* if you wish.
 
 After your tests are run, scaladbtest will naturally clean out all the data.
