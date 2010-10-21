@@ -218,14 +218,14 @@ actual tests only care about a small subset of columns on a given table.
 
 ### Record Insertion Order
 
-DBUnit had a strange limitation where it inserted all the records for a given
-table, regardless of the order you wrote them in. This caused a lot of headaches
-because foreign key constraints would be violated very easily, causing you to
-turn them off altogether.
+DBUnit had a strange limitation where it inserted all the records grouped by the
+table they belonged to, regardless of the order you wrote them in. This caused
+a lot of headaches because foreign key constraints would get violated very
+easily, forcing you to turn them off altogether.
 
 Scaladbtest does not have this problem - it remembers the exact order you wrote
-your records in and processes them in that same order! Intuitive, eh? (Yes,
-I'm from Canada).
+your records in and processes them exactly in that same order! Intuitive, eh?
+(Yes, I'm from Canada).
 
 Combining default values and the ability to specify column definitions multiple
 times, you can create a very easy to maintain test data file:
