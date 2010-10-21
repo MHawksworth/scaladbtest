@@ -113,6 +113,24 @@ class RecordSpec extends DataSourceSpecSupport {
 			}
 		}
 
+		describe("when contains strings that wreck sql grammar") {
+			val record = Record(Some("record"), List(
+				new Column("col1", Value(Some("Sisko's Awesome")))
+			))
+
+			val table = new Table(testData, "two_string_table", List(), List(record)	)
+
+			it("should insert its values as a new record into the table") {
+				val table = new Table(testData, "two_string_table", List(), List(record)	)
+
+				record.insert()
+
+				val map = jdbcTemplate.queryForMap("select * from two_string_table where col1 = ?", "Sisko's Awesome")
+
+				map.get("col1") should equal ("Sisko's Awesome")
+			}
+		}
+
 		describe("when it has None in the option values") {
 			val record = Record(Some("record"), List(
 	      new Column("col1", Value(None)),

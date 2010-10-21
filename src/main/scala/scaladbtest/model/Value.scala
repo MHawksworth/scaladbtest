@@ -58,6 +58,10 @@ object Value {
 
 class Value(val text: Option[String] = None, var column: Option[Column] = None) {
 
+	private def escape(text: String) = {
+		text.replace("'", "''")
+	}
+
 	private def processText(text: String): String = {
 		text.toLowerCase match {
 			case "$label" => {
@@ -70,7 +74,7 @@ class Value(val text: Option[String] = None, var column: Option[Column] = None) 
 
 				column.get.record.get.label.get
 			}
-			case _ => text
+			case _ => escape(text)
 		}
 	}
 
