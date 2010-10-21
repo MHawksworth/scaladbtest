@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2f799b9f-8e78-414e-84a0-f72e008679fe" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.markdown" afterPath="$PROJECT_DIR$/README.markdown" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$USER_HOME_GRAILS$/" />
     <ignored path="$USER_HOME_GRIFFON$/" />
@@ -80,7 +79,7 @@
       <file leaf-file-name="README.markdown" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.markdown">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="116" column="6" selection-start="4111" selection-end="4111" vertical-scroll-proportion="0.63076925">
+            <state line="178" column="33" selection-start="6662" selection-end="6662" vertical-scroll-proportion="0.6282051">
               <folding />
             </state>
           </provider>
@@ -844,7 +843,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.markdown">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="116" column="6" selection-start="4111" selection-end="4111" vertical-scroll-proportion="0.63076925">
+        <state line="178" column="33" selection-start="6662" selection-end="6662" vertical-scroll-proportion="0.6282051">
           <folding />
         </state>
       </provider>

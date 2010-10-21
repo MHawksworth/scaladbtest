@@ -173,9 +173,10 @@ is supposed to be the primary key, and scaladbtest will generate a key using
 the hash code of the label for us!
 
 Once the test data is loaded, whenever you want to lookup the record, you can
-simply refer to the *"Canada".hashCode* in your code. This instantly improves
-the readability of your tests, and helps people get back in the groove if
-they've been out of a project for far too long.
+simply refer to the *"Canada".hashCode* in your code.
+
+**BENEFIT**: This instantly improves the readability of your tests, and helps
+people get back in the groove if they've been out of a project for far too long.
 
 ### Default Columns
 
