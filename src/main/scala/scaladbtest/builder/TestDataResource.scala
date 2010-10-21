@@ -67,8 +67,10 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 	def value: Parser[String] =
 		stringLiteral ^^ (removeQuotes(_)) |
 		floatingPointNumber |
-		"true" |
-		"false" |
+		"true" ^^ (s => "$true") |
+		"$true" |
+		"false" ^^ (s => "$false") |
+		"$false" |
 		"$label" |
 		"$now" |
 		"$null" |

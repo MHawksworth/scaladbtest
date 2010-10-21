@@ -102,6 +102,18 @@ class ValueSpec extends SpecSupport {
 				value.sqlValue should equal ("NULL")
 			}
 		}
+
+		describe("When it's a boolean") {
+			it("should return true without single quotes if $true") {
+				Value.boolean(true).sqlValue should equal ("true")
+				Value.string("$true").sqlValue should equal ("true")
+			}
+
+			it("should return false without single quotes if $false") {
+				Value.boolean(false).sqlValue should equal ("false")
+				Value.string("$false").sqlValue should equal ("false")
+			}
+		}
 		
 		describe("when it refers to the label") {
 			it("should return the record label's value and not $label") {

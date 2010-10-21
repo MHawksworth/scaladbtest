@@ -96,6 +96,17 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables(0).records(1).columns(0).value.text should equal (None)
 			}
 
+			it("should parse $true/$false and true/false for a column value and infer boolean") {
+				testDataResource loadFrom (dslDir + "boolean_column.dbt")
+
+				testData.tables(0).records should have size (4)
+
+				testData.tables(0).records(0).columns(0).value.sqlValue should equal ("true")
+				testData.tables(0).records(1).columns(0).value.sqlValue should equal ("true")
+				testData.tables(0).records(2).columns(0).value.sqlValue should equal ("false")
+				testData.tables(0).records(3).columns(0).value.sqlValue should equal ("false")
+			}
+
 			it("should parse $label and replace it with the label's name") {
 				testDataResource loadFrom (dslDir + "label_column.dbt")
 
@@ -222,7 +233,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables(0).defaultColumns should contain (
 					DefaultColumn("country_id", Value.string("1"), Some(testData.tables(0))))
 				testData.tables(0).defaultColumns should contain (
-					DefaultColumn("nice_weather", Value.string("true"), Some(testData.tables(0))))
+					DefaultColumn("nice_weather", Value.boolean(true), Some(testData.tables(0))))
 
 				testData.tables(0).records should have size (3)
 
@@ -234,7 +245,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables(0).records(0).columns should contain (
 					Column("country_id", Value.string("1"), Some(testData.tables(0).records(0))))
 				testData.tables(0).records(0).columns should contain (
-					Column("nice_weather", Value.string("true"), Some(testData.tables(0).records(0))))
+					Column("nice_weather", Value.boolean(true), Some(testData.tables(0).records(0))))
 
 				testData.tables(0).records(1).columns should have size (4)
 				testData.tables(0).records(1).columns should contain (
@@ -244,7 +255,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables(0).records(1).columns should contain (
 					Column("country_id", Value.string("1"), Some(testData.tables(0).records(1))))
 				testData.tables(0).records(1).columns should contain (
-					Column("nice_weather", Value.string("false"), Some(testData.tables(0).records(1))))
+					Column("nice_weather", Value.boolean(false), Some(testData.tables(0).records(1))))
 
 				testData.tables(0).records(2).columns should have size (4)
 				testData.tables(0).records(2).columns should contain (
@@ -254,7 +265,7 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 				testData.tables(0).records(2).columns should contain (
 					Column("country_id", Value.string("2"), Some(testData.tables(0).records(2))))
 				testData.tables(0).records(2).columns should contain (
-					Column("nice_weather", Value.string("true"), Some(testData.tables(0).records(2))))
+					Column("nice_weather", Value.boolean(true), Some(testData.tables(0).records(2))))
 			}
 		}
 

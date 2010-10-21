@@ -71,6 +71,7 @@ trait DataSourceSpecSupport extends SpecSupport {
 		jdbcTemplate.update("delete from two_string_table")
 		jdbcTemplate.update("delete from single_id_table")
 		jdbcTemplate.update("delete from date_table")
+		jdbcTemplate.update("delete from boolean_table")
 	}
 	
 }

@@ -31,6 +31,10 @@ object Value {
 		}
 	}
 
+	def boolean(value: Boolean) = {
+		new Value(Some("$" + value.toString))
+	}
+
 	def formatDate(date: java.util.Date): String = {
 		new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date)
 	}
@@ -72,6 +76,8 @@ class Value(val text: Option[String] = None, var column: Option[Column] = None) 
 
 	def sqlValue: String = {
 		text match {
+			case Some("$true") => "true"
+			case Some("$false") => "false"
 			case Some(text) => "'" + processText(text) + "'"
 			case None => "NULL"
 		}

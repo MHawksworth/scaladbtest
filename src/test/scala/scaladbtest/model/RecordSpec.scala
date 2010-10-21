@@ -165,6 +165,24 @@ class RecordSpec extends DataSourceSpecSupport {
 			}
 		}
 
+		describe("when it has a boolean value") {
+			val record = Record(Some("record"), List(
+	      new Column("id", Value(Some("1"))),
+				new Column("is_valid", Value.boolean(true))
+			))
+
+			it("should insert") {
+				val table = new Table(testData, "boolean_table", List(), List(record))
+
+				record.insert()
+
+				val map = jdbcTemplate.queryForMap("select * from boolean_table where id = ?", new java.lang.Integer(1))
+
+				map.get("id") should equal (1)
+				map.get("is_valid") should equal (true)
+			}
+		}
+
 		describe("when the has default values defined") {
 			val record = Record(Some("record"))
 
