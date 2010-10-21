@@ -14,13 +14,15 @@ heavy and violate the DRY principle. There must be a better way, and there is!
 ### Introducing DBT
 
 DBT is scaladbtest's way of specifying test data. When comparing DBT to an
-XML file of 500 lines that was used by DBUnit, there was nearly a
+XML file that consisted of 500 lines and was used by DBUnit, there was nearly a
 **30% Reduction** in the number of characters used to express the same test
 data!
 
-There is currently only one way to load data in ScalaDBTest, and I did my best
-to make it a good one! ;) There's suddenly **no more confusion** between
-dozens of formats to select from or the pondering on how to configure them!
+There is *only* one way to load data in ScalaDBTest, and I did my best
+to make it a good one! ;) There's suddenly **no confusion** between which
+format to use among dozens... or putting up with the hassle of trying to figure
+out how to configure them! You also don't have to download a tool to generate
+a schema just to make the XML format usable.
 
 ### DBT Usage
 
@@ -28,7 +30,7 @@ Make a file in your tests' resources directory. Usually it's located in
 *"src/test/resources"* as part of your project structure if you're using SBT or
 Maven.
 
-You can call the DBT file whatever you want, but *"data.dbt"* is a pretty good
+You can name the DBT file whatever you want, but *"data.dbt"* is a pretty good
 name to get started until you start splitting up your files.
 
 ### Inserting Records
