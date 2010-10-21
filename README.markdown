@@ -213,8 +213,8 @@ All three of the province records will contain 4 columns. *Manitoba* will still
 have bad weather while *New York* will belong to the United States (2) instead
 of Canada (1).
 
-This kind if expressive power can really save typing and space in the file when
-your tests only care about a small subset of columns on that table.
+This kind of expressive power can really save typing and space when your
+actual tests only care about a small subset of columns on a given table.
 
 ### Record Insertion Order
 
