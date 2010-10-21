@@ -227,8 +227,8 @@ Scaladbtest does not have this problem - it remembers the exact order you wrote
 your records in and processes them exactly in that same order! Intuitive, eh?
 (Yes, I'm from Canada).
 
-Combining default values and the ability to specify column definitions multiple
-times, you can create a very easy to maintain test data file:
+By combining default values and the ability to specify column definitions
+multiple times, it is *very easy* to maintain your test data:
 
     category:
     - category_id: 1, name: "Star Trek Characters"
