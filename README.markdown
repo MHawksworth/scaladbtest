@@ -49,10 +49,10 @@ above.
 
 Whitespace is not important, so feel free to shape the syntax however you like.
 
-#### Inserting Multiple Records from the Same Table
+#### Inserting Multiple Records for the same Table
 
-You can specify multiple records that belong to the same table by *-*'s, like
-this:
+You can specify multiple records that belong to the same table by using *-*
+characters, like this:
 
     province:
     - province_id: 1, name: "Alberta", country_id: 1
@@ -64,8 +64,8 @@ See, you're already saving many characters compared to XML!
 ### Numbers
 
 Numbers can be represented with or without quotes. Most databases have no
-issues accepting '1' and converting it to the number 1, so you are free to
-choose whichever format pleases your eye.
+issues accepting the string '1' and converting it to the number 1, so you are
+free to choose whichever format pleases your eye.
 
 For example, you *could* place the number 1 in quotes, like this:
 
@@ -85,7 +85,8 @@ actual text, such as the string *"United States"*:
 Booleans are represented by the literals *true* and *false*, like this:
 
     user_account:
-    - user_account_id: 1, name: "Ken", is_enabled: true
+    - user_account_id: 1, name: "Ken Egervari", is_enabled: true
+    - user_account_id: 2, name: "George W. Bush", is_enabled: false
 
 If you specify the *"true"* instead of *true*, scaladbtest will think you mean
 the string "true" instead of the boolean value, which is probably not what you
