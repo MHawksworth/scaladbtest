@@ -88,8 +88,8 @@ Booleans are represented by the literals *true* and *false*, like this:
     - user_account_id: 1, name: "Ken Egervari", is_enabled: true
     - user_account_id: 2, name: "George W. Bush", is_enabled: false
 
-If you specify the *"true"* instead of *true*, scaladbtest will think you mean
-the string "true" instead of the boolean value, which is probably not what you
+If you specify the value *"true"* instead of *true*, scaladbtest will think you
+mean the string "true" instead of the boolean value, which is probably not what you
 want.
 
 ### Dates
@@ -104,7 +104,7 @@ So instead of specifying a lengthy record declaration like the following...
     task:
     - task_id: 1, name: "My Task", creation_date: "2010-05-15 01:00:00.00"
 
-Scaladbtest will let you specify it like this instead:
+... Scaladbtest will let you specify it like this instead:
 
     task:
     - task_id: 1, name: "My Task", creation_date: $now
