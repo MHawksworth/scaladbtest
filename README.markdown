@@ -148,7 +148,7 @@ like this:
 database, scaladbtest will replace it with the exact string you provided as a
 label.
 
-In the future, they'll be more functionality to maniupulate labels to make
+In the future, they'll be more functionality to manipulate labels to make
 maintaining and creating test data easier.
 
 #### Labels Generating Primary Keys (Not Yet Implemented)
