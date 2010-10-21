@@ -295,7 +295,7 @@ should just work out of the box. Before your tests are run, scaladbtest will
 parse your DBT files and load everything into the database. You can even specify
 multiple DBT files to *scalaDbTester.onBefore()* if you wish.
 
-After your tests are run, scaladbtest will naturally clean out all the data.
+After your tests are run, scaladbtest will naturally clean out all the test data.
 It's really that simple! DBUnit requires twice as much code to setup, requires
 declaration of exceptions and has lots of other mandatory configuration
 doo-dads that should have been optional and set as defaults.
