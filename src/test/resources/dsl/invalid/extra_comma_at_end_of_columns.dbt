@@ -1,0 +1,7 @@
+user_account:
+? is_enabled: "true"
+- user_account_id: "1", first_name: "Vincent", last_name: "Halford",
+    username: "vincent", password: "vincent",
+    email_address: "vinhalf@gmail.com", unconfirmed_email_address: "",
+    user_type: "ROLE_ADMIN", requires_email_verification: "false",
+    is_verified: "true",

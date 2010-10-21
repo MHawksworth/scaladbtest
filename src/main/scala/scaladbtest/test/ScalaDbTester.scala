@@ -26,6 +26,9 @@ class ScalaDbTester(
 	var disableForeignKeys: Boolean = true
 ) {
 
+	def this(dataSource: DataSource, basePath: String) =
+		this(dataSource, Some(basePath))
+	
 	val testData = new TestData(dataSource)
 
 	def onBefore(filename: String) {

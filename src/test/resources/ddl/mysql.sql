@@ -1,3 +1,5 @@
+USE scaladbtest;
+
 DROP TABLE IF EXISTS two_string_table;
 CREATE TABLE two_string_table (
   col1 VARCHAR(32),

@@ -25,6 +25,7 @@ import javax.sql.DataSource
 class TestDataResourceSpec extends DataSourceSpecSupport {
 
 	val dslDir = resourceDir + "dsl/"
+	var invalidDslDir = dslDir + "invalid/"
 
 	var testData: TestData = _
 	var testDataResource: TestDataResource = _
@@ -254,6 +255,14 @@ class TestDataResourceSpec extends DataSourceSpecSupport {
 					Column("country_id", Value.string("2"), Some(testData.tables(0).records(2))))
 				testData.tables(0).records(2).columns should contain (
 					Column("nice_weather", Value.string("true"), Some(testData.tables(0).records(2))))
+			}
+		}
+
+		describe("when has invalid syntax") {
+			it("should throw exception if a comma exists at the end of a column list") {
+				intercept[TestDataParseException] {
+					testDataResource loadFrom (invalidDslDir + "extra_comma_at_end_of_columns.dbt")
+				}
 			}
 		}
 	}

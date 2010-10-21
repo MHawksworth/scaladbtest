@@ -39,6 +39,7 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 		case t ~ ":" ~ Some(defaultColumns) ~ records => {
 			testData.createTable(t, defaultColumns, records)
 		}
+
 		case t ~ ":" ~ None ~ records => {
 			testData.createTable(t, List(), records)
 		}
@@ -75,7 +76,10 @@ class TestDataResource(val testData: TestData) extends JavaTokenParsers {
 
 	def loadFrom(filename: String) {
 		val source = Source.fromFile(filename).getLines.filterNot(_.startsWith("#")).mkString("\n")
-		println(parse(tables, source))
+		val parseResult = parseAll(tables, source)
+		if(!parseResult.successful) {
+			throw new TestDataParseException(parseResult.toString)
+		}
 	}
 
 }
