@@ -111,10 +111,10 @@ So instead of specifying a lengthy record declaration like the following...
 
 ### Null Values
 
-One of the annoying things with DBUnit is that you had instruct the framework
-to transform a special string, such as "[NULL]", to an actual null value in Java.
-This trick required a few lines of setup code... and to the uninitiated, you'd
-probably be scratching your head for a bit until you figured it out.
+One of the annoying things with DBUnit is that you had to instruct the framework
+to transform a special string, such as "[NULL]", to an actual *null* value in
+Java. This trick required a few lines of setup code... and to the uninitiated,
+you'd probably be scratching your head for a bit until you figured it out.
 
 With DBT, you can plant *null* literals anywhere you like. Here's an example:
 
