@@ -268,7 +268,7 @@ Setting up scaladbtest is easy - even easier than in DBUnit.
 
 Here's a small snippet of what you need to do to get scaladbunit to work with
 Java, JUnit4 and the Spring Framework (taken from a real-world project). The
-steps would be real similar for other testing frameworks.
+steps would be similar for other testing frameworks.
 
 	@Autowired
 	protected DataSource dataSource;
