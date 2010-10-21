@@ -1,7 +1,8 @@
 # scaladbtest
 
-A new, light-weight database population framework for scala to replace
-DBUnit.
+A new, light-weight way to load test data into your database before individual
+tests run. It is intended to replace DBUnit. It is written in Scala, but you
+can use it in Java/Junit4 as well.
 
 ## Getting Started is Simple
 
@@ -17,9 +18,9 @@ XML file of 500 lines that was used by DBUnit, there was nearly a
 **30% Reduction** in the number of characters used to express the same test
 data!
 
-There is currently only one way to load data in ScalaDBTest, and we made it a
-good! There's suddenly **no more confusion** between dozens of formats to pick
-from and how to configure them!
+There is currently only one way to load data in ScalaDBTest, and I did my best
+to make it a good one! ;) There's suddenly **no more confusion** between
+dozens of formats to select from or the pondering on how to configure them!
 
 ### DBT Usage
 
